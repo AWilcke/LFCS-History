@@ -13,3 +13,4 @@ class PersonItem(scrapy.Item):
     # name = scrapy.Field()
     last = scrapy.Field()
     first = scrapy.Field()
+    role = scrapy.Field()

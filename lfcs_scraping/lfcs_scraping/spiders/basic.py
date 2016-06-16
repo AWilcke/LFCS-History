@@ -10,17 +10,21 @@ class CurrentLfcs(scrapy.Spider):
             ]
 
     def parse(self, response):
-        #case where link has bold text
-        for name in response.xpath('//table//a/strong/text()').re('.+ \S+'):
-            m = re.search('(.+) (\S*)', name)
-            item = PersonItem()
-            item['first'] = m.group(1)
-            item['last']= m.group(2)
-            yield item
-        #case where link is in bold
-        for name in response.xpath('//table//strong/a/text()').re('.+ \S+'):
-            m = re.search('(.+) (\S*)', name)
-            item = PersonItem()
-            item['first'] = m.group(1)
-            item['last'] = m.group(2)
-            yield item
+        #two cases for name formatting
+        for name in response.xpath('//table//a/strong | //table//strong/a'):
+            try:
+                m = re.search('(.+) (\S+)', name.xpath('text()').extract()[0])
+            except:
+                print name
+                pass
+
+            if m:
+                item = PersonItem()
+                item['first'] = m.group(1)
+                item['last']= m.group(2)
+                role = name.xpath('preceding::h2[1]/text()').extract()
+                item['role'] = role
+                yield item
+            else:
+                print name.xpath('text()').extract()[0]
+                pass
