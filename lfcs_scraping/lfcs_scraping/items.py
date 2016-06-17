@@ -15,3 +15,8 @@ class PersonItem(scrapy.Item):
     last = scrapy.Field()
     first = scrapy.Field()
     role = scrapy.Field()
+    year = scrapy.Field()
+
+class TimeItem(scrapy.Item):
+    url = scrapy.Field()
+    date = scrapy.Field()

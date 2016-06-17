@@ -4,10 +4,12 @@ import re
 
 class CurrentLfcs(scrapy.Spider):
     name = "currentlfcs"
-    allowed_domains = ["http://wcms.inf.ed.ac.uk/"]
+    #allowed_domains = ["http://wcms.inf.ed.ac.uk/"]
     start_urls = [
+            #"http://web.archive.org/web/20110319001651/http://wcms.inf.ed.ac.uk/lfcs/people"
             "http://wcms.inf.ed.ac.uk/lfcs/people"
             ]
+
 
     def parse(self, response):
         #two cases for name formatting
@@ -22,9 +24,9 @@ class CurrentLfcs(scrapy.Spider):
 
             if m:
                 item = PersonItem()
-                item['url'] = name.xpath('@href | ../@href | ../../@href').extract()
+                #item['url'] = name.xpath('@href | ../@href | ../../@href').extract()
                 
-                item['role'] = name.xpath('preceding::h2[1]/text() | preceding::h2[1]/a/text()').extract()
+                item['role'] = name.xpath('preceding::h3[1]/text() | preceding::h3[1]/a/text()').extract()
                 item['last'] = m.group(2)
                 item['first'] = m.group(1)
                 yield item
