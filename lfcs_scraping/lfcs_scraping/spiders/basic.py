@@ -11,20 +11,23 @@ class CurrentLfcs(scrapy.Spider):
 
     def parse(self, response):
         #two cases for name formatting
-        for name in response.xpath('//table//a/strong | //table//strong/a'):
+        
+        
+        for name in response.xpath('//a/strong/u | //a/strong[not(u)] | //strong/a'):
             try:
                 m = re.search('(.+) (\S+)', name.xpath('text()').extract()[0])
+            #if fails, it's because there was no text to extract, was a false positive
             except:
-                print name
                 pass
 
             if m:
                 item = PersonItem()
+                item['url'] = name.xpath('@href | ../@href | ../../@href').extract()
+                
+                item['role'] = name.xpath('preceding::h2[1]/text() | preceding::h2[1]/a/text()').extract()
+                item['last'] = m.group(2)
                 item['first'] = m.group(1)
-                item['last']= m.group(2)
-                role = name.xpath('preceding::h2[1]/text()').extract()
-                item['role'] = role
                 yield item
+            #if no match then it isnt a name
             else:
-                print name.xpath('text()').extract()[0]
                 pass
