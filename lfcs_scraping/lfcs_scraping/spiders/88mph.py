@@ -5,7 +5,8 @@ import re
 class First(scrapy.Spider):
     name = "first"
     start_urls = [
-            'http://web.archive.org/web/20160615173215/http://wcms.inf.ed.ac.uk/lfcs/people'
+                    'http://web.archive.org/web/20160506183023/http://wcms.inf.ed.ac.uk/lfcs/people',
+                    'http://web.archive.org/web/20110319001651/http://wcms.inf.ed.ac.uk/lfcs/people'
              ]
 
     def parse(self, response):
@@ -20,13 +21,13 @@ class First(scrapy.Spider):
             if m:
                 item = PersonItem()
                 item['url'] = name.xpath('@href | ../@href | ../../@href').re('.*(http.*)')[0]
-                item['role'] = name.xpath('preceding::h2[1]/text() | preceding::h2[1]/a/text() | preceding::h3[1]/text()').extract()
+                item['role'] = re.sub('.*\xa0', '', name.xpath('preceding::h2[1]/text() | preceding::h2[1]/a/text() | preceding::h3[1]/text()').extract()[0])
                 item['last'] = m.group(2)
                 item['first'] = m.group(1)
                 item['year'] = response.xpath('//tr[@class="y"]/td[@class="c"]/text()').extract()[0]
                 yield item
         
-        nextpage = response.xpath('//tr[@class="y"]/td[@class="b"]/a/@href').extract()
+        nextpage = response.xpath('//tr[@class="y"]/td[@class="f"]/a/@href').extract()
         if nextpage:
             yield scrapy.Request(response.urljoin(nextpage[0]), callback=self.parse)
 
@@ -46,7 +47,7 @@ class Second(scrapy.Spider):
                 m = None
             if m:
                 item = PersonItem()
-                item['role'] = name.xpath("preceding::h3[1]/text()").extract()
+                item['role'] = name.xpath("preceding::h3[1]/text()").extract()[0]
                 item['last'] = m.group(2)
                 item['first'] = m.group(1)
                 item['year'] = response.xpath('//tr[@class="y"]/td[@class="c"]/text()').extract()[0]
