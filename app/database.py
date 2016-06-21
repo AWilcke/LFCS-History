@@ -26,10 +26,14 @@ class Staff(db.Model):
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     location = db.Column(db.String())
 
-    search_vector = db.Column(TSVectorType('name','position','location'))
+    search_vector = db.Column(TSVectorType(
+        'name',
+        'position',
+        'location',
+        weights={'name':'A','position':'B','location':'C'}))
 
     def __repr__(self):
-        return 'Name %r' % (self.name)
+        return self.name
 
 #class for easy searchign for students
 class PhDQuery(BaseQuery, SearchQueryMixin):
@@ -46,25 +50,15 @@ class PhD(db.Model):
     thesis = db.Column(db.String())
     location = db.Column(db.String())
 
-    search_vector = db.Column(TSVectorType('name','thesis','location'))
+    search_vector = db.Column(TSVectorType(
+        'name',
+        'thesis',
+        'location',
+        weights={'name':'A','thesis':'B','location':'C'}))
+
     def __repr__(self):
-        if self.supervisor:
-            if len(self.supervisor) == 1:
-                return 'Name %r, Supervisor %r' % (self.name, self.supervisor)
-            else:
-                return 'Name %r, Supervisors %r' % (self.name, self.supervisor)
-        else:
-            return 'Name %r, Supervisor unknown' % (self.name)
+        return self.name
 
 #mappers for vectoring, for the search
 db.configure_mappers()
 db.create_all()
-
-def addPerson(name, role, start=None, end=None, position=None, location=None, thesis=None):
-    new = None
-    if role.lower() =="phd" or role.lower() == "pg":
-        new = PhD(name=name, start=start, end=end, thesis=thesis, location=location)
-    else:
-        new = Staff(name=name, start=start, end=end, position=position, location=location)
-    db.session.add(new)
-    db.session.commit()
