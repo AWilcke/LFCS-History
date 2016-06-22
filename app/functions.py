@@ -9,6 +9,20 @@ def addPerson(name, role, start=None, end=None, position=None, location=None, th
     db.session.add(new)
     db.session.commit()
 
+def updateStaff(person, start=None, end=None, position=None, location=None, student=None):
+    person.start=start
+    person.end=end
+    person.position+=position.split(',')
+    person.location=location
+    person.students.append(student)
+
+def updatePhD(person, start=None, end=None, thesis=None, location=None, supervisor=None):
+    person.start=start
+    person.end=end
+    person.thesis=thesis
+    person.location=location
+    person.supervisor.append(supervisor)
+
 #there must be a better way to do this, but for now this works
 def search(q):
     #get all staff and students that match query

@@ -35,6 +35,24 @@ class Staff(db.Model):
     def __repr__(self):
         return self.name
 
+    def __init__(self, name, start=None, end=None, position=None, location=None, students=None):
+            self.name = name
+            self.start = start
+            self.end = end
+            if type(position) == 'list':
+                self.position=position
+            elif type(position) == 'str':
+                self.position=position.split(',')
+            else:
+                self.position=[]
+            self.location=location
+            if type(students) == 'list':
+                self.students=students
+            elif type(students) == 'str':
+                self.students=students.split(',')
+            else:
+                self.students=[]
+
 #class for easy searchign for students
 class PhDQuery(BaseQuery, SearchQueryMixin):
     pass
@@ -58,6 +76,19 @@ class PhD(db.Model):
 
     def __repr__(self):
         return self.name
+
+    def __init__(self, name, start=None, end=None, thesis=None, location=None, supervisor=None):
+        self.name=name
+        self.start=start
+        self.end=end
+        self.thesis=thesis
+        self.location=location
+        if type(supervisor) == 'list':
+            self.supervisor = supervisor
+        elif type(supervisor) == 'str':
+            self.supervisor = supervisor.split(',')
+        else:
+            self.supervisor = []
 
 #mappers for vectoring, for the search
 db.configure_mappers()
