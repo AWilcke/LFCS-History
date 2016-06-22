@@ -9,9 +9,18 @@ def addPerson(name, role, start=None, end=None, position=None, location=None, th
     db.session.add(new)
     db.session.commit()
 
+#there must be a better way to do this, but for now this works
 def search(q):
-    staff = Staff.query.search(q, sort=True)
-    students = PhD.query.search(q, sort=True)
-    
-    return staff.all() + students.all()
+    #get all staff and students that match query
+    staff = Staff.query.search(q)
+    students = PhD.query.search(q)
+
+    rankings=[]
+    #create list of tuples with result and relevance
+    for person in staff.all() + students.all():
+        rank = db.engine.execute(db.func.ts_rank(person.search_vector, db.func.to_tsquery(q))).fetchone()[0]
+        rankings.append((person, rank))
+
+    #return list of people sorted by relevance
+    return map(lambda t:t[0], sorted(rankings, key=lambda t:t[1], reverse=True))
 

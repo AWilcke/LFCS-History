@@ -25,7 +25,7 @@ class Staff(db.Model):
     position = db.Column(db.String())
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     location = db.Column(db.String())
-
+    
     search_vector = db.Column(TSVectorType(
         'name',
         'position',
@@ -49,7 +49,7 @@ class PhD(db.Model):
     supervisor = db.relationship('Staff', back_populates='students', secondary=supervising_table)
     thesis = db.Column(db.String())
     location = db.Column(db.String())
-
+    
     search_vector = db.Column(TSVectorType(
         'name',
         'thesis',
