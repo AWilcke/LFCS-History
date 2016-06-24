@@ -38,7 +38,6 @@ class Second(scrapy.Spider):
             ]
 
     def parse(self, response):
-        yield
         for name in response.xpath("//div[not(@id='wm-ipp')]//table//a"):
             
             try:
@@ -56,3 +55,15 @@ class Second(scrapy.Spider):
         nextpage = response.xpath('//tr[@class="y"]/td[@class="b"]/a/@href').extract()
         if nextpage:
             yield scrapy.Request(response.urljoin(nextpage[0]), callback=self.parse)
+
+class Third(scrapy.Spider):
+    name='third'
+    start_urls = [
+            "http://web.archive.org/web/20040109002116/http://www.inf.ed.ac.uk/research/lfcs/members.html",
+            "http://web.archive.org/web/20040109002125/http://www.inf.ed.ac.uk/research/lfcs/support.html",
+            "http://web.archive.org/web/20040109002026/http://www.inf.ed.ac.uk/research/lfcs/students.html"
+            ]
+
+    def parse(self, response):
+        return
+        #to be completed

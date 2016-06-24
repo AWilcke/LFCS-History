@@ -20,3 +20,8 @@ class PersonItem(scrapy.Item):
 class TimeItem(scrapy.Item):
     url = scrapy.Field()
     date = scrapy.Field()
+
+class ReportItem(scrapy.Item):
+    first=scrapy.Field()
+    last=scrapy.Field()
+    thesis=scrapy.Field()

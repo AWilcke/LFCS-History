@@ -9,7 +9,7 @@ make_searchable()
 supervising_table = db.Table('relationship_table',
     db.Column('staff', db.Integer, db.ForeignKey('staff.id')),
     db.Column('phd', db.Integer, db.ForeignKey('phd.id')),
-)
+)   
 
 #class for easy searching
 class QueryClass(BaseQuery, SearchQueryMixin):
@@ -29,7 +29,7 @@ class Staff(db.Model):
     
     phd_id = db.Column(db.Integer, db.ForeignKey('phd.id'))
     phd = db.relationship('PhD', back_populates='staff')
-
+    
     associate = db.relationship('Associates',back_populates='staff',uselist=False)
 
     search_vector = db.Column(TSVectorType(
@@ -65,7 +65,7 @@ class PhD(db.Model):
     thesis = db.Column(db.String())
     location = db.Column(db.String())
     url = db.Column(db.String())
-
+    
     associate_id = db.Column(db.Integer, db.ForeignKey('associates.id'))
     associate = db.relationship('Associates',back_populates='phd')
 
@@ -105,7 +105,7 @@ class Associates(db.Model):
     staff=db.relationship('Staff', back_populates='associate')
     
     phd=db.relationship('PhD',back_populates='associate',uselist=False)
-    
+
     search_vector = db.Column(TSVectorType(
         'name',
         'role',
