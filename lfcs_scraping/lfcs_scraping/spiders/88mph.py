@@ -65,5 +65,19 @@ class Third(scrapy.Spider):
             ]
 
     def parse(self, response):
-        return
-        #to be completed
+        names = response.xpath('//ul/li/a | //dl/dd/a')
+
+        for name in names:
+              m=re.match('([^\d]+) (\S+)', name.xpath('text()').extract()[0])
+              if m:
+                  item=PersonItem()
+                  item['role'] = name.xpath('preceding::b[1]/text()').extract()[0]
+                  item['last'] = m.group(2)
+                  item['first'] = m.group(1)
+                  item['year'] = response.xpath('//tr[@class="y"]/td[@class="c"]/text()').extract()[0]
+                  yield item
+
+        nextpage = response.xpath('//tr[@class="d"]/td[@class="f"]/a/@href').extract()
+        if nextpage:
+            yield scrapy.Request(response.urljoin(nextpage[0]), callback=self.parse)
+            

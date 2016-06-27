@@ -1,6 +1,6 @@
 import re
 
-with open('output.txt') as f:
+with open('output2.txt') as f:
     dic = eval(f.read())
 
 csv = ''
@@ -15,6 +15,6 @@ for name in dic.keys():
 
         csv += first + ',' + last + ',' + start + ',' + end + ',' + ' and '.join(role) + ',,,' + url + '\n'
 
-with open('csv.csv','w') as o:
+with open('csv2.csv','w') as o:
     o.write(csv)
 

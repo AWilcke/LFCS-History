@@ -1,13 +1,17 @@
 import re
-
+'''
 with open('first.csv') as datafile:
     first=datafile.read().splitlines()[1:]
 with open('second.csv') as datafile:
     second=datafile.read().splitlines()[1:]
+'''
+
+with open('third.csv') as datafile:
+    third=datafile.read().splitlines()[1:]
 
 output = {}
 
-for line in (first+second):
+for line in (third):
     line = line.split(',')
     name = line[4] + ' ' + line[3]
     year = line[2]
@@ -49,5 +53,5 @@ for line in (first+second):
         if all(year>i for i in output[name]['year']):
             output[url] = url
 
-with open('output.txt','w') as f:
+with open('output2.txt','w') as f:
     f.write(str(output))
