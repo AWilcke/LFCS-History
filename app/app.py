@@ -8,16 +8,16 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('welcome.html')
 
 # Save e-mail to database and send to success page
-@app.route('/prereg', methods=['POST'])
-def prereg():
-    email = None
+@app.route('/search', methods=['POST'])
+def search():
+    search=None
     if request.method == 'POST':
-        email = request.form['email']
-        print email
-        return render_template('success.html')
+        search = request.form['search']
+        print search
+        return render_template('welcome.html')
 
 if __name__ == '__main__':
     app.debug = True
