@@ -1,10 +1,17 @@
 from database import *
+import re
 
 def addPerson(name, role, start=None, end=None, position=None, location=None, thesis=None, url=None):
     if role.lower() =="phd" or role.lower() == "pg":
         new = PhD(name=name, start=start, end=end, thesis=thesis, location=location, url=url)
     elif role.lower() == 'staff':
-        new = Staff(name=name, start=start, end=end, position=position, location=location, url=url)
+        new = Staff(name=name, start=start, end=end, location=location, url=url)
+        for role in position.split(' & '):
+            m = re.match('(.*) \((\d\d\d\d)-(\d\d\d\d)\)', role)
+            if m:
+                p = Positions(m.group(1), start=m.group(2), end=m.group(3))
+                new.position.append(p)
+
     else:
         new = Associates(name=name, start=start, end=end, location=location, url=url, role=position)
     db.session.add(new)
@@ -18,9 +25,7 @@ def updateStaff(person, name=None,start=None, end=None, position=None, location=
     if end:
         person.end=end
     if position:
-        previous = eval(person.position)
-        previous.append(position)
-        person.position=str(previous)
+        person.position.append(position)
     if location:
         person.location=location
     if student:
@@ -42,7 +47,7 @@ def updatePhD(person, name=None,start=None, end=None, thesis=None, location=None
     if location:
         person.location=location
     if supervisor:
-        person.supervisor.append(student)
+        person.supervisor.append(supervisor)
     if url:
         person.url=url
     

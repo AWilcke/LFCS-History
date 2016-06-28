@@ -1,0 +1,13 @@
+<tr>
+    <td id="name">{{result.name}}</td>
+    <td id="position">
+            <table class="table table-list-search">
+                    <tbody>
+                        {% for pos in result.position %}
+                            {% include 'position.html' %}
+                        {% endfor %}
+                    </tbody>
+            </table>
+    </td>
+    <td id="dates">({{result.start}}-{{result.end}})</td>
+</tr>

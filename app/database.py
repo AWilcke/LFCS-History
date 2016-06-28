@@ -9,6 +9,7 @@ make_searchable()
 supervising_table = db.Table('relationship_table',
     db.Column('staff', db.Integer, db.ForeignKey('staff.id')),
     db.Column('phd', db.Integer, db.ForeignKey('phd.id')),
+    extend_existing=True
 )   
 
 #class for easy searching
@@ -22,7 +23,7 @@ class Staff(db.Model):
     name = db.Column(db.String())
     start = db.Column(db.Integer)
     end = db.Column(db.Integer)
-    position = db.Column(db.String())
+    position = db.relationship('Positions', back_populates='staff')
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     location = db.Column(db.String())
     url = db.Column(db.String())
@@ -34,23 +35,17 @@ class Staff(db.Model):
 
     search_vector = db.Column(TSVectorType(
         'name',
-        'position',
         'location',
         weights={'name':'A','position':'B','location':'C'}))
 
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, start=None, end=None, position=None, location=None, students=[], url=None):
+    def __init__(self, name, start=None, end=None, location=None, students=[], url=None):
         self.name = name
         self.start = start
         self.end = end
         self.url=url
-        #positions formatted as Pos1 (start-end) & Pos2...etc
-        if position:
-            self.position=str(position.split(' & '))
-        else:
-            self.position='[]'
         self.location=location
         self.students=students
 
@@ -125,6 +120,24 @@ class Associates(db.Model):
             self.role=str(role.split(' & '))
         else:
             self.role='[]'
+
+class Positions(db.Model):
+    __tablename__='positions'
+    id=db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.String())
+    start = db.Column(db.Integer)
+    end = db.Column(db.Integer)
+    staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
+    staff=db.relationship('Staff', back_populates='position')
+
+    def __init__(self, position, start=None, end=None, staff=None):
+        self.position=position
+        self.staff=staff
+        self.start=start
+        self.end=end
+    
+    def __repr__(self):
+        return self.position
 
 #mappers for vectoring, for the search
 db.configure_mappers()
