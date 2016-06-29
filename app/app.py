@@ -23,7 +23,7 @@ def search():
 @app.route('/results/<query>', methods=['GET'])
 def results(query):
     results=functions.search(query)
-    return render_template('results.html', results=results)
+    return render_template('results.html', results=results, query=query)
 '''
 @app.route('/test')
 def test():

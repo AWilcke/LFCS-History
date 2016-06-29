@@ -142,7 +142,9 @@ class Positions(db.Model):
 class People(db.Model):
     __tablename__='people'
     id=db.Column(db.Integer, primary_key=True)
-    
+
+    size=db.Column(db.Integer)
+
     staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
     staff=db.relationship('Staff',back_populates='person')
 
@@ -161,6 +163,9 @@ class People(db.Model):
             return self.associate.name
         else:
             return "No one"
+
+    def __init__(self):
+        self.size = 1
 
 #mappers for vectoring, for the search
 db.configure_mappers()

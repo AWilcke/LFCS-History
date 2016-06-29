@@ -1,13 +1,34 @@
 <tr>
-    <td id="name">{{result.name}}</td>
-    <td id="position">
-            <table class="table table-list-search">
-                    <tbody>
-                        {% for pos in result.position %}
-                            {% include 'position.html' %}
-                        {% endfor %}
-                    </tbody>
-            </table>
-    </td>
-    <td id="dates">({{result.start}}-{{result.end}})</td>
+        <td id="name">{{result.staff.name or result.phd.name or result.associate.name}}</td>
+        <td id="positions">
+                {% for pos in result.staff.position %}
+                    <p>{{pos.position}} ({{pos.start}}-{{pos.end}})</p>
+                {% endfor %}
+                
+                {% for pos in result.associate.position %}
+                    <p>{{pos.position}} ({{pos.start}}-{{pos.end}})</p>
+                {% endfor %}
+        </td>
+        <td id="category">
+                {% if result.staff %}
+                <p>Staff</p>
+                {% endif %}
+                {% if result.phd %}
+                <p>PhD</p>
+                {% endif %}
+                {% if result.associate %}
+                <p>Associates</p>
+                {% endif %}
+        </td>
+        <td id="dates">
+                {% if result.staff %}
+                <p>{{result.staff.start}}-{{result.staff.end}}</p>
+                {% endif %}
+                {% if result.phd %}
+                <p>{{result.phd.start}}-{{result.phd.end}}</p>
+                {% endif %}
+                {% if result.associate %}
+                <p>{{result.associate.start}}-{{result.associate.end}}</p>
+                {% endif %}
+        </td>
 </tr>

@@ -2,10 +2,12 @@
 {% block content %}
 <div class="container">
     {% include 'searchbar.html' %}
+    <h2>Results for "{{query}}"</h2>
     <table class="table table-list-search">
             <thead>
                 <th>Name</th>
                 <th>Position</th>
+                <th>Category</th>
                 <th>Dates</th>
             </thead>
             <tbody>
