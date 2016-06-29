@@ -20,51 +20,48 @@ class Staff(db.Model):
     query_class = QueryClass
     __tablename__ = 'staff'
     id = db.Column(db.Integer, primary_key=True)
+
     name = db.Column(db.String())
     start = db.Column(db.Integer)
     end = db.Column(db.Integer)
-    position = db.relationship('Positions', back_populates='staff')
-    students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
-    location = db.Column(db.String())
     url = db.Column(db.String())
+    location = db.Column(db.String())
     
-    phd_id = db.Column(db.Integer, db.ForeignKey('phd.id'))
-    phd = db.relationship('PhD', back_populates='staff')
+    students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
+    position = db.relationship('Positions', back_populates='staff')
     
-    associate = db.relationship('Associates',back_populates='staff',uselist=False)
+    person = db.relationship('People', back_populates='staff', uselist=False)
 
     search_vector = db.Column(TSVectorType(
         'name',
         'location',
-        weights={'name':'A','position':'B','location':'C'}))
+        weights={'name':'A','location':'C'}))
 
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, start=None, end=None, location=None, students=[], url=None):
+    def __init__(self, name, start=None, end=None, location=None, url=None):
         self.name = name
         self.start = start
         self.end = end
         self.url=url
         self.location=location
-        self.students=students
 
 class PhD(db.Model):
     query_class = QueryClass
     __tablename__ = 'phd'
     id = db.Column(db.Integer, primary_key=True)
+
     name = db.Column(db.String())
     start = db.Column(db.Integer)
     end = db.Column(db.Integer)
-    supervisor = db.relationship('Staff', back_populates='students', secondary=supervising_table)
     thesis = db.Column(db.String())
     location = db.Column(db.String())
     url = db.Column(db.String())
     
-    associate_id = db.Column(db.Integer, db.ForeignKey('associates.id'))
-    associate = db.relationship('Associates',back_populates='phd')
 
-    staff = db.relationship('Staff',back_populates='phd',uselist=False)
+    supervisor = db.relationship('Staff', back_populates='students', secondary=supervising_table) 
+    person = db.relationship('People', back_populates='phd', uselist=False)
 
     search_vector = db.Column(TSVectorType(
         'name',
@@ -75,69 +72,95 @@ class PhD(db.Model):
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, start=None, end=None, thesis=None, location=None, supervisor=[], url=None):
+    def __init__(self, name, start=None, end=None, thesis=None, location=None, url=None):
         self.name=name
         self.start=start
         self.end=end
         self.thesis=thesis
         self.location=location
         self.url=url
-        self.supervisor=supervisor
 
 #table for Associate and Honorary members, and visitors
 class Associates(db.Model):
     query_class = QueryClass
     __tablename__='associates'
     id = db.Column(db.Integer, primary_key=True)
+    
     name = db.Column(db.String())
     start=db.Column(db.Integer)
     end=db.Column(db.Integer)
     location=db.Column(db.String())
     url=db.Column(db.String())
-    role=db.Column(db.String())
-
-    staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
-    staff=db.relationship('Staff', back_populates='associate')
     
-    phd=db.relationship('PhD',back_populates='associate',uselist=False)
+    position=db.relationship('Positions', back_populates='associate')
+
+    person=db.relationship('People',back_populates='associate',uselist=False)
 
     search_vector = db.Column(TSVectorType(
         'name',
-        'role',
         'location',
-        weights={'name':'A','role':'B','location':'C'}))
+        weights={'name':'A','location':'C'}))
 
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, start=None, end=None, location=None, url=None, role=None):
+    def __init__(self, name, start=None, end=None, location=None, url=None):
         self.name=name
         self.start=start
         self.end=end
         self.location=location
         self.url=url
-        if role:
-            self.role=str(role.split(' & '))
-        else:
-            self.role='[]'
 
 class Positions(db.Model):
+    query_class = QueryClass
     __tablename__='positions'
     id=db.Column(db.Integer, primary_key=True)
+   
     position = db.Column(db.String())
     start = db.Column(db.Integer)
     end = db.Column(db.Integer)
+
     staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
     staff=db.relationship('Staff', back_populates='position')
 
-    def __init__(self, position, start=None, end=None, staff=None):
+    associate_id=db.Column(db.Integer, db.ForeignKey('associates.id'))
+    associate=db.relationship('Associates', back_populates='position')
+
+    search_vector = db.Column(TSVectorType(
+        'position',
+        weights={'position':'B'}))
+
+    def __init__(self, position, start=None, end=None):
         self.position=position
-        self.staff=staff
         self.start=start
         self.end=end
     
     def __repr__(self):
-        return self.position
+        return self.position + '(' + str(self.start) + '-' + str(self.end) + ')'
+
+#table of unique people
+class People(db.Model):
+    __tablename__='people'
+    id=db.Column(db.Integer, primary_key=True)
+    
+    staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
+    staff=db.relationship('Staff',back_populates='person')
+
+    phd_id=db.Column(db.Integer, db.ForeignKey('phd.id'))
+    phd=db.relationship('PhD',back_populates='person')
+
+    associate_id=db.Column(db.Integer, db.ForeignKey('associates.id'))
+    associate=db.relationship('Associates', back_populates='person')
+
+    def __repr__(self):
+        if self.staff:
+            return self.staff.name
+        elif self.phd:
+            return self.phd.name
+        elif self.associate:
+            return self.associate.name
+        else:
+            return "No one"
 
 #mappers for vectoring, for the search
 db.configure_mappers()

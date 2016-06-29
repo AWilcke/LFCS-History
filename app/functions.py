@@ -13,7 +13,13 @@ def addPerson(name, role, start=None, end=None, position=None, location=None, th
                 new.position.append(p)
 
     else:
-        new = Associates(name=name, start=start, end=end, location=location, url=url, role=position)
+        new = Associates(name=name, start=start, end=end, location=location, url=url)
+        for role in position.split(' & '):
+            m = re.match('(.*) \((\d\d\d\d)-(\d\d\d\d)\)', role)
+            if m:
+                p = Positions(m.group(1), start=m.group(2), end=m.group(3))
+                new.position.append(p)
+    
     db.session.add(new)
     db.session.commit()
 
@@ -25,7 +31,10 @@ def updateStaff(person, name=None,start=None, end=None, position=None, location=
     if end:
         person.end=end
     if position:
-        person.position.append(position)
+        m = re.match('(.*) \((\d\d\d\d)-(\d\d\d\d)\)', position)
+        if m:
+            p = Positions(m.group(1), start=m.group(2), end=m.group(3))
+            person.position.append(p)
     if location:
         person.location=location
     if student:
@@ -53,7 +62,7 @@ def updatePhD(person, name=None,start=None, end=None, thesis=None, location=None
     
     db.session.commit()
 
-def updateAssociate(person, name=None, start=None, end=None, location=None, url=None, role=None):
+def updateAssociate(person, name=None, start=None, end=None, location=None, url=None, position=None):
     if name:
         person.name=name
     if start:
@@ -64,22 +73,39 @@ def updateAssociate(person, name=None, start=None, end=None, location=None, url=
         person.location=location
     if url:
         person.url=url
-    print role
-    if role:
-        previous = eval(person.role)
-        previous.append(role)
-        person.role=str(previous)
-
+    if position:
+        m = re.match('(.*) \((\d\d\d\d)-(\d\d\d\d)\)', position)
+        if m:
+            p = Positions(m.group(1), start=m.group(2), end=m.group(3))
+            person.position.append(p)
+    
     db.session.commit()
-#there must be a better way to do this, but for now this works
 
 def link(person1, person2):
-    if type(person1) == Staff:
-        person2.staff = person1
-    elif type(person1) == PhD:
-        person2.phd = person1
-    elif type(person1) == Associates:
-        person2.associate = person1
+    if person1.person:
+        person2.person = person1.person
+    elif person2.person:
+        person1.person = person2.person
+    #if neither has a unique person attached, create one
+    else:
+        new_person = People()
+        
+        #complete appropriate fields
+        if type(person1) == Staff:
+            new_person.staff = person1
+        elif type(person1) == PhD:
+            new_person.phd = person1
+        else:
+            new_person.associate = person1
+
+        if type(person2) == Staff:
+            new_person.staff = person2
+        elif type(person2) == PhD:
+            new_person.phd = person2
+        else:
+            new_person.associate = person2
+
+        db.session.add(new_person)
 
     db.session.commit()
 
@@ -94,6 +120,14 @@ def search(q):
         rank = db.engine.execute(db.func.ts_rank(person.search_vector, db.func.to_tsquery(q))).fetchone()[0]
         rankings.append((person, rank))
 
+    #also search through positions, extracting the corresponding person
+    for position in Positions.query.search(q):
+        rank = db.engine.execute(db.func.ts_rank(position.search_vector, db.func.to_tsquery(q))).fetchone()[0]
+        if position.staff:
+            rankings.append((position.staff, rank))
+        elif position.associate:
+            rankings.append((position.associate, rank))
+    
     #return list of people sorted by relevance
     return map(lambda t:t[0], sorted(rankings, key=lambda t:t[1], reverse=True))
 
