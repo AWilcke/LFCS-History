@@ -1,5 +1,5 @@
 <tr>
-        <td id="name">{{result.staff.name or result.phd.name or result.associate.name}}</td>
+        <td id="name">{{result.name}}</td>
         <td id="positions">
                 {% for pos in result.staff.position %}
                     <p>{{pos.position}} ({{pos.start}}-{{pos.end}})</p>
@@ -21,14 +21,6 @@
                 {% endif %}
         </td>
         <td id="dates">
-                {% if result.staff %}
-                <p>{{result.staff.start}}-{{result.staff.end}}</p>
-                {% endif %}
-                {% if result.phd %}
-                <p>{{result.phd.start}}-{{result.phd.end}}</p>
-                {% endif %}
-                {% if result.associate %}
-                <p>{{result.associate.start}}-{{result.associate.end}}</p>
-                {% endif %}
+                <p>{{result.start}}-{{result.end}}</p>
         </td>
 </tr>

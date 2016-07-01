@@ -1,0 +1,581 @@
+Guidelines for contributing	Thanks a lot for helping out with the LFCS History project. Here are the guidelines you should follow when adding/editing information. Each person should have one row per category they fit in (PG/PhD, Staff, Associate Members, Honorary Members). People are ordered alphabetically by surname. If during their time as staff, they occupied several positions (such as Lecturer and Research fellow), each position should have the dates in brackets after it, and positions should be separated using a '&'. ex: Research Fellow (1987-1992) & Lecturer (1990-1996). Websites are preferred over emails, however if you know someone's email do not hesitate to fill it in. If you have any questions or suggestions, feel free to email me at s1452854@sms.ed.ac.uk									
+	This sheet is meant to be used as an overview, please fill in data in the Staff and PhD sheets. I will update this overview with the new data every few days.									
+										
+First Name	Last Name	Dates at LFCS		Category	Extra Information (position or supervisors)	Thesis	Location before LFCS	Current Location	Nationality	Website/email
+		Start	End							
+Samson	Abramsky									
+Yusef	Abu Shabaan	2000	2005	PhD	Jane Hillston, Stuart Anderson					
+Bahareh	Afshari		2012	Staff						http://www.inf.ed.ac.uk/people/staff/Bahareh_Afshari.html
+Jaume 	Agusti	1992	1992	Visitor						
+Danel	Ahman	2015	now	PG	Gordon Plotkin, Ian Stark			LFCS		http://www.inf.ed.ac.uk/people/students/Danel_Ahman.html
+Jorge Branco	Aires	2005	2011	PG	John Longley, Don Sannella			Univ of Coimbra		http://www.inf.ed.ac.uk/people/students/Jorge_Branco_Aires.html
+Cristina	Alexandru	2012	2015	PG						http://homepages.inf.ed.ac.uk/s0951739/index.htm
+Ricardo	Almeida	2015	now	PG	Kousha Etessami, Richard Mayr			LFCS		http://www.inf.ed.ac.uk/people/students/Ricardo_Almeida.html
+Thorsten	Altenkirch	1989		PhD	Rod Burstall	Constructions, Inductive Types and Strong Normalization (1993)		Reader at the University of Nottingham		
+Shunichi	Amano	2007		PhD	Leonid Libkin					
+Simon 	Ambler	1986		PhD	Bob Harper	First Order Linear Logic in Symmetric Monoidal Closed Categories (1992)		University of Leicester		
+Bill 	Anderson	1987		PhD	Kyriakos Kalorkoti, Mark Jerrum	Algorithms for polynomial factorisation and their extension to quotient rings				
+Paul 	Anderson	1988		Staff	Systems Development manager			LFCS		
+Stuart 	Anderson	1986		Staff	Lecturer			LFCS		http://www.inf.ed.ac.uk/people/staff/Stuart_Anderson.html
+Vasilis	Andreou	2015	2015	Staff						
+James 	Andrews	1987	1991	PhD	Don Sannella, Stuart Anderson	Logic Programming: Operational Semantics and Proof Theory (1991)		Google, Mountain View		andrews@csd.uwo.ca
+Apostolidis	Apostolos		2011	PhD	Stratis Viglas			NOT SURE IF HAD VIVA		
+Andrew	Appel									
+Myrto 	Arapinis			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Myrto_Arapinis.html
+David 	Aspinall	1991	1997	PhD	Don Sannella, Benjamin Pierce	Type Systems for Modular Programs and Specifications		LFCS		http://www.inf.ed.ac.uk/people/staff/David_Aspinall.html
+David 	Aspinall			Staff	Research Fellow & Lecturer			LFCS		
+Maria	Astefanoaei	2015		PG	Mirella Lapata, Rik Sarkar			LFCS		http://www.inf.ed.ac.uk/people/students/Maria_Astefanoaei.html
+Robert	Atkey	2004?	2007?	Staff	David Aspinall, Ian Stark					
+Malcolm	Atkinson	2011?	now	Staff						http://www.inf.ed.ac.uk/people/staff/Malcolm_Atkinson.html
+Arnon 	Avron	1986	1988	Staff	Research Fellow			Professor, Computer Science Department, Tel Aviv University		
+Giorgio	Bacci	2011	2011	Staff						
+Paolo	Ballarini									
+Christopher	Banks	2012	2015	PG						http://homepages.inf.ed.ac.uk/s0968997
+Andrew G	Barber	1992		PhD	Gordon Plotkin, Phillipa Gardner					
+M	Barnett									
+Simon	Bartels	2011?	2011	Associate Members						http://www.inf.ed.ac.uk/people/staff/Simon_Bartels.html
+Andrew	Bates	2004	2004	Staff						
+Ingo	Battenfeld	2005	2007?	PhD	Alexander Simpson, Gordon Plotkin					
+Robert	Beattie	2004?	2005	PG						
+Marek	Bednarczyk	1986		PhD						
+Nicholas 	Behr	2015		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Nicolas_Behr.html
+Gianluigi 	Bellin	1990		PG?		Mechanizing Proof Theory: Resource-Aware Logics and Proof-Transformations to extract implicit information (1990)				
+Anne	Benoit	2006	2006	Staff						
+Lennart	Beringer	2004?	2005	Staff	Colin Stirling					
+David 	Berry	1986		PhD	Robin Milner	Generating Program Animators from Programming Language Semantics (1991)		Head of Development Services, Applications Division, University of Edinburgh		
+Bernard	Berthomieu									
+Yves	Bertot									
+Inge-Marie 	Bethke	1989		Staff	Lecturer					
+Michel	Bidoit									
+Robbie 	Bishop	1986	Yes (no longer in 87-88 report)	Staff	Part-Time Programmer					
+Andrew	Black	2011	2011	Staff						
+Veselin	Blagoev	2016		PG	Mary Cryan, Kousha Etessami			LFCS		https://www.inf.ed.ac.uk/people/students/Veselin_Blagoev.html
+Jo 	Blishen	1987		PhD	Kevin Mitchell, David Walker	?		High School Maths Teacher		
+Phillip	Bohannon	2006	2006	Staff						
+Michele	Boreale									
+Luca	Bortolussi	2014	now	Honorary Members						http://www.dmi.units.it/~bortolu/index.html
+Rajendra	Bose	2006	2007?	Staff						
+Juliana	Bowles	2007	2007?	Honorary Members						
+Julian 	Bradfield	1987		Staff	Colin Stirling, Gordon Plotkin	Verifying Temporal Properties of Systems with Applications to Petri Nets (1991)		LFCS		http://www.inf.ed.ac.uk/people/staff/Julian_Bradfield.html
+Loreto	Bravo	2007	2007?	Staff						
+James	Brotherston	2004?	2006	PhD	Alex Simpson, Alan Smaill, Alberto Momigliano					
+Carolyn 	Brown	1987		PhD	Stuart Anderson	Linear Logic and Petri Nets: Categories, Algebra and Proof (1991)				CIO Durham University search site: dur.ac.uk
+Simon 	Brown	1986		PG (PhD?)	Eric McKenzie, Robin Milner					
+Vaclav	Brozek	2011?	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Vaclav_Brozek.html
+Glen R	Bruns	1990		PhD	Colin Stirling					
+Russ	Bubley									
+Dominik	Bucher	2013	2013	PG						
+Alan	Bundy	2004?	now	Staff						http://www.inf.ed.ac.uk/people/staff/Alan_Bundy.html
+Peter 	Buneman	2004?		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Peter_Buneman.html
+Olaf	Burkart									
+Rod	Burstall		2005	Associate Members						
+Rod 	Burstall	1986		Staff	Professor of Computer Science					
+Luca	Cacchiani	2007	2007?	Visitor						
+Brian 	Campbell	2003	2008	PhD	Don Sannella, David Aspinall	Type-based Amortized Stack Memory Prediction		LFCS		http://www.inf.ed.ac.uk/people/staff/Brian_Campbell.html
+Brian 	Campbell	2008		Staff				LFCS		
+Catherine	Canevet	2004	2004	Staff						
+Yang	Cao	2015	now	Staff	Wenfei Fan, Leonid Libkin			LFCS		http://www.inf.ed.ac.uk/people/students/Yang_Cao.html
+Daniela Vasconcelos	Carbogim	1998		PhD	David Robertson, John Lee					
+Ilaria 	Castellani	1986	1988	PhD	Matthew Hennessy	Bisimulations for Concurrency (1988)		moved to Sussex with Matthew Hennessy before LFCS started?		
+Matteo 	Cavaliere	2015		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Matteo_Cavaliere.html
+Carlo 	Cecci	1986	Yes (no longer in 87-88 report)	PG						
+Pietro	Cenciarelli									
+Chiranjit	Chakraborty	2011?	2012	PG						http://www.inf.ed.ac.uk/people/students/Chiranjit_Chakraborty.html
+Arthur	Chan	2016	now	PG	David Aspinall, James Cheney					https://www.inf.ed.ac.uk/people/students/Sheung_chi_Chan.html
+Adriane	Chapman	2004	2004	Staff						
+Andreas	Chatzistergiou	2015		PG	Vijay Nargarajan, Stratis Viglas			LFCS		http://www.inf.ed.ac.uk/people/students/Andreas_Chatzistergiou.html
+Aziem	Chawdhary	2011?	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Aziem_Chawdhary.html
+Chee Yong	Chee	2006	2006	Visitor						
+Liang	Chen			PhD	John Power, Stewart Anderson	Timed Processes: Models, Axioms and Decidability (1993)				
+Ruiwen	Chen	2015	now	Staff						http://www.inf.ed.ac.uk/people/staff/Ruiwen_Chen.html
+Wei 	Chen	2014		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Wei_Chen.html
+Yin	Chen	2005	2005	PG						
+James 	Cheney	2005		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/James_Cheney.html
+Paul	Chisholm	1987		PhD	Stuart Anderson					
+Byron	Choi	2004?	2007?	Staff						
+Søren	Christensen	1989				Decidability and Decomposition in Process Algebras (1993)				
+Gabriel 	Ciobanu	1991	1992	Visitor						
+Radu	Ciobanu	2015		PG	Kusha Etessami, Richard Mayr			LFCS		http://www.inf.ed.ac.uk/people/students/Radu_Ciobanu.html
+Federica	Ciocchetta	2007	2007?	Staff						
+Cristina 	Civilli	2016		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Cristina_Civili.html
+Allan	Clark	2004?		Staff	Stephen Gilmore					
+Graham	Clark	1996	2000	PhD	Jane Hillston	Techniques for the Construction and Analysis of Algebraic Performance Models (2000)		Works in industry in the US now, but I have lost touch so I don't know the details		
+George 	Cleland	1986		Staff	Assistant Director					
+Lorenzo	Clemente	2011?	2012	PG						http://www.inf.ed.ac.uk/people/students/Lorenzo_Clemente.html
+Murray 	Cole	1986	Yes (no longer in 87-88 report)	PG						
+Gao	Cong	2005	2007?	Staff						
+Robert 	Constable	1990	1991	Visitor						
+Jonathan J	Cook		2005	PhD	Stephen Gilmore			Deceased.		
+Ezra	Cooper	2006	2007?	PG						
+Patrick John	Creed	2006		PhD	Mary Cryan					
+Mary 	Cryan			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Mary_Cryan.html
+Luciana	D'Adderio	2004	2004	Staff						
+Fabio 	da Silva	1988	1992	PhD	Kevin Mitchell, Don Sannella	Correctness proofs of compilers and debuggers : an approach based on structural operational semantics (1992)		Federal Univ. of Pernambuco		http://www.cin.ufpe.br/~fabio/Fabio_Silvas_Website/About_Me.html
+Fredrik	Dahlqvist	2014	now	Staff						http://www.inf.ed.ac.uk/people/staff/Fredrik_Dahlqvist.html
+Mads 	Dam	1986		PhD	Colin Stirling, Gordon Plotkin	Relevance Logic and Concurrent Composition (1990)				
+Vincent 	Danos	2011?		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Vincent_Danos.html
+Bruce 	Davie	1986		PG (PhD?)	G. Milne (U. of Strathclyde), D. Rees					
+Margaret	Davis	2004?	2007?	Staff						
+Carla	Delgado	2006	2006	Visitor						
+Ting	Deng	2015	2015	Staff						
+Ewen	Denney		2014	Honorary Members						http://www.inf.ed.ac.uk/people/staff/Ewen_Denney.html
+Ewen	Denney			PhD	Gordon Plotkin, John Power					
+Razvan	Diaconescu									
+Ilias	Diakonikolas	2012	now	Staff						http://www.inf.ed.ac.uk/people/staff/Ilias_Diakonikolas.html
+Jie	Ding	2007	2010	PhD	Jane Hillston	Structural and Fluid Analysis for Large Scale PEPA Models - With Applications to Content Adaptation Systems (2010)		Works as an assistant professor at the University of Yangzhou		
+Luis	Dominguez	1994	2001	PhD	Don Sannella, Stuart Anderson	left without degree				
+Andrew	Drucker	2015	2015	Staff						http://www.inf.ed.ac.uk/people/staff/Andrew_Drucker.html
+Gilles	Dubochet	2005	2005	Visitor						
+Angus	Duggan									
+Adam	Duguid	2006	2011	PG						http://www.inf.ed.ac.uk/people/students/Adam_Duguid.html
+Vedran	Dunjko	2013	2013	Staff						http://www.inf.ed.ac.uk/people/staff/Vedran_Dunjko.html
+Roy	Dyckhoff	2004	2004	Staff						
+Martin	Dyer									
+Keith	Edwards	2015	now	Commercialisation						https://www.inf.ed.ac.uk/people/staff/Keith_Edwards.html
+Jeff	Egger	2011?	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Jeff_Egger.html
+Martín Hötzel	Escardó									
+Javier	Esparza	2004?	2005	Visitor						
+José	Espírito Santo									
+Kousha 	Etessami	2004?		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Kousha_Etessami.html
+Emanuela	Fachini									
+Matt 	Fairtlough	1990		PhD		Ordinal Complexity of Recursive Programs and their Termination Proofs (1992)				
+Samuel	Falconer	2006	2007?	Staff						
+Wenfei 	Fan	2004?		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Wenfei_Fan.html
+Yrsa Roca	Fannberg	2006	2007?	Staff						
+Jordi 	Farrés-Casals	1986	1992	PhD	Don Sannella, Rod Burstall	Verification in ASL and Related Specification Languages		European Space Agency, Frascati		jordi_farres_casals@yahoo.it
+Jorge	Farrés-Casals					Verification in ASL and related specification languages (1992)				
+Hadi Daneshva	Farzenegan	2015		PG	Stuart Anderson, Robin Williams			LFCS		http://www.inf.ed.ac.uk/people/students/Sayed_Daneshvar_Farzanegan.html
+Sefan	Fehrenbach	2015		PG	Peter Bunemanm, James Cheney			LFCS		http://www.inf.ed.ac.uk/people/students/Stefan_Fehrenbach.html
+Massimo	Felici		2005	PhD	Stuart Anderson			Works at HP Labs in Bristol now		
+Cheng	Feng	2013		PG	Jane Hillston, Gordon Plotkin			LFCS		http://www.inf.ed.ac.uk/people/students/Cheng_Feng.html
+Diego	Figueira	2012	2015	Staff						http://www.inf.ed.ac.uk/people/staff/Diego_Figueira.html
+Morna 	Findlay	1987		Staff	Systems Programmer					
+Simon	Finn									
+Marcelo P	Fiore			PhD	Gordon Plotkin, Barry Jay, John Power			Reader University of Cambridge		
+Fedor	Fomenko	2004?	2006	PG						
+Eirini	Fountoulaki	2006	2007?	Staff						
+Mike 	Fourman	1988		Staff	Professor of Computer Systems			LFCS		http://www.inf.ed.ac.uk/people/staff/Michael_Fourman.html
+Simon 	Fowler	2016		PG	Vijay Nargarajan, Philip Wadler, Sam Lindley			LFCS		https://www.inf.ed.ac.uk/people/students/Simon_Fowler.html
+Nadime 	Francis	2016		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Nadime_Francis.html
+Daniel	Franzen	2015		PG	David Aspinall, Ian Stark			LFCS		http://www.inf.ed.ac.uk/people/students/Daniel_Franzen.html
+James	Frew	2006	2006	Visitor						
+Alan	Frieze									
+Sibylle	Froeschle	1998	2003	PhD	Julian Bradfield, Jane Hillston	Decidability and Coincidence of Equivalences for Concurrency (2003)				
+Sibylle	Froeschle	2004?	2004	Staff						
+Weili	Fu	2015		PG	Paul Anderson, James Cheney			LFCS		http://www.inf.ed.ac.uk/people/students/Weili_Fu.html
+Carsten	Führmann			PhD	Stuart Anderson, John Power					
+Grigori	Fursin	2004	2005	Staff						
+Vashti	Galpin	2007	now	Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Vashti_Galpin.html
+Vashti	Galpin			PhD	Julian Bradfield					
+Philippa 	Gardner	1988		PhD	David Walker, Gordon Plotkin	Representing Logics in Type Theory (1992)		Professor at Imperial College		
+Ilias	Garnier	2012	now	Staff						http://www.inf.ed.ac.uk/people/staff/Ilias_Garnier.html
+Floris	Geerts	2005	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Floris_Geerts.html
+Nil	Geisweiller	2006	2006	Staff						
+Anastasios	Georgoulas	2012		PG	Jane Hillston, Guido Sanguinetti			LFCS		http://www.inf.ed.ac.uk/people/students/Anastasios_Georgoulas.html
+Nargess	Ghahremani-Azghandi		2012	PG						http://www.inf.ed.ac.uk/people/students/Nargess_Ghahremani-Azghand.html
+Neil	Ghani	1990	1995	PhD	Barry Jay, Don Sannella, Stefan Kahrs	Adjoint Rewriting		Professor at Strathclyde University		https://personal.cis.strath.ac.uk/neil.ghani/
+Amelie	Gheerbrant	2011?	2013	Staff						http://www.inf.ed.ac.uk/people/staff/Amelie_Gheerbrant.html
+Alexandru	Gheorghiu	2015		PG	Myrto Arapinis, Etham Kashefi			LFCS		http://www.inf.ed.ac.uk/people/students/Alexandru_Gheorghiu.html
+Abhirup	Ghosh	2016		PG	Mahesh Marina, Rik Sarkar			LFCS		https://www.inf.ed.ac.uk/people/students/Abhirup_Ghosh.html
+Stephen 	Gilmore			Staff	Lecturer	Correctedness-Oriented Approaches to Software Development (1991) PhD completed at Queens Univ Belfast, not Edinburgh		LFCS		http://www.inf.ed.ac.uk/people/staff/Stephen_Gilmore.html
+Rob van	Glabbeek		2004	Staff						
+Tomasz 	Gogacz	2016		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Tomasz_Gogacz.html
+Healfdene	Goguen			PhD	Rod Burstall			Works for Google in the US		
+Joseph A	Goguen									
+Leslie Ann 	Goldberg			PhD	Mark Jerrum	Efficient Algorithms for Listing Combinatorial Structures (1992)		Professor at University of Oxford		
+Paul 	Goldberg	1988	1992	PhD	Mark Jerrum	PAC-Learning Geometrical Figures (1992)		Professor at University of Oxford		
+Paul W	Goldberg					PAC-Learning Geometrical Figures (1993)				
+Dyane	Goodchild	2004	2011	Staff						
+Kees 	Goossens	1988		PhD	Stuart Anderson, Kevin Mitchell, Mike Fourman					
+Kees G W	Goossens					Embedding Hardware Description Languages in ProofSystems (1993)				
+Andrew D. 	Gordon	2012		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Andrew_Gordon.html
+Robert	Gordon									
+Vivek	Gore									
+Antonio	Grau	2004?	2005	Staff						
+Timothy	Griffin									
+Jan Frisco	Groote									
+Christian	Gruen	2006	2006	Visitor						
+Paolo 	Guagilardo			Staff				LFCS		
+Maria Luisa	Guerriero		2011	Associate Members						http//www.inf.ed.ac.uk/people/staff/Maria_Luisa_Guerriero.html
+Qianghui	Guo	2011	2011	PG						
+Corin	Gurr		2005	Associate Members						
+Douglas 	Gurr	1987		PhD	Gordon Plotkin	Semantic Frameworks for Complexity (1991)		Is Executive Development Director at Asda and Chairman of the Board of the National Museum of Science and Industry		
+Julian	Gutierrez		2011	PhD	Julian Bradfield, Ian Stark, Colin Stirling					
+Nikolaus	Haenel	2006	2006	PG						
+Val	Haenel		2005	Staff						
+Valentin	Haenel	2004	2007	PG						
+Tatsuya 	Hagino	1986	Yes (no longer in 87-88 report)	PG		A Categorical Programming Language (1987)				
+Joseph 	Hailett			Staff				LFCS		
+Joseph	Hallett	2015	now	PG						http://www.inf.ed.ac.uk/people/students/Joseph_Hallett.html
+Peter	Hancock	1995	2000	PhD	Gordon Plotkin, Don Sannella	Ordinals and Interactive Programs				
+Jo Erskine	Hannay	1996	2001	PhD	Don Sannella, Martin Hofmann	Abstraction Barriers and Refinement in the Polymorphic Lambda Calculus				
+David	Harel	2007	2007?	Visitor						
+James 	Harland	1986	1991	PhD	Don Sannella, Robin Milner	On Heriditary Harrop Formulae as a Basis for Logic Programming (1991)		Associate Professor, RMIT, Melbourne		http://goanna.cs.rmit.edu.au/~jah/
+Bob 	Harper	1986		Staff	Research Fellow/Lecturer					
+Dyane	Harvey	2014	now	Staff						http://www.inf.ed.ac.uk/people/staff/Dyane_Harvey.html
+Masahito	Hasegawa			PhD	Rod Burstall					
+John	Hawkins	2004?	2006	PG						
+Susumu 	Hayashi	1987	1988	Visitor	Gordon Plotkin					
+Jiansen	He	2011?	2014	MPhil	Phil Wadler, Don Sannella	Type-Parameterized Actors and Their Supervision				
+Willem	Heijltjes		2011	PhD	J. Longley, A. Simpson					
+Tobias	Heindel	2014	2014	Staff						http://www.inf.ed.ac.uk/people/staff/Tobias_Heindel.html
+Leslie 	Henderson	1987		PhD	Mark Jerrum, Alistair Sinclair	The Complexity of Enumeration				
+Matthew 	Hennessey	1986	Yes (no longer in 87-88 report)	Staff	Professor of Computer Science, U. of Sussex					
+Claudio	Hermida		1993	PhD	Don Sannella, Stuart Anderson, John Power	Fibrations, Logical Predicates and Indeterminates (1993)				
+Avril	Heron	2011?	now	Staff						http://www.inf.ed.ac.uk/people/staff/Avril_Heron.html
+Chris 	Heunen	2016		Staff	Lecturer			LFCS		http://www.inf.ed.ac.uk/people/staff/Chris_Heunen.html
+Jane 	Hillston			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Jane_Hillston.html
+Yoram	Hirshfeld									
+Kate	Ho	2013	2013	PG						
+Joshua	Hodas									
+Martin	Hofmann	1991	1995	PhD	Don Sannella, Terry Stroup, Gordon Plotkin	Extensional Concepts in Intensional Type Theory		Professor, LMU Munich		https://www.tcs.ifi.lmu.de/people/martin-hofmann
+Martin	Hofmann			Staff	Lecturer			Professor, LMU Munich		https://www.tcs.ifi.lmu.de/people/martin-hofmann
+Ricardo	Honorato	2015		PG	Vincent Danos, Gordon Plotkin			LFCS		http://www.inf.ed.ac.uk/people/students/Ricardo_Honorato.html
+Furio 	Honsell	1986	1988	Staff	Research Fellow					
+Linda	Hope	2014	now	Staff						http://www.inf.ed.ac.uk/people/staff/Linda_Hope.html
+Jincair	Huang		2011	Associate Members						http://cn.linkedin.com/pub/jincai-huang-apple/1b/2b0/17
+Ruizhe	Huang	2015		PG	Wenfei Fan, Leonid Libkin			LFCS		http://www.inf.ed.ac.uk/people/students/Ruizhe_Huang.html
+Lin	Huimin									
+DeLesley	Hutchins	2007		PhD	Philip Wadler					
+Robert	Hutchison	2004?	2006	PG						
+Hans 	Hüttel	1988		PhD	Colin Stirling, David Walker	Decidability, Behavioural Equivalences and Infinite Transition Graphs (1992)		Associate Professor at Aalborg University		
+Martin 	Illsley	1986	Yes (no longer in 87-88 report)	PG						
+Paul 	Jackson	2004?		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Paul_Jackson.html
+Mateja	Jamnik			PhD	Alan Bundy, Ian Green					
+Petr	Jancar									
+Maurice	Jansen		2012	Staff						http://www.inf.ed.ac.uk/people/staff/Maurice_Jansen.html
+Shayan Najd	Javadipour	2015	2016	PG						
+C Barry	Jay									
+Mark 	Jerrum	1986		2	Lecturer					
+Xibei	Jia		2011	PhD	Wenfei Fan					
+Pedro Diaz	Jimenez	2006	2006	Staff						
+Magnus	Johansson	2006	2006	Staff						
+Claire 	Jones	1986		PhD	Gordon Plotkin	Probabilistic Non-Determinism (1990)		Deceased		
+Khush	Joshi	2016	now	Staff						http://www.inf.ed.ac.uk/people/staff/Khushaal_Joshi.html
+Natthapong	Jungteerapanich			PhD	Colin Stirling, Julian Bradfield					
+Mike	Just	2013	now	Honorary Members						http://justmikejust.wordpress.com/
+Saif Ullah	Kahn									
+Stefan 	Kahrs	1991		Staff	Research Fellow			LFCS		
+Roope	Kaivola			PhD	Colin Stirling					
+Kyriakos 	Kalorkoti	1986		Staff	Lecturer			LFCS		http://www.inf.ed.ac.uk/people/staff/Kyriakos_Kalorkoti.html
+Ohad	Kammar	2011?	2012	PG						http://www.inf.ed.ac.uk/people/students/Ohad_Kammar.html
+Kyota	Kanno	2011	2011	Staff						
+Marc 	Kaplan	2016		Staff				LFCS		https://www.inf.ed.ac.uk/people/staff/Marc_Kaplan.html
+Theodoros	Kapourniotis	2015		PG	Rahul Santhanam, Etham Kashefi			LFCS		http://www.inf.ed.ac.uk/people/students/Theodoros_Kapourniotis.html
+Marti	Karvonen	2016		PG	Thomas Leinster, Chris Heunen			LFCS		http://www.inf.ed.ac.uk/people/students/Martti_Karvonen.html
+Elham 	Kashefi	2011?		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Elham_Kashefi.html
+Panagiota	Katsikouli	2015		PG	Mahesh Marina, Rik Sarkar			LFCS		http://www.inf.ed.ac.uk/people/students/Panagiota_Katsikouli.html
+Shin-ya	Katsumata	2000	2005	PhD	Don Sannella, Ian Stark	A Generalisation of Pre-logical Predicates and its Applications		RIMS, Kyoto University		http://www.kurims.kyoto-u.ac.jp/~sinya/index-e.html
+Benedict	Kavanagh	2005		PG	James Cheney, Philip Wadler			LFCS		http://www.inf.ed.ac.uk/people/students/Benedict_Kavanagh.html
+Edmund	Kazmierczak			Staff	Research Fellow					
+Gavin	Keighren		2011	PhD	Ian Stark					
+James	Kelly	2005	2005	PG						
+Anastasios	Kementsietsidis	2005	2007?	Staff						
+Tim	Kempster									
+Eleanor 	Kerse	1986	Yes (no longer in 87-88 report)	Staff	Secretary to Rod Burstall					
+Jussi	Ketonen									
+Roni	Khardon									
+Aggelos 	Kiayias			Staff				LFCS		
+Marco	Kick		2004	PG						
+Yunhyong	Kim	2006	2006	Visitor						
+Yoshiki	Kinoshita									
+Dilsun	Kirli									
+Aggelos	Kiyias	2016	now	Staff						https://www.inf.ed.ac.uk/people/staff/Aggelos_Kiayias.html
+Zeliha D	Kırlı	1998	2002	PhD	Stephen Gilmore, Jane Hillston			Research Fellow at CMU		
+Ben	Kleinman	1996	2000	PG	Don Sannella, Paul Jackson	left without degree		IP Litigation Associate, Kilpatrick Townsend & Stockton LLP		
+Thomas	Kleymann			PhD	Rod Burstall, Paul Jackson					
+Bartek	Klin	2004?	2005	Visitor						
+Bartosz	Klin	2006	2007?	Staff						
+Leila	Kloul	2004?	2004	Staff						
+Andreas 	Knobel	1986		PhD	Gordon Plotkin, Colin Stirling	Constructive -models (1990)				
+Jens	Knoop									
+Konstantin	Knorr	2015	2015	Staff						
+Christoph	Koch	2006	2006	Visitor						
+Ioannis	Koltsidas	2007		PhD	Stratis Viglas, Peter Buneman					
+Ekaterina	Komendantskaya	2006	2006	Staff						
+Michal	Konecny	2004	2004	Staff						
+Laura	Korte	2004?	2005	PhD	Phil Wadler, Don Sannella	switched in 2005 to PhD with Helen Pain(?)				
+Egor	Kostylev	2011?	2014	Staff						http://www.inf.ed.ac.uk/people/staff/Egor_Kostylev.html
+Bernd	Kreig-Bruckner									
+Konstantinos	Krikellas	2007		PhD	Stratis D. Viglas, Marcelo Cintra					
+Juliana	Kuester-Filipe	2004?	2006	Staff						
+Marek	Kwiatkowski	2007	2011	PhD	Ian Stark			Working in the Evolutionary Ecology group of ETH Zürich		
+James David	Laird									
+Martin	Lange			PhD	Colin Stirling					
+Laurent 	Langlois	1986	Yes (no longer in 87-88 report)	PG		Parallel parsing of context-free languages on an array of processors (1988)				
+Kim	Larsen	1986		PhD		Context-Dependent Bisimulation between Processes (1986)				
+Thierry	Le Sergent									
+Katey	Lee	2013	2013	Staff						http://www.inf.ed.ac.uk/people/staff/Katey_Lee.html
+Fiona	Lees	2013	2013	Staff						http://www.inf.ed.ac.uk/people/staff/Fiona_Lees.html
+Karoliina	Lehtinen	2015		PG	Julian Bradfield, Sandra Quickert			LFCS		http://www.inf.ed.ac.uk/people/students/Maria_Lehtinen.html
+Monika 	Lekuse	1990	2011							
+Chris	Lengauer									
+Christian 	Lengauer		1992							
+Marina	Lenisa									
+Leonid 	Libkin	2007		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Leonid_Libkin.html
+Krisjan	Lilva	2015		PG	Paul Jackson, Grant Passmore			LFCS		http://www.inf.ed.ac.uk/people/students/Kristjan_Liiva.html
+Hengshuai	Lin	2015		PG	Stuart Anderson, Brian MkKinstry			LFCS		http://www.inf.ed.ac.uk/people/students/Zhengshuai_Lin.html
+Huimin	Lin	1986	Yes (no longer in 87-88 report)	Staff	Research Fellow					
+Sam	Lindley			PhD	Ian Stark, Stephen Gilmore					
+Sam 	Lindley			Staff				LFCS		https://www.inf.ed.ac.uk/people/staff/Samuel_Lindley.html
+Budi H	Ling 			PhD	Michael Fourman, Stuart Anderson					
+Ralph	Loader									
+John	Longley			PhD	Michael Fourman, Gordon Plotkin					
+John 	Longley			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/John_Longley.html
+Christoph	Lueth	2011?	2014	Honorary Members						http://www.inf.ed.ac.uk/people/staff/Christoph_Luth.html
+Jizhou	Luo		2011	Associate Members						http://www.inf.ed.ac.uk/people/staff/Jizhou_Luo.html
+Zhaohui 	Luo	1986		PhD	Rob Burstall, Paul Taylor	An extended calculus of constructions (1990)				
+Christoph	Lüth 	1991	1997	PhD	Donald Sannella, Stefan Kahrs	Categorical Term Rewriting: Monads and Modularity		Professor, Univ Bremen		http://www.informatik.uni-bremen.de/~cxl/
+Lisha	Ma	2005	2006	Staff						
+Shuai	Ma	2006	2011	PhD	Wenfei Fan					
+Tiejun	Ma	2003	2007	PhD	Stuart Anderson, Jane Hillston	Quality of Service of Crash-Recovery Failure Detectors (2007)		Works as a Lecturer at the University of Southampton in the Management School		
+Mark 	MacGillivray	2015		PG	Stuart Anderson, Mark Hartwood			LFCS		http://www.inf.ed.ac.uk/people/students/Mark_MacGillivray.html
+Patricia D L	Machado	1996	2000	PhD	Don Sannella, Stuart Anderson	Testing from Structured Algebraic Specifications: The Oracle Problem				
+Kenneth	MacKenzie	2004?	2014	Staff						http://www.inf.ed.ac.uk/people/staff/Kenneth_MacKenzie.html
+David 	MacQueen	1986	Yes (no longer in 87-88 report)	Staff	Research Fellow					
+Angelika	Mader									
+Savitri	Maharaj			PhD	Stuart Anderson			Senior Lecture at the University of Stirling		
+Arshad 	Mahmood	1988		PhD	Kevin Mitchell, Stuart Anderson					
+Monika	Maidl		2004	Staff						
+Patrick	Maier	2006		Staff						
+Joanne	Mair	2014	2014	Staff						http://www.inf.ed.ac.uk/people/staff/Joanne_Mair.html
+Ranajit	Majumder	2004?	2006	PG						
+Savvas	Makalias	2006		PhD	Stratis Viglas					
+Sebastian 	Maneth	2014		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Sebastian_Maneth.html
+Damian	Markham	2013	now	Honorary Members						http://www.infres.enst.fr/~markham/index.html
+Ursula 	Martin	1991	1991	Visitor						
+Thierry	Martinez	2006	2006	Staff						
+Ian 	Mason	1986		Staff	Research Fellow					
+David C J	Matthews									
+James	Matthews	2005		PhD	Mary Cryan, Mark Jerrum					
+Sarah	Mayne	2015	2015	Staff						http://www.inf.ed.ac.uk/people/staff/Sarah_Mayne.html
+Richard 	Mayr			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Richard_Mayr.html
+Magdalena	Mazurczak	2011?	now	Staff						http://www.inf.ed.ac.uk/people/staff/Magdalena_Mazurczak.html
+Bruce J	McAdam	1998	2001	PhD	Stephen Gilmore, Don Sannella	Repairing Type Errors in Functional Programs				
+Conor	McBride	2013	now	Honorary Members						http://www.cis.strath.ac.uk/cis/staff/index.php?uid=conor
+Conor	McBride			PhD	Rod Burstall					
+David 	McCarty	1986	Yes (no longer in 87-88 report)	Staff	Lecturer					
+Mags	McGinley	2004	2007	Staff						
+Margaret	McGinley	2006	2007?	Staff						
+Sally	McGregor	2011?	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Sally_McGregor.html
+Dorothy 	McKie	1986	Yes (no longer in 87-88 report)	Staff	Secretary to Robin Milner					
+James 	McKinna	1988		PhD	Rob Burstall, Gordon Plotkin	Deliverables: a categorical approach to program development in type theory (1992)		LFCS		http://www.inf.ed.ac.uk/people/staff/James_McKinna.html
+Craig	McLaughlin	2016		PG	Ian Stark			LFCS		https://www.inf.ed.ac.uk/people/students/Craig_McLaughlin.html
+Carrie	McNamee	2012	now	Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Carrie_McNamee.html
+Michael 	Mendler	1988		PhD	Rob Burstall, Mike Fourman	A Modal Logic for Handling Behavioural Constraints in FormalHardware Verification (1993)				
+Matias	Menni			PhD	Alex K Simpson					
+Alex	Mifsud			PhD	Robin Milner					
+Dimitris	Milios	2011?	2012	PG						http://www.inf.ed.ac.uk/people/students/Dimitris_Milios.html
+Dale 	Miller	1990	1991	Visitor						
+Mark	Millington					Theories of translation correctness for concurrentprogramming language (1987)				
+Daniel	Mills	2016		PG	Elham Kashefi, Rik Sarkar			LFCS		https://www.inf.ed.ac.uk/people/students/Daniel_Mills.html
+Robin 	Milner	1986		Staff	Director			Deceased		
+Matteo	Mio		2011	PhD	Alex Simpson					
+John	Mitchell									
+Kevin 	Mitchell	1986		Staff	Lecturer					
+Isi	Mitrani									
+Rasmus	Mogelberg	2004?	2007?	Staff						
+Eugenio 	Moggi	1986	1988	PhD	Gordon Plotkin	The Partial Lambda-Calculus (1988)				
+Eugenio 	Moggi	1988	1991	Staff	Research Fellow			Professor at Genova University		
+Faron	Moller	1986		PhD	Robin Milner	Axioms for Concurrency (1989)		Professor at Swansea University		
+Faron	Moller		2011	Associate Members						
+Michael	Molloy									
+Alberto	Momigliano	2004?	now	Staff						http://www.inf.ed.ac.uk/people/staff/Alberto_Momigliano.html
+Alvaro F	Moreira			PhD	Michael Fourman					
+Tomoyuki	Morimae	2011	2011	Staff						
+Matthew	Morley			PhD	Stuart Anderson					
+Garett 	Morris	1986		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/John_Morris.html
+Heiko	Mueller	2007	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Heiko_Mueller.html
+Philip 	Mulry	1991	1992	Visitor						
+Elaine	Murphy	2011?	2011	PG						http://www.inf.ed.ac.uk/people/students/Elaine_Murphy.html
+Luka 	Music			Staff				LFCS		
+Fabian	Nagel	2015	2015	PG						http://www.inf.ed.ac.uk/people/students/Fabian_Nagel.html
+Shayan	Najd	2015		PG	Philip Wadler, Sam Lindley			LFCS		http://www.inf.ed.ac.uk/people/students/Shayan_Najd_Javadipour.html
+Vladimir	Nikishkin	2015		PG	Ilias Diakonikolas, Rahul Santhanam			LFCS		http://www.inf.ed.ac.uk/people/students/Vladimir_Nikishkin.html
+Uchenna	Nnabuko	2016		PG	Stuart Anderson			LFCS		http://www.inf.ed.ac.uk/people/students/Uchenna_Nnabuko.html
+Moira 	Norrie	1986	1988	Staff	Lecturer	?? Edinburgh, but not LFCS				
+Adel	Noureddine	2015	2015	Staff						http://www.inf.ed.ac.uk/people/staff/Adel_Noureddine.html
+Peter W	O'Hearn									
+Nicholas	O’Shea	2007	2010	PhD	Stephen Gilmore, Ian Stark			Working for Microsoft Redmond (Seattle)		
+Jan	Obdrzalek	2004?	2006	PG						
+Christian-Emil	Ore									
+Bill	Orrok		2006	Staff						
+Samantha	Osmer	2006	2006	PG						
+Nicholas	Oury	2011?	2013	Associate Members						http://www.inf.ed.ac.uk/people/staff/Nicholas_Oury.html
+Christopher	Owens			PhD	Stephen Gilmore, Stuart Anderson					
+Pawel 	Paczkowski	1986		PhD	Colin Stirling, David Walker	Annotated Transition Systems for Verifying Concurrent Programs (1991)				
+Anna 	Pappa	2015		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Anna_Pappa.html
+David 	Park	1986	Yes (no longer in 87-88 report)	Visitor	Senior Visiting Fellow					
+Joachim 	Parrow	1986	Yes (no longer in 87-88 report)	Staff	Research Fellow					
+Grant Olney	Passmore		2014	PhD	Paul B. Jackson					
+Rick	Paul	2003	2007	PhD	Jane Hillston	Self-organisation in Ant-based Peer-to-peer Systems (2007)				
+Chrystalla	Pavlou	2016		PG	Ilias Diakonikolas, Kousha Etessami			LFCS		https://www.inf.ed.ac.uk/people/students/Chrystalla_Pavlou.html
+Alan	Paxton			PhD	Stuart Anderson					
+Michael	Pedersen	2007	2010	PhD	Gordon Plotkin			EPSRC Post-doctoral Fellowship, Cambridge University		
+Eloina	Pelaez			PhD	Stuart Anderson					
+Joanne	Pennie	2012	2013	Staff						http://www.inf.ed.ac.uk/people/staff/Joanne_Pennie.html
+Roly 	Perera	2014		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Roland_Perera.html
+Suzanne	Perry	2013	2013	Staff						
+Fabian	Peternek	2015		PG	Peter Buneman, Sebastian Maneth			LFCS		http://www.inf.ed.ac.uk/people/students/Fabian_Peternek.html
+Marius	Petria	2005	2010	PhD	Don Sannella, Phil Wadler	Generic Refinements for Behavioral Specifications		Adobe, Bucharest		mariuspyah@yahoo.com
+Wesley 	Phoa	1991				Domain Theory in Realizability Toposes (1991)				
+Benjamin 	Pierce	1992								
+Paul	Piho	2016		PG	Jane Hillston, Alan Smaill			LFCS		https://www.inf.ed.ac.uk/people/students/Paul_Piho.html
+Einar	Pius	2015	now	Associate Members						http://www.ph.ed.ac.uk/people/einar-pius
+Gordon 	Plotkin	1986		Staff	Professor of Computer Science			LFCS		http://www.inf.ed.ac.uk/people/staff/Gordon_Plotkin.html
+Randy 	Pollack	1987		PhD	Rod Burstall, Ian Mason	Machine-Checked Mathematics		Working as a Resarch Fellow at Harvard		
+Alireza	Pourranjbar	2010	2015	PG	Jane Hillston, Vashti Galpin	Performance Analysis of Large-Scale Ressource-Bound Computer Systems (2015)				http://www.inf.ed.ac.uk/people/students/Alireza_Pourranjbar.html
+John	Power	2004?	2014	Staff						http://www.inf.ed.ac.uk/people/staff/John_Power.html
+K.V.S. 	Prasad	1986	1988	PhD	Robin Milner	Combinators and Bisimulation Proofs for Restartable Systems (1988)				
+Matija	Pretnar	2006		PhD	Gordon Plotkin, John Power					
+Paul	Pritchard									
+Matthew	Prowse	2004?	2005	Staff						
+David 	Pym	1986		PhD	Gordon Plotkin, Furio Honsell	Proofs, Search and Computation in General Logic (1991)		Professor at University of Aberdeen		
+Sandra	Quickert	2005	2012	Staff						http://www.inf.ed.ac.uk/people/staff/Sandra_Quickert.html
+Ajitha 	Rajan	2013		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Ajitha_Rajan.html
+Lars E	Rasmussen									
+Joan 	Ratcliff	1986	Yes (no longer in 87-88 report)	Staff	Secretary to George Cleland					
+M	Read									
+Sarah	Reay	2011?	2011	Staff						http://www.inf.ed.ac.uk/people/staff/Sarah_Reay.html
+Laura	Recalde									
+Louise	Redmonds	2014	2014	Staff						http://www.inf.ed.ac.uk/people/staff/Morag_Redmonds.html
+Horst	Reichel									
+Daniel 	Reijsbergen	2014		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Daniel_Reijsbergen.html
+Juan	Reutter	2011?	2012	PG						
+John	Reynolds									
+Wilmer	Ricciotti	2016	now	Staff						http://www.inf.ed.ac.uk/people/staff/Wilmer_Ricciotti.html
+Laura	Rich	2015	2015	Staff						http://www.inf.ed.ac.uk/people/staff/Laura_Rich.html
+David	Richardson	2011?	2014	Commercialisation						http://www.inf.ed.ac.uk/people/staff/David_Richardson.html
+Thomas	Ridge		2006	PhD	Paul Jackson					
+Brian	Ritchie					The Design and Implementation of an Interactive ProofEditor (1988)				
+Brian 	Ritchie	1986	1988	PhD	Rod Burstall	The Design and Implementation of an Interactive Proof Editor (1988)				
+Dave	Robertson	2004?	now	Associate Members						
+Robert	Robinson									
+Isabel C.	Rojas	1993	1997	PhD	Jane Hillston	Compositional Construction and Analysis of Petri net systems (1997)		Deceased.		
+Nick 	Rothwell	1986		Staff	Research Fellow	The Generation of Concurrent Code for Declarative Languages (1987)				
+Claudio	Russo	1992	1998	PhD	Don Sannella, Kevin Mitchell, Healfdene Goguen	Types for Modules		Microsoft Research, Cambridge		research.microsoft.com/en-us/um/people/crusso/
+David	Rydeheard									
+Morteza Kheirkhah	Sabetghadam	2016		Staff				LFCS		https://www.inf.ed.ac.uk/people/staff/Morteza_Kheirkhah_Sabetghadam.html
+Andras	Salamon	2011?	2014	Staff						http://www.inf.ed.ac.uk/people/staff/Andras_Salamon.html
+Davide	Sangiorgi			PhD	Robin Milner	Expressing Mobility in Process Algebras: First-Order and Higher-Order Paradigms (1993)		Professor at Bologna University		
+Guido	Sanguinetti	2013	now	Associate Members						http://www.inf.ed.ac.uk/people/staff/Guido_Sanguinetti.html
+Don 	Sannella	1986		Staff	Lecturer			LFCS		http://www.inf.ed.ac.uk/people/staff/Donald_Sannella.html
+Rahul	Santhanam	2011?	now	Staff						http://www.inf.ed.ac.uk/people/staff/Rahul_Santhanam.html
+Rik 	Sarkar	2013		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Rik_Sarkar.html
+Andreas 	Schettini									
+Pascal	Schmitt	2015	2015	PG						http://www.inf.ed.ac.uk/people/students/Pascal_Schmitt.html
+Matthias	Schoeder	2006	2006	Staff						
+Ulrich	Schoepp	2004?	2006	PG						
+Oliver	Schoett					Data Abstraction and the Correctness of ModularProgramming (1986)				
+Peter 	Schofield	1986	Yes (no longer in 87-88 report)	Staff	Senior Lecturer, Head of Department					
+Marc	Scholl	2006	2006	Visitor						
+Jirina	Scholtzova	2015	2015	Staff						
+Ulrich	Schöpp			PhD	Ian Stark					
+Peter	Schrammel	2015	2016	Staff						
+Matthias	Schroeder	2004?	2005	Staff						
+Claus	Schroeter	2004?	2004	Visitor						
+Philip 	Scott	1991	1992	Visitor						
+Mohamed	Seghir	2015	2015	Staff						
+Nassim 	Seghir	2014		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Mohamed_Seghir.html
+Dilip	Sequeira									
+Jaroslav	Sevcik	2006		PhD	David Aspinall					
+Peter	Sewel			PhD	Robin Milner			Reader in the Computer Laboratory at Cambridge University		
+Peter Michael	Sewell									
+Subodh	Sharma	2015	2016	Staff						
+Daniel	Sheridan		2006	PhD	Paul Jackson					
+Alex	Simpson	2006	2014	Staff						
+Alex	Simpson			PhD	G Plotkin					
+Alistair 	Sinclair	1986	Yes (no longer in 87-88 report)	PhD	Mark Jerrum			Professor at Berkeley		
+Cristina	Sirangelo	2007	2007?	Staff						
+Alan 	Smaill	1989		Staff	Lecturer					http://www.inf.ed.ac.uk/people/staff/Alan_Smaill.html
+Michael James Andrew	Smith	2006		PhD	Jane Hillston, Ian Stark	Stochastic Abstraction of programs: towards performance driven developpment (2010)		Works for Adobe in San Francisco after two years as postdoc at DTU in Denmark		
+Andrew	Sogokon	2015		PG	Paul Jackson, Jacques Fleuriot			LFCS		http://www.inf.ed.ac.uk/people/students/Andrew_Sogokon.html
+Stefan	Sokolowski									
+Jung-bae	Son		2005	PG						
+Gregory 	Sorkin	1991		PG	Mark Jerrum, Alistair Sinclair					
+Joseph	Spadavecchia	2006	2011	PG						http://www.inf.ed.ac.uk/people/students/Joseph_Spadavecchia.html
+Hugh 	Stabler	1986	Yes (no longer in 87-88 report)	Staff	Computing Officer					
+Ian 	Stark			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Ian_Stark.html
+Slawek 	Staworko	2015		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Slawomir_Staworko.html
+Paul	Steckler									
+Mark	Steedman		now	Associate Members						http://www.inf.ed.ac.uk/people/staff/Mark_Steedman.html
+Bernhard 	Steffen	1987		Staff	Research Fellow					
+Martin	Steffen									
+Marco	Stenico	2007		PG						
+Perdita 	Stevens			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Perdita_Stevens.html
+Alistair	Stewart	2012	now	Staff						http://www.inf.ed.ac.uk/people/staff/Alistair_Stewart.html
+Colin 	Stirling	1986		Staff	Lecturer			LFCS		http://www.inf.ed.ac.uk/people/staff/Colin_Stirling.html
+Allen	Stoughton	1986		PhD	Gordon Plotkin					
+Panos	Stratis	2016		PG	David Aspinall, Ajitha Rajan			LFCS		https://www.inf.ed.ac.uk/people/students/Panagiotis_Stratis.html
+Jitka	Stríbrná			PhD	Mark Jerrum					
+Terry 	Stroup	1991								
+James	Sweet	2016	2016	Staff						
+Marcin	Syzmczak	2015		PG	David Aspinall, Andrew D. Gordon			LFCS		http://www.inf.ed.ac.uk/people/students/Marcin_Szymczak.html
+Deian	Tabakov	2004	2004	Staff						
+Makoto	Takeyama			PhD	Rod Burstall, John Power					
+Tony	Tan	2011?	2012	Staff						http://www.inf.ed.ac.uk/people/staff/Tony_Tan.html
+Miki	Tanaka		2005	PhD	Gordon Plotkin, John Power					
+Nan	Tang	2011	2011	Staff						
+Andrzej	Tarlecki			Staff	Research Fellow			Professor, Univ Warsaw		http://www.mimuw.edu.pl/~tarlecki/
+Mark 	Tarver	1988		Staff	Research Fellow					
+Eugenio 	Taylor	1986	Yes (no longer in 87-88 report)	Staff	Research Fellow					
+George	Taylor									
+Paul	Taylor									
+Bob 	Tennent	1992	1993							
+Jennifer	Tenzer		2006	PhD	Perdita Stevens			Works as a management consultant for Deutche Bank (I think -- check with Perdita)		
+Guillaume 	Terradot			Staff				LFCS		
+Peter	Thanisch									
+Hayo	Thielecke 			PhD	Stuart Anderson, John Power	Categorical Structure of Continuation Passing Style		Lecturer in Birmingham (England)		
+Nigel	Thomas									
+Chao	Tian	2015		PG	Wenfei Fan, Leonid Libkin			LFCS		http://www.inf.ed.ac.uk/people/students/Chao_Tian.html
+Anthony Widjaja	To	2007		PhD	Leonid Libkin, Richard Mayr					
+Mads	Tofte					Operational Semantics and Polymorphic Type Inference (1988)				
+Mads 	Tofte	1986	1988	PhD	Robin Milner	Operational Semantics and Polymorphic Type Inference (1988)				
+Mads 	Tofte	1988		Staff	Research Fellow			President, IT University of Copenhagen		
+Chris 	Tofts	1986		PhD	Robin Milner	Proof Methods and Pragmatics for Parallel Programming (1991)				
+Rodney	Topor	2005	2005	Staff						
+Patrick 	Totzke			Staff				LFCS		http://www.inf.ed.ac.uk/people/students/Patrick_Totzke.html
+Konstantinos	Tourlas	1996	2001	PhD	Stuart Anderson, Don Sannella	Diagrammatic Representations in Domain-Specific Languages		Deceased.		
+Mirco	Tribastone	2006	2010	PhD	Stephen Gilmore, Perdita Stevens			Assistant Professor at LMU, Munich		
+Daniele	Turi			PhD	Gordon Plotkin					
+David	Turner 			PhD	Robert Milner					
+Judith	Underwood			Staff	Research Fellow					
+Kami	Vaniea	2016	2016	Staff						
+Vasilis	Vasaitis	2006	2011	PhD	Stratis Viglas					
+Björn	Victor									
+Stratis 	Viglas		now	Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Stratis_Viglas.html
+Ludovica Luisia	Vissat	2014		PG	Jane Hillston, Glenn Marion			LFCS		https://www.inf.ed.ac.uk/people/students/Ludovica_Luisa_Vissat.html
+Domagoj	Vrgoc		2012	PG						http://www.inf.ed.ac.uk/people/students/Domagoj_Vrgoc.html
+Marije	Vugts	2007	2007?	Staff						
+Philip 	Wadler			Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Philip_Wadler.html
+William 	Waites			Staff				LFCS		
+William 	Waites			PG	Murray Cole, Vincent Danos			LFCS		http://www.inf.ed.ac.uk/people/staff/William_Waites.html
+David 	Walker	1986		Staff	Research Fellow + Lecturer from August 1988					
+Petros 	Wallden	2015		Staff				LFCS		http://www.inf.ed.ac.uk/people/staff/Petros_Wallden.html
+Lincoln A	Wallen									
+Christopher D	Walton			PhD	Stephen Gilmore					
+Li-Guo 	Wang	1988		PhD	Mike Fourman, Rob Burstall					
+Xin	Wang	2011?	2012	PG						http://www.inf.ed.ac.uk/people/students/Xin_Wang.html
+Yanghao	Wang	2016	2016	Staff						
+Zi	Wang	2011?	2011	PG						http://www.inf.ed.ac.uk/people/students/Zi_Wang.html
+Andrea 	Weisse	2014		Staff				LFCS		https://www.inf.ed.ac.uk/people/staff/Andrea_Weisse.html
+Ian	Whiteside		2011	PhD				NOT SURE IF HAD VIVA		
+Angus	Whyte	2011	2011	Staff						
+Jack	Williams	2015		PG	Philip Wadler, Sam Lindley			LFCS		http://www.inf.ed.ac.uk/people/students/Jack_Williams.html
+Andrew	Wilson			PhD	Kevin Mitchell					
+John	Wilson-Kanamori	2011?	2015	PG						http://www.inf.ed.ac.uk/people/students/John_Wilson-Kanamori.html
+Dominik	Wojtczak	2006		PhD	Kousha Etessami					
+Nicholas	Wolverson			PhD	John Longley					
+Yinghui	Wu		2011	PhD	Wenfei Fan, Floris Geerts					
+Jingbo	Xu	2015		PG	Wenfei Fan, Leonid Libkin			LFCS		http://www.inf.ed.ac.uk/people/students/Jingbo_Xu.html
+Jingling 	Xue			PhD		The Formal Synthesis of Control Signals (1992)				
+Jeremy	Yallop	2005	2011	PhD	Philip Wadler					
+Vanya	Yaneva	2016		PG	Christophe Dubach, Michael O'Boyle			LFCS		https://www.inf.ed.ac.uk/people/students/Vanya_Yaneva.html
+Guoli	Yang	2015		PG	Vincent Danos, Michael Hermann			LFCS		http://www.inf.ed.ac.uk/people/students/Guoli_Yang.html
+Hua	Yang	2006		PG						
+Chris	Yocum	2011	2011	Staff						
+Sun 	Yong	1986		PhD	Gordon Plotkin	A Framework for Binding Operators (1992)				
+Nobuko	Yoshida									
+Wenyuan	Yu	2011?	2012	PG						http://www.inf.ed.ac.uk/people/students/Wenyuan_Yu.html
+Jakub	Zalewski	2016		PG	Hugh Leather, Philip Wadler			LFCS		https://www.inf.ed.ac.uk/people/staff/Jakub_Zalewski.html
+Natalia	Zon	2015		PG	Stephen Gilmore, Daniel Reijsbergen			LFCS		http://www.inf.ed.ac.uk/people/students/Natalia_Zon.html
