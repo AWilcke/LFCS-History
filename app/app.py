@@ -24,6 +24,23 @@ def results(query):
     results=func.base_search(query)
     return render_template('results.html', results=results, query=query)
 
+
+@app.route('/person/<id>')
+def person(id):
+    return render_template('person_detail.html', person=func.People.query.get(id))
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
+@app.route('/testing', methods=['POST'])
+def testing():
+    first=None
+    if request.method == 'POST':
+        first = request.form.getlist('positions')
+        print first
+        return redirect(url_for('test'))
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

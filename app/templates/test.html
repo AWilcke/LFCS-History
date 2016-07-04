@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+        <div class="control-group">
+            <div class="controls"> 
+                <form class="position-form" role="form" action="{{url_for('testing')}}" method="POST">
+                    <h2>Positions</h2>
+                    <div class="entry input-group">
+                        <div class="col-xs-3">
+                            <input class="form-control" name="positions" type='text'/>
+                        </div>
+                        <div class="col-xs-3">
+                            <input class="form-control" name="start" type="int"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <input class="form-control" name="end" type="int"/>
+                        </div>
+                        <div class="col-xs-3">
+                        <span class="input-group-btn">
+                            <button class="btn btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                        </div>  
+                    </div>
+                    <button class="btn btn-default sub" type="submit">
+                        <span class="glyphicon glyphicon-save-file"/>
+                    </button>
+                </form>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

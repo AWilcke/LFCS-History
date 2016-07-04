@@ -2,15 +2,6 @@ html, body {
   height: 100%;
 }
 
-.form-control {
-  text-align: center;
-  border-radius:30px;
-}
-
-input {
-  border-radius:30px
-}
-
 h1 {
   font-family: 'Open Sans', sans-serif;
   margin-top: 30px;

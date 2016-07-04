@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 id="name">{{person.name}}</h1>
+    <h3 id="dates">{{person.start}}-{{person.end}}</h3>
+
+    {% if person.staff %}
+    <div id="staff" class="col-xs-12">
+    <h2>Staff</h2>
+        <div class="col-xs-6">
+            <p><b>Positions</b></p>
+            {% for position in person.staff.position %}
+            <p id="staff_pos">{{position.position}} ({{position.start}}-{{position.end}})</p>
+            {% endfor %}
+        </div>
+        <div class="col-xs-6">
+            <p><b>Students</b></p>
+            {% for student in person.staff.students %}
+            <a href="/person/{{student.person.id}}" id="student">{{student.person.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if person.phd %}
+    <div id="phd" class="col-xs-12">
+        <h2>PhD</h2>
+        <p>Thesis: {{person.phd.thesis}}</p>
+        <p>Supervisors:
+            {% for supervisor in person.phd.supervisor %}
+            <a href='/person/{{supervisor.person.id}}' id="supervisor">{{supervisor.person.name}} </a>
+            {% endfor %}
+        </p>
+    </div>
+    {% endif %}
+
+    {% if person.associate %}
+    <div id="assoc" class="col-xs-12">
+        <h2>Associate</h2>
+            {% for position in person.associate.position %}
+            <p id="assoc_pos">{{position.position}} ({{position.start}}-{{position.end}})</p>
+            {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock %}
