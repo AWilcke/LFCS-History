@@ -2,16 +2,19 @@
     <td id="name"><a href="/person/{{result.id}}">{{result.name}}</a></td>
         <td id="positions">
                 {% for pos in result.staff.position %}
-                    <p>{{pos.position}} ({{pos.start}}-{{pos.end}})</p>
+                    <p>{{pos.position}}</p>
                 {% endfor %}
                 
                 {% for pos in result.associate.position %}
-                    <p>{{pos.position}} ({{pos.start}}-{{pos.end}})</p>
+                    <p>{{pos.position}}</p>
                 {% endfor %}
         </td>
         <td id="category">
                 {% if result.staff %}
                 <p>Staff</p>
+                {% endif %}
+                {% if result.postdoc %}
+                <p>PostDoc</p>
                 {% endif %}
                 {% if result.phd %}
                 <p>PhD</p>
@@ -21,6 +24,8 @@
                 {% endif %}
         </td>
         <td id="dates">
-                <p>{{result.start}}-{{result.end}}</p>
+            {% for date in result.dates %}
+            <p>{{date.start}}-{{date.end}}</p>
+            {% endfor %}
         </td>
 </tr>

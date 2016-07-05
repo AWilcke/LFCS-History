@@ -6,11 +6,18 @@ from sqlalchemy_utils.types import TSVectorType
 make_searchable()
 
 #phd supervisor table
-supervising_table = db.Table('relationship_table',
+supervising_table = db.Table('supervising_table',
     db.Column('staff', db.Integer, db.ForeignKey('staff.id')),
     db.Column('phd', db.Integer, db.ForeignKey('phd.id')),
     extend_existing=True
 )   
+
+#postdoc investigator table
+postdoc_table = db.Table('postdoc_table',
+    db.Column('staff', db.Integer, db.ForeignKey('staff.id')),
+    db.Column('postdocs', db.Integer, db.ForeignKey('postdocs.id')),
+    extend_existing=True
+)
 
 #class for easy searching
 class QueryClass(BaseQuery, SearchQueryMixin):
@@ -20,12 +27,15 @@ class Staff(db.Model):
     __tablename__ = 'staff'
     id = db.Column(db.Integer, primary_key=True)
 
-    students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
-    
     position = db.relationship('Positions', back_populates='staff')
-    
-    person = db.relationship('People', back_populates='staff', uselist=False)
+    dates = db.relationship('Dates', back_populates='staff')
 
+    students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
+    postdocs = db.relationship('PostDoc', back_populates='primary_investigator')
+    postdocs_secondary = db.relationship('PostDoc', back_populates='investigators', secondary=postdoc_table)
+
+    person = db.relationship('People', back_populates='staff', uselist=False)
+    
     def __repr__(self):
         return self.person.name
 
@@ -35,6 +45,7 @@ class PhD(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     thesis = db.Column(db.String())
+    dates = db.relationship('Dates', back_populates='phd')
 
     supervisor = db.relationship('Staff', back_populates='students', secondary=supervising_table) 
     person = db.relationship('People', back_populates='phd', uselist=False)
@@ -55,20 +66,37 @@ class Associates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     
     position=db.relationship('Positions', back_populates='associate')
+    dates = db.relationship('Dates', back_populates='associate')
 
     person=db.relationship('People',back_populates='associate',uselist=False)
 
     def __repr__(self):
         return self.person.name
 
+class PostDoc(db.Model):
+    __tablename__='postdocs'
+    id = db.Column(db.Integer, primary_key=True)
+
+    dates = db.relationship('Dates', back_populates='postdoc')
+
+    primary_investigator_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
+    primary_investigator=db.relationship('Staff', back_populates='postdocs')
+
+    investigators=db.relationship('Staff', back_populates='postdocs_secondary', secondary=postdoc_table)
+
+    person=db.relationship('People', back_populates='postdoc')
+
+    def __repr__(self):
+        return self.person.name
+
+#table to define positions for staff and assoc
 class Positions(db.Model):
     query_class = QueryClass
     __tablename__='positions'
     id=db.Column(db.Integer, primary_key=True)
    
     position = db.Column(db.String())
-    start = db.Column(db.Integer)
-    end = db.Column(db.Integer)
+    dates = db.relationship('Dates', back_populates='position')
 
     #link to the person
     staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
@@ -81,13 +109,49 @@ class Positions(db.Model):
         'position',
         weights={'position':'B'}))
 
-    def __init__(self, position, start=None, end=None):
+    def __init__(self, position):
         self.position=position
-        self.start=start
-        self.end=end
     
     def __repr__(self):
-        return self.position + '(' + str(self.start) + '-' + str(self.end) + ')'
+
+        dates=[]
+        for pair in self.dates:
+            dates.append('(' + str(pair.start) + '-' + str(pair.end) + ')')
+        return self.position + ' ' + ' and '.join(dates)
+
+#table for pairs of start-end dates
+class Dates(db.Model):
+    __tablename__='dates'
+    id=db.Column(db.Integer, primary_key=True)
+
+    start=db.Column(db.Integer)
+    end=db.Column(db.Integer)
+    
+    #person link
+    person_id=db.Column(db.Integer, db.ForeignKey('people.id'))
+    person=db.relationship('People', back_populates='dates')
+
+    staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
+    staff=db.relationship('Staff',back_populates='dates')
+
+    phd_id=db.Column(db.Integer, db.ForeignKey('phd.id'))
+    phd=db.relationship('PhD',back_populates='dates')
+
+    associate_id=db.Column(db.Integer, db.ForeignKey('associates.id'))
+    associate=db.relationship('Associates', back_populates='dates')
+
+    postdoc_id=db.Column(db.Integer, db.ForeignKey('postdocs.id'))
+    postdoc=db.relationship('PostDoc', back_populates='dates')
+    
+    position_id=db.Column(db.Integer, db.ForeignKey('positions.id'))
+    position=db.relationship('Positions', back_populates='dates')
+
+    def __init__(self, start, end):
+        self.start=start
+        self.end=end
+
+    def __repr__(self):
+        return str(self.start) + '-' + str(self.end)
 
 #table of unique people
 class People(db.Model):
@@ -98,19 +162,22 @@ class People(db.Model):
     name = db.Column(db.String())
     url = db.Column(db.String())
     location = db.Column(db.String())
-    start = db.Column(db.Integer)
-    end = db.Column(db.Integer)
+    dates = db.relationship('Dates', back_populates='person')
+    
     #number of positions (1-3)
     size=db.Column(db.Integer)
-
+    
     staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
-    staff=db.relationship('Staff',back_populates='person')
+    staff=db.relationship('Staff', back_populates='person')
 
     phd_id=db.Column(db.Integer, db.ForeignKey('phd.id'))
     phd=db.relationship('PhD',back_populates='person')
 
     associate_id=db.Column(db.Integer, db.ForeignKey('associates.id'))
     associate=db.relationship('Associates', back_populates='person')
+
+    postdoc_id=db.Column(db.Integer, db.ForeignKey('postdocs.id'))
+    postdoc=db.relationship('PostDoc', back_populates='person')
 
     search_vector=db.Column(TSVectorType(
         'name',

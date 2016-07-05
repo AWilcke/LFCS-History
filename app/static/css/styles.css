@@ -8,7 +8,7 @@ h1 {
   margin-bottom: 70px;
 }
 
-.search {
+#searchbar {
   margin-top: 30px;
   margin-bottom: 30px;
   text-align: center;
@@ -20,4 +20,3 @@ h1 {
   background-color:#ededed;
   overflow:hidden;
 }
-
