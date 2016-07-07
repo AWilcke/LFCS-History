@@ -181,3 +181,22 @@ def base_search(query):
             results[s.person]=rank
 
     return sorted(results, key=results.get, reverse=True)
+
+def update_info(id, name, url, location, starts, ends):
+    person = People.query.get(id)
+    person.name = name
+    person.url = url
+    person.location = location
+    person.dates = []    
+    for (start, end) in zip(starts, ends):
+        try:
+            start = int(start)
+        except:
+            start=None
+        try:
+            end = int(end)
+        except:
+            end=None
+        person.dates.append(Dates(start, end))
+
+    db.session.commit()

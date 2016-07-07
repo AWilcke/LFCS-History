@@ -2,7 +2,7 @@
 {% block content %}
 <div class='container'>
     <div>
-        <form id="info" role="form" action="{{url_for('updatetest')}}" method="POST">
+        <form id="info" role="form" action="{{url_for('updatesend', num=person.id)}}" method="POST">
             <div id="name" class="form-group col-xs-12">
                 <label>Name</label>
                 <input class="form-control" name="name" type="text" value="{{person.name}}"/>
@@ -21,7 +21,7 @@
             </div>
             <div id="location" class="form-group col-xs-12">
                 <label>Location</label>
-                <input class="form-control" name="locaton" type="text" value="{{person.location}}"/>
+                <input class="form-control" name="location" type="text" value="{{person.location}}"/>
             </div>
             {% if person.staff %}
             {% include 'forms/staff_form.html' %}
@@ -35,13 +35,21 @@
             {% if person.associate %}
             {% include 'forms/associate_form.html' %}
             {% endif %}
-            
-            <div class="col-xs-11"></div>
-            <span class="input-group-btn col-xs-1">
-                <button class="btn btn-default" type="submit">
+            <div class="col-xs-10"></div>
+            <div class="col-xs-1">
+            <span class="input-group-btn col-xs-2" style="margin-top: 30px; float: right">
+                <a href="{{url_for('update', id=person.id)}}" class="btn btn-default btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </span>
+            </div>
+            <div class="col-xs-1">
+            <span class="input-group-btn col-xs-2" style="margin-top: 30px">
+                <button class="btn btn-default btn-success" type="submit">
                     <i class="glyphicon glyphicon-ok"></i>
                 </button>
             </span>
+            </div>
         </form>
     </div>
 </div>

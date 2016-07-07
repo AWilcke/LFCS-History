@@ -29,21 +29,21 @@ def results(query):
 def person(id):
     return render_template('people/person_detail.html', person=func.People.query.get(id))
 
-@app.route('/update/<query>', methods=['GET'])
-def update(query):
-    person = func.base_search(query)[0]
+@app.route('/update/<id>', methods=['GET'])
+def update(id):
+    person = func.People.query.get(id)
     return render_template('forms/person_form.html', person=person)
 
-@app.route('/updatetest', methods=['POST'])
-def updatetest():
-    name=None
+@app.route('/updatesend/<num>', methods=['POST','GET'])
+def updatesend(num):
     if request.method == 'POST':
-        name = request.form.getlist('staff_position')
-        for i in range(0, len(name)):
-            start = request.form.getlist('staff_' + str(i) + '_start')
-            end = request.form.getlist('staff_' + str(i) + '_end')
-            print name[i], start, end
-        return redirect(url_for('update'))
+        name = request.form['name']
+        url = request.form['url']
+        location = request.form['location']
+        starts = request.form.getlist('info_start')
+        ends = request.form.getlist('info_end')
+        func.update_info(num, name, url, location, starts, ends)
+        return redirect(url_for('update', id=19))
 
 
 @app.route('/test')
