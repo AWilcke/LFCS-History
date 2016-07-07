@@ -1,16 +1,15 @@
 <div id="{{type}}-positions" class="form-group entry">
     <div class="col-xs-6">
-        <input class="form-control" name="{{type}}_position" value="{{position.position}}"/>
+        <input class="form-control" name="{{type}}_position"/>
     </div>
-    
+
     <div class="position-date-form">
-        {% for date in position.dates %}
         <div class="date-entry">
             <div class="col-xs-2">
-                <input class="form-control datestart" name="{{type}}_{{num}}_start" value="{{date.start}}"/>
+                <input class="form-control datestart" name="{{type}}_0_start"/>
             </div>
             <div class="col-xs-2">
-                <input class="form-control dateend" name="{{type}}_{{num}}_end" value="{{date.end}}"/>
+                <input class="form-control dateend" name="{{type}}_0_end"/>
             </div>
             <div class="col-xs-1">
                 <span class="input-group-btn">
@@ -20,7 +19,6 @@
                 </span>
             </div>
         </div>
-        {% endfor %}
     </div>
     <div class="col-xs-1">
         <span class="input-group-btn">

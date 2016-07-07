@@ -1,0 +1,13 @@
+<h2 class="col-xs-12">PostDoc</h2>
+<div class="form-group">
+    <label class="col-xs-12">Dates</label>
+    {% with type="postdoc" %}
+    <div class="dynamic-form">
+        {% for date in person.postdoc.dates %}
+        {% include 'forms/dates.html' %}
+        {% else %}
+        {% include 'forms/default_date.html' %}
+        {% endfor %}
+    </div>
+</div>
+{% endwith %}

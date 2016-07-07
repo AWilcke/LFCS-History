@@ -29,9 +29,9 @@ def results(query):
 def person(id):
     return render_template('people/person_detail.html', person=func.People.query.get(id))
 
-@app.route('/update', methods=['GET'])
-def update():
-    person = func.base_search("David Aspinall")[0]
+@app.route('/update/<query>', methods=['GET'])
+def update(query):
+    person = func.base_search(query)[0]
     return render_template('forms/person_form.html', person=person)
 
 @app.route('/updatetest', methods=['POST'])
@@ -40,8 +40,8 @@ def updatetest():
     if request.method == 'POST':
         name = request.form.getlist('staff_position')
         for i in range(0, len(name)):
-            start = request.form.getlist(str(i) + '_start')
-            end = request.form.getlist(str(i) + '_end')
+            start = request.form.getlist('staff_' + str(i) + '_start')
+            end = request.form.getlist('staff_' + str(i) + '_end')
             print name[i], start, end
         return redirect(url_for('update'))
 

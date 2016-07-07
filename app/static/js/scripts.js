@@ -36,11 +36,15 @@ $(function()
         newEntry.find('input').val('');
         
         //change name of date form, to link up with relevant position
-        var oldName = newEntry.find('.date-entry input').attr('name'),
-            newName = (parseInt(oldName.split('_')[0], 10) + 1).toString();
+        var oldName = newEntry.find('.date-entry input').attr('name');
 
-        newEntry.find('.date-entry .datestart').attr('name',newName.concat('_start'));
-        newEntry.find('.date-entry .dateend').attr('name',newName.concat('_end'));
+        if(oldName){
+            var newNum = (parseInt(oldName.split('_')[1], 10) + 1).toString(),
+                type = oldName.split('_')[0];
+
+            newEntry.find('.date-entry .datestart').attr('name', type.concat('_').concat(newNum.concat('_start')));
+            newEntry.find('.date-entry .dateend').attr('name', type.concat('_').concat(newNum.concat('_end')));
+        }
 
         //so that the cloning only picks up one date-entry
         if(newEntry.find('.date-entry').length>1){
@@ -61,9 +65,11 @@ $(function()
                 
                 //update date indexes
                 var dateForm = $('.position-date-form');
+                
                 for(i=0;i<dateForm.length;i++){
-                    dateForm.eq(i).find('.datestart').attr('name',i.toString().concat('_start'));
-                    dateForm.eq(i).find('.dateend').attr('name',i.toString().concat('_end'));
+                    var type = dateForm.eq(i).find('.form-control').eq(0).attr('name').split('_')[0];
+                    dateForm.eq(i).find('.datestart').attr('name',type.concat('_').concat(i.toString().concat('_start')));
+                    dateForm.eq(i).find('.dateend').attr('name',type.concat('_').concat(i.toString().concat('_end')));
                 }
 
                 e.preventDefault();
@@ -91,7 +97,8 @@ $(function()
             newEntry = $(current.clone()).insertAfter(current);
             
         newEntry.find('input').val('');
-        
+
+        //insert blank to preserve formatting        
         var elem=document.createElement('div');
         elem.id='blank';
         elem.className='col-xs-6';

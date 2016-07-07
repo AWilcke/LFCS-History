@@ -1,9 +1,9 @@
-<h2 class="col-xs-12">Staff</h2>
+<h2 class="col-xs-12">Associate</h2>
 <div class="form-group">
     <label class="col-xs-12">Dates</label>
-    {% with type="staff" %}
+    {% with type="associate" %}
     <div class="dynamic-form">
-        {% for date in person.staff.dates %}
+        {% for date in person.associate.dates %}
         {% include 'forms/dates.html' %}
         {% else %}
         {% include 'forms/default_date.html' %}
@@ -14,7 +14,7 @@
     <label class="col-xs-12">Positions</label>
     <div class="dynamic-form">
         {% with num = 0 %}
-        {% for position in person.staff.position %}
+        {% for position in person.associate.position %}
         {% include 'forms/positions.html' %}
         {% set num = num + 1 %}
         {% else %}

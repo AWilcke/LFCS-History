@@ -1,0 +1,17 @@
+<h2 class="col-xs-12">PhD</h2>
+<div class="form-group">
+    <label class="col-xs-12">Dates</label>
+    {% with type="phd" %}
+    <div class="dynamic-form">
+        {% for date in person.phd.dates %}
+        {% include 'forms/dates.html' %}
+        {% else %}
+        {% include 'forms/default_dates.html' %}
+        {% endfor %}
+    </div>
+</div>
+<div class="form-group col-xs-12" id="thesis">
+    <label>Thesis</label>
+    <input class="form-control" name="thesis" type"text" value="{{person.phd.thesis}}"</input>
+</div> 
+{% endwith %}
