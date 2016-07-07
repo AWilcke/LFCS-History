@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 id="name">{{person.name}}</h1>
+    {% for date in person.dates %}
+        <h3 id="dates">{{date.start}}-{{date.end}}</h3>
+    {% endfor %}
+
+    {% if person.staff %}
+        {% include 'people/staff.html' %}
+    {% endif %}
+
+    {% if person.postdoc %}
+        {% include 'people/postdoc.html' %}
+    {% endif %}
+
+    {% if person.phd %}
+        {% include 'people/phd.html' %}
+    {% endif %}
+
+    {% if person.associate %}
+        {% include 'people/associate.html' %}
+    {% endif %}
+
+{% endblock %}

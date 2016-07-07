@@ -1,14 +1,6 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-    <h1 id="name">{{person.name}}</h1>
-    {% for date in person.dates %}
-        <h3 id="dates">{{date.start}}-{{date.end}}</h3>
-    {% endfor %}
-
-    {% if person.staff %}
     <div id="staff" class="col-xs-12">
     <h2>Staff</h2>
+    </div>
         <div class="col-xs-4">
             <p><b>Positions</b></p>
             {% for position in person.staff.position %}
@@ -36,32 +28,3 @@
                     <p><a href="/person/{{student.person.id}}" id="student">{{student.person.name}}</a><p>
                 {% endfor %}
         </div>
-    </div>
-    {% endif %}
-
-    {% if person.phd %}
-    <div id="phd" class="col-xs-12">
-        <h2>PhD</h2>
-        <p>Thesis: {{person.phd.thesis}}</p>
-        <p>Supervisors:
-            {% for supervisor in person.phd.supervisor %}
-            <a href='/person/{{supervisor.person.id}}' id="supervisor">{{supervisor.person.name}} </a>
-            {% endfor %}
-        </p>
-    </div>
-    {% endif %}
-
-    {% if person.associate %}
-    <div id="assoc" class="col-xs-12">
-        <h2>Associate</h2>
-            {% for position in person.associate.position %}
-                <p id="assoc_pos">{{position.position}}
-                    {% for date in position.dates %}
-                        ({{date.start}}-{{date.end}})
-                    {% endfor %}
-                </p>
-            {% endfor %}
-    </div>
-    {% endif %}
-
-{% endblock %}

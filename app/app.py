@@ -19,7 +19,7 @@ def search():
         search = request.form['search']
         return redirect(url_for('results', query=search))
 
-@app.route('/results/<query>', methods=['GET'])
+@app.route('/results/<query>')
 def results(query):
     results=func.base_search(query)
     return render_template('results.html', results=results, query=query)
@@ -27,19 +27,29 @@ def results(query):
 
 @app.route('/person/<id>')
 def person(id):
-    return render_template('person_detail.html', person=func.People.query.get(id))
+    return render_template('people/person_detail.html', person=func.People.query.get(id))
+
+@app.route('/update', methods=['GET'])
+def update():
+    person = func.base_search("David Aspinall")[0]
+    return render_template('forms/person_form.html', person=person)
+
+@app.route('/updatetest', methods=['POST'])
+def updatetest():
+    name=None
+    if request.method == 'POST':
+        name = request.form.getlist('staff_position')
+        for i in range(0, len(name)):
+            start = request.form.getlist(str(i) + '_start')
+            end = request.form.getlist(str(i) + '_end')
+            print name[i], start, end
+        return redirect(url_for('update'))
+
 
 @app.route('/test')
 def test():
-    return render_template('test.html')
-
-@app.route('/testing', methods=['POST'])
-def testing():
-    first=None
-    if request.method == 'POST':
-        first = request.form.getlist('positions')
-        print first
-        return redirect(url_for('test'))
+    person = func.base_search("David Aspinall")[0]
+    return render_template('test.html', person=person)
 
 if __name__ == '__main__':
     app.debug = True

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='container'>
+    <div>
+        <form id="info" role="form" action="{{url_for('updatetest')}}" method="POST">
+            <div id="name" class="form-group col-xs-12">
+                <label>Name</label>
+                <input class="form-control" name="name" type="text" value="{{person.name}}"/>
+            </div>
+            <label class="col-xs-12">Dates</label>
+            <div class="dynamic-form">
+                {% with type="info" %}
+                {% for date in person.dates %}
+                {% include 'forms/dates.html' %}
+                {% endfor %}
+                {% endwith %}
+            </div>
+            <div id="url" class="form-group col-xs-12">
+                <label>Website</label>
+                <input class="form-control" name="url" type="text" value="{{person.url}}"/>
+            </div>
+            <div id="location" class="form-group col-xs-12">
+                <label>Location</label>
+                <input class="form-control" name="locaton" type="text" value="{{person.location}}"/>
+            </div>
+            {% if person.staff %}
+            {% include 'forms/staff_form.html' %}
+            {% endif %}
+            {#
+            {% if person.phd %}
+            {% include 'forms/phd_form.html' %}
+            {% endif %}
+            {% if person.postdoc %}
+            {% include 'forms/postdoc_form.html' %}
+            {% endif %}
+            {% if person.associate %}
+            {% include 'forms/associate_form.html' %}
+            {% endif %}
+            #}
+            <div class="col-xs-11"></div>
+            <span class="input-group-btn col-xs-1">
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-ok"></i>
+                </button>
+            </span>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

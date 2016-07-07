@@ -1,0 +1,32 @@
+<div id="{{type}}-positions" class="form-group entry">
+    <div class="col-xs-6">
+        <input class="form-control" name="{{type}}_position" value="{{position.position}}"/>
+    </div>
+    
+    <div class="position-date-form">
+        {% for date in position.dates %}
+        <div class="date-entry">
+            <div class="col-xs-2">
+                <input class="form-control datestart" name="{{num}}_start" value="{{date.start}}"/>
+            </div>
+            <div class="col-xs-2">
+                <input class="form-control dateend" name="{{num}}_end" value="{{date.end}}"/>
+            </div>
+            <div class="col-xs-1">
+                <span class="input-group-btn">
+                    <button class="btn date-add" type="button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-xs-1">
+        <span class="input-group-btn">
+            <button class="btn btn-add" type="button">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </span>
+    </div>
+</div>

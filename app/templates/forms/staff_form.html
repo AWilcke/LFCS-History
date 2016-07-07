@@ -1,0 +1,21 @@
+<h2>Staff</h2>
+<div id="staff_pos" class="form-group entry">
+    <label class="col-xs-12">Dates</label>
+    {% with type="staff" %}
+    <div class="dynamic-form">
+        {% for date in person.staff.dates %}
+        {% include 'forms/dates.html' %}
+        {% endfor %}
+    </div>
+
+    <label class="col-xs-12">Positions</label>
+    <div class="dynamic-form">
+        {% with num = 0 %}
+        {% for position in person.staff.position %}
+        {% include 'forms/positions.html' %}
+        {% set num = num + 1 %}
+        {% endfor %}
+        {% endwith %}
+    </div>
+    {% endwith%}
+</div>
