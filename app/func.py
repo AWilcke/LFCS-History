@@ -199,4 +199,94 @@ def update_info(id, name, url, location, starts, ends):
             end=None
         person.dates.append(Dates(start, end))
 
-    db.session.commit()
+def update_staff(id, positions, pos_starts, pos_ends, starts, ends):
+    person = People.query.get(id).staff
+    person.position = []
+    for i in range(0, len(positions)):
+        newPos = Positions(positions[i])
+        for (start, end) in zip(pos_starts[i], pos_ends[i]):
+            try:
+                start = int(start)
+            except:
+                start=None
+            try:
+                end = int(end)
+            except:
+                end=None
+            newPos.dates.append(Dates(start, end))
+        person.position.append(newPos)
+    
+    person.dates=[]
+    for (start, end) in zip(starts, ends):
+        try:
+            start = int(start)
+        except:
+            start=None
+        try:
+            end = int(end)
+        except:
+            end=None
+        person.dates.append(Dates(start, end))
+
+def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
+    person = People.query.get(id).associate
+    person.position = []
+    for i in range(0, len(positions)):
+        newPos = Positions(positions[i])
+        for (start, end) in zip(pos_starts[i], pos_ends[i]):
+            try:
+                start = int(start)
+            except:
+                start=None
+            try:
+                end = int(end)
+            except:
+                end=None
+            newPos.dates.append(Dates(start, end))
+        person.position.append(newPos)
+    
+    person.dates=[]
+    for (start, end) in zip(starts, ends):
+        try:
+            start = int(start)
+        except:
+            start=None
+        try:
+            end = int(end)
+        except:
+            end=None
+        person.dates.append(Dates(start, end))
+
+
+def update_phd(id, thesis, starts, ends):
+    person = People.query.get(id).phd
+    
+    person.dates = []
+    for (start, end) in zip(starts, ends):
+        try:
+            start = int(start)
+        except:
+            start=None
+        try:
+            end = int(end)
+        except:
+            end=None
+        person.dates.append(Dates(start, end))
+    
+    person.thesis = thesis
+
+def update_postdoc(id, starts, ends):
+    person = People.query.get(id).postdoc
+    
+    person.dates = []
+    for (start, end) in zip(starts, ends):
+        try:
+            start = int(start)
+        except:
+            start=None
+        try:
+            end = int(end)
+        except:
+            end=None
+        person.dates.append(Dates(start, end))
+

@@ -28,7 +28,7 @@ $(function()
     {
         e.preventDefault();
 
-        var controlForm = $('.dynamic-form'),
+        var controlForm = $(this).parents('.dynamic-form:first'),
             currentEntry = $(this).parents('.entry:first'),
             newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
         
@@ -79,8 +79,16 @@ $(function()
 
 //first load
 $(document).ready(function(){
-    $('.position-date-form').find('.date-entry:not(:last) .btn-add')
-        .removeClass('btn-add').addClass('btn-remove')
+    //preserve formatting
+    var elem=document.createElement('div');
+    elem.id='blank';
+    elem.className='col-xs-6';
+
+    $('.position-date-form').find('.date-entry:not(:first)')
+        .prepend(elem);
+    //get relevant buttons
+    $('.position-date-form').find('.date-entry:not(:last) .date-add')
+        .removeClass('date-add').addClass('date-remove')
         .html('<i class="glyphicon glyphicon-remove"></i>');
 });
 
@@ -91,19 +99,21 @@ $(function()
     .on('click', '.date-add', function(e)
     {
         e.preventDefault();
-
+        //clone first entry
         var form = $(this).parents('.position-date-form:first'),
-            current = form.find('.date-entry:first'),
+            current = $(this).parents('.date-entry:first'),
             newEntry = $(current.clone()).insertAfter(current);
-            
         newEntry.find('input').val('');
 
-        //insert blank to preserve formatting        
-        var elem=document.createElement('div');
-        elem.id='blank';
-        elem.className='col-xs-6';
-        $(newEntry).prepend(elem);
-
+        //insert blank to preserve formatting
+        if(newEntry.find('#blank').length == 0){        
+            var elem=document.createElement('div');
+            elem.id='blank';
+            elem.className='col-xs-6';
+            $(newEntry).prepend(elem);
+        }
+        
+        //get relevant buttons
         form.find('.date-entry:not(:last) .date-add')
             .removeClass('date-add').addClass('date-remove')
             .html('<i class="glyphicon glyphicon-remove"></i>');

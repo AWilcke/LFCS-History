@@ -37,13 +37,57 @@ def update(id):
 @app.route('/updatesend/<num>', methods=['POST','GET'])
 def updatesend(num):
     if request.method == 'POST':
+        #basic info
         name = request.form['name']
         url = request.form['url']
         location = request.form['location']
         starts = request.form.getlist('info_start')
         ends = request.form.getlist('info_end')
         func.update_info(num, name, url, location, starts, ends)
-        return redirect(url_for('update', id=19))
+
+        #staff
+        starts = request.form.getlist('staff_start')
+        if starts:
+            ends = request.form.getlist('staff_end')
+            position_names = request.form.getlist('staff_position')
+            pos_starts = []
+            pos_ends = []
+            for i in range(0, len(position_names)):
+                pos_starts.append(request.form.getlist('staff_' + str(i) + '_start'))
+                pos_ends.append(request.form.getlist('staff_' + str(i) + '_end'))
+
+            func.update_staff(num, position_names, pos_starts, pos_ends, starts, ends)
+
+        #phd
+        starts = request.form.getlist('phd_start')
+        if starts:
+            ends = request.form.getlist('phd_end')
+            thesis = request.form['thesis']
+            
+            func.update_phd(num, thesis, starts, ends)
+
+
+        #postdoc
+        starts = request.form.getlist('postdoc_start')
+        if starts:
+            ends = request.form.getlist('postdoc_end')
+            func.update_postdoc(num, starts, ends)
+
+        #associates
+        starts = request.form.getlist('associate_start')
+        if starts:
+            ends = request.form.getlist('associate_end')
+            position_names = request.form.getlist('associate_position')
+            pos_starts = []
+            pos_ends = []
+            for i in range(0, len(position_names)):
+                pos_starts.append(request.form.getlist('associate_' + str(i) + '_start'))
+                pos_ends.append(request.form.getlist('associate_' + str(i) + '_end'))
+
+            func.update_associate(num, position_names, pos_starts, pos_ends, starts, ends)
+
+        func.db.session.commit()
+        return redirect(url_for('update', id=num))
 
 
 @app.route('/test')
