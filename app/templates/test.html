@@ -1,8 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container dynamic-form">
-    {% for position in person.staff.position %}
-    {% include 'forms/positions.html' %}
-    {% endfor %}
+<div class="dynamic-form">
+    <div class="entry">
+        <div class="col-xs-6">
+            <select name="test" style="width: 100%">
+                <option></option>
+                {% for person in people %}
+                <option value="{{person.id}}">{{person.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class='col-xs-1'>
+            <span class="input-group-btn">
+                <button class="btn btn-add" type="button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </span>
+        </div>
+    </div>
 </div>
 {% endblock %}

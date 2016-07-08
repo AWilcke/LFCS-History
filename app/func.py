@@ -199,7 +199,7 @@ def update_info(id, name, url, location, starts, ends):
             end=None
         person.dates.append(Dates(start, end))
 
-def update_staff(id, positions, pos_starts, pos_ends, starts, ends):
+def update_staff(id, positions, pos_starts, pos_ends, starts, ends, students):
     person = People.query.get(id).staff
     person.position = []
     for i in range(0, len(positions)):
@@ -227,6 +227,11 @@ def update_staff(id, positions, pos_starts, pos_ends, starts, ends):
         except:
             end=None
         person.dates.append(Dates(start, end))
+
+    person.students=[]
+    for id in students:
+        if id:
+            person.students.append(People.query.get(id).phd)
 
 def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
     person = People.query.get(id).associate

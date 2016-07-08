@@ -32,7 +32,8 @@ def person(id):
 @app.route('/update/<id>', methods=['GET'])
 def update(id):
     person = func.People.query.get(id)
-    return render_template('forms/person_form.html', person=person)
+    students = [student.person for student in func.PhD.query.all()]
+    return render_template('forms/person_form.html', person=person, students=students)
 
 @app.route('/updatesend/<num>', methods=['POST','GET'])
 def updatesend(num):
@@ -55,8 +56,9 @@ def updatesend(num):
             for i in range(0, len(position_names)):
                 pos_starts.append(request.form.getlist('staff_' + str(i) + '_start'))
                 pos_ends.append(request.form.getlist('staff_' + str(i) + '_end'))
-
-            func.update_staff(num, position_names, pos_starts, pos_ends, starts, ends)
+            students = request.form.getlist('staff_link')
+            
+            func.update_staff(num, position_names, pos_starts, pos_ends, starts, ends, students)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -92,8 +94,15 @@ def updatesend(num):
 
 @app.route('/test')
 def test():
-    person = func.base_search("David Aspinall")[0]
-    return render_template('test.html', person=person)
+    phd = func.PhD.query.all()
+    students = [student.person for student in phd]
+    return render_template('test.html', people=students)
+
+@app.route('/testsend', methods=['POST'])
+def testsend():
+    data = request.form.getlist('test')
+    print data
+    return redirect(url_for('test'))
 
 if __name__ == '__main__':
     app.debug = True

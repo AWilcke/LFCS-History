@@ -1,3 +1,9 @@
+//Select2
+$(document).ready(function() {
+      $("select").select2();
+});
+
+
 //DataTables ini
 $(document).ready(function() {
   $('#results').dataTable({
@@ -29,12 +35,22 @@ $(function()
         e.preventDefault();
 
         var controlForm = $(this).parents('.dynamic-form:first'),
-            currentEntry = $(this).parents('.entry:first'),
-            newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
+            currentEntry = $(this).parents('.entry:first');
+        
+        //Select2 special case
+        if(currentEntry.find('select').length!=0){
+            currentEntry.find('select').select2('destroy');
+            var newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
+            $('select').select2();
+        }
+        else{
+            var newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
+        }
         
         //clear value
+        //need to add way to clear value of linking form
         newEntry.find('input').val('');
-        
+
         //change name of date form, to link up with relevant position
         var oldName = newEntry.find('.date-entry input').attr('name');
 

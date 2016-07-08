@@ -23,4 +23,17 @@
         {% endwith %}
     </div>
 </div>
+<div class="form-group">
+    <label class="col-xs-12">Students</label>
+    <div class="dynamic-form">
+        {% with people = students %}
+        {% for student in person.staff.students %}
+        {% include 'forms/link_form.html' %}
+        {% else %}
+        {% include 'forms/default_link.html' %}
+        {% endfor %}
+        {% endwith %}
+    </div>
+</div>
+
 {% endwith%}
