@@ -26,14 +26,43 @@
 <div class="form-group">
     <label class="col-xs-12">Students</label>
     <div class="dynamic-form">
+        {% with linkname = 'staff_phd' %}
         {% with people = students %}
-        {% for student in person.staff.students %}
+        {% for link_person in person.staff.students %}
         {% include 'forms/link_form.html' %}
         {% else %}
         {% include 'forms/default_link.html' %}
         {% endfor %}
         {% endwith %}
+        {% endwith %}
     </div>
 </div>
-
+<div class="form-group">
+    <label class="col-xs-12">PostDocs (Primary Investigator)</label>
+    <div class="dynamic-form">
+        {% with linkname = 'staff_primary' %}
+        {% with people = postdocs %}
+        {% for link_person in person.staff.postdocs %}
+        {% include 'forms/link_form.html' %}
+        {% else %}
+        {% include 'forms/default_link.html' %}
+        {% endfor %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-xs-12">PostDocs (Secondary Investigator)</label>
+    <div class="dynamic-form">
+        {% with linkname = 'staff_secondary' %}
+        {% with people = postdocs %}
+        {% for link_person in person.staff.postdocs_secondary %}
+        {% include 'forms/link_form.html' %}
+        {% else %}
+        {% include 'forms/default_link.html' %}
+        {% endfor %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+</div>
 {% endwith%}

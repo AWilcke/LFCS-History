@@ -33,7 +33,9 @@ def person(id):
 def update(id):
     person = func.People.query.get(id)
     students = [student.person for student in func.PhD.query.all()]
-    return render_template('forms/person_form.html', person=person, students=students)
+    staff = [staff.person for staff in func.Staff.query.all()]
+    postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
+    return render_template('forms/person_form.html', person=person, students=students, staff=staff, postdocs=postdocs)
 
 @app.route('/updatesend/<num>', methods=['POST','GET'])
 def updatesend(num):
@@ -56,24 +58,27 @@ def updatesend(num):
             for i in range(0, len(position_names)):
                 pos_starts.append(request.form.getlist('staff_' + str(i) + '_start'))
                 pos_ends.append(request.form.getlist('staff_' + str(i) + '_end'))
-            students = request.form.getlist('staff_link')
-            
-            func.update_staff(num, position_names, pos_starts, pos_ends, starts, ends, students)
+            students = request.form.getlist('staff_phd_link')
+            primary = request.form.getlist('staff_primary_link')
+            secondary = request.form.getlist('staff_secondary_link')
+            func.update_staff(num, position_names, pos_starts, pos_ends, starts, ends, students, primary, secondary)
 
         #phd
         starts = request.form.getlist('phd_start')
         if starts:
             ends = request.form.getlist('phd_end')
             thesis = request.form['thesis']
-            
-            func.update_phd(num, thesis, starts, ends)
+            supervisors = request.form.getlist('phd_staff_link')
+            func.update_phd(num, thesis, starts, ends, supervisors)
 
 
         #postdoc
         starts = request.form.getlist('postdoc_start')
         if starts:
             ends = request.form.getlist('postdoc_end')
-            func.update_postdoc(num, starts, ends)
+            primary = request.form['postdoc_primary']
+            secondary = request.form.getlist('postdoc_secondary_link')
+            func.update_postdoc(num, starts, ends, primary, secondary)
 
         #associates
         starts = request.form.getlist('associate_start')
@@ -94,9 +99,8 @@ def updatesend(num):
 
 @app.route('/test')
 def test():
-    phd = func.PhD.query.all()
-    students = [student.person for student in phd]
-    return render_template('test.html', people=students)
+    person = func.base_search('sannella')[0]
+    return render_template('test.html', person=person)
 
 @app.route('/testsend', methods=['POST'])
 def testsend():

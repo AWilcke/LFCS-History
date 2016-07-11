@@ -40,7 +40,15 @@ $(function()
         //Select2 special case
         if(currentEntry.find('select').length!=0){
             currentEntry.find('select').select2('destroy');
-            var newEntry = $(currentEntry.clone()).insertAfter(currentEntry);
+
+            var newEntry = $(currentEntry.clone()),
+                firstNew = newEntry.find('option:first')[0];
+           //clear first
+           if(firstNew.value != ''){
+                firstNew.remove();
+            }
+
+            newEntry.insertAfter(currentEntry);
             $('select').select2();
         }
         else{

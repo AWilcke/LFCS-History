@@ -13,5 +13,19 @@
 <div class="form-group col-xs-12" id="thesis">
     <label>Thesis</label>
     <input class="form-control" name="thesis" type"text" value="{{person.phd.thesis}}"</input>
-</div> 
+</div>
+<div class="form-group">
+    <label class="col-xs-12">Supervisors</label>
+    <div class="dynamic-form">
+        {% with linkname = 'phd_staff' %}
+        {% with people = staff %}
+        {% for link_person in person.phd.supervisor %}
+        {% include 'forms/link_form.html' %}
+        {% else %}
+        {% include 'forms/default_link.html' %}
+        {% endfor %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+</div>
 {% endwith %}

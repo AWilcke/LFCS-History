@@ -21,6 +21,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
                         p.dates.append(Dates(m.group(2), m.group(3)))
                     else:
                         p = Positions(role)
+                        p.dates.append(Dates(None, None))
                     person.staff.position.append(p)
 
             if dates:
@@ -102,6 +103,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
                         p.dates.append(Dates(m.group(2), m.group(3)))
                     else:
                         p = Positions(role)
+                        p.dates.append(Dates(None, None))
                     person.associate.position.append(p)
             
             if dates:
@@ -199,7 +201,7 @@ def update_info(id, name, url, location, starts, ends):
             end=None
         person.dates.append(Dates(start, end))
 
-def update_staff(id, positions, pos_starts, pos_ends, starts, ends, students):
+def update_staff(id, positions, pos_starts, pos_ends, starts, ends, students, primary, secondary):
     person = People.query.get(id).staff
     person.position = []
     for i in range(0, len(positions)):
@@ -233,6 +235,17 @@ def update_staff(id, positions, pos_starts, pos_ends, starts, ends, students):
         if id:
             person.students.append(People.query.get(id).phd)
 
+    person.postdocs = []
+    for id in primary:
+        if id:
+            person.postdocs.append(People.query.get(id).postdoc)
+
+    person.postdocs_secondary = []
+    for id in secondary:
+        if id:
+            person.postdocs_secondary.append(People.query.get(id).postdoc)
+
+
 def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
     person = People.query.get(id).associate
     person.position = []
@@ -263,7 +276,7 @@ def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
         person.dates.append(Dates(start, end))
 
 
-def update_phd(id, thesis, starts, ends):
+def update_phd(id, thesis, starts, ends, supervisors):
     person = People.query.get(id).phd
     
     person.dates = []
@@ -277,10 +290,15 @@ def update_phd(id, thesis, starts, ends):
         except:
             end=None
         person.dates.append(Dates(start, end))
+   
+    person.supervisor = []
+    for id in supervisors:
+        if id:
+            person.supervisor.append(People.query.get(id).staff)
     
     person.thesis = thesis
 
-def update_postdoc(id, starts, ends):
+def update_postdoc(id, starts, ends, primary, secondary):
     person = People.query.get(id).postdoc
     
     person.dates = []
@@ -294,4 +312,12 @@ def update_postdoc(id, starts, ends):
         except:
             end=None
         person.dates.append(Dates(start, end))
+    if primary:
+        person.primary_investigator = People.query.get(primary).staff
+    else:
+        person.primary_investigator = None
 
+    person.investigators = []
+    for id in secondary:
+        if id:
+            person.investigators.append(People.query.get(id).staff)

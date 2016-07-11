@@ -10,4 +10,32 @@
         {% endfor %}
     </div>
 </div>
+<div class="form-group">
+    <label class="col-xs-12">Primary Investigator</label>
+    <div class="col-xs-6">
+        <select name="postdoc_primary" style="width: 100%">
+            {% if person.postdoc.primary_investigator %}
+            <option value={{person.postdoc.primary_investigator.person.id}}>{{person.postdoc.primary_investigator.person.name}}</option>
+            {% endif %}
+            <option value=''>None</option>
+            {% for person in staff %}
+            <option value={{person.id}}>{{person.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-xs-12">Secondary Investigators</label>
+    <div class="dynamic-form">
+        {% with linkname = 'postdoc_secondary' %}
+        {% with people=staff %}
+        {% for link_person in person.postdoc.investigators %}
+        {% include 'forms/link_form.html' %}
+        {% else %}
+        {% include 'forms/default_link.html' %}
+        {% endfor %}
+        {% endwith %}
+        {% endwith %}
+    </div>
+</div>
 {% endwith %}

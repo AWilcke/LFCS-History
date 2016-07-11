@@ -27,14 +27,15 @@ class Staff(db.Model):
     __tablename__ = 'staff'
     id = db.Column(db.Integer, primary_key=True)
 
-    position = db.relationship('Positions', back_populates='staff')
-    dates = db.relationship('Dates', back_populates='staff')
+    position = db.relationship('Positions', back_populates='staff', cascade='all, delete-orphan')
+    dates = db.relationship('Dates', back_populates='staff', cascade='all, delete-orphan')
 
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     postdocs = db.relationship('PostDoc', back_populates='primary_investigator')
     postdocs_secondary = db.relationship('PostDoc', back_populates='investigators', secondary=postdoc_table)
 
-    person = db.relationship('People', back_populates='staff', uselist=False)
+    person_id = db.Column(Integer, ForeignKey('People'))
+    person = db.relationship('People', back_populates='staff')
     
     def __repr__(self):
         return self.person.name
@@ -45,10 +46,12 @@ class PhD(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     thesis = db.Column(db.String())
-    dates = db.relationship('Dates', back_populates='phd')
+    dates = db.relationship('Dates', back_populates='phd', cascade='all, delete-orphan')
 
     supervisor = db.relationship('Staff', back_populates='students', secondary=supervising_table) 
-    person = db.relationship('People', back_populates='phd', uselist=False)
+    
+    person_id = db.Column(Integer, ForeignKey('People'))
+    person = db.relationship('People', back_populates='phd')
 
     search_vector = db.Column(TSVectorType(
         'thesis',
@@ -65,10 +68,11 @@ class Associates(db.Model):
     __tablename__='associates'
     id = db.Column(db.Integer, primary_key=True)
     
-    position=db.relationship('Positions', back_populates='associate')
-    dates = db.relationship('Dates', back_populates='associate')
+    position=db.relationship('Positions', back_populates='associate', cascade='all, delete-orphan')
+    dates = db.relationship('Dates', back_populates='associate', cascade='all, delete-orphan')
 
-    person=db.relationship('People',back_populates='associate',uselist=False)
+    person_id = db.Column(Integer, ForeignKey('People'))
+    person=db.relationship('People',back_populates='associate')
 
     def __repr__(self):
         return self.person.name
@@ -77,15 +81,16 @@ class PostDoc(db.Model):
     __tablename__='postdocs'
     id = db.Column(db.Integer, primary_key=True)
 
-    dates = db.relationship('Dates', back_populates='postdoc')
+    dates = db.relationship('Dates', back_populates='postdoc', cascade='all, delete-orphan')
 
     primary_investigator_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
     primary_investigator=db.relationship('Staff', back_populates='postdocs')
 
     investigators=db.relationship('Staff', back_populates='postdocs_secondary', secondary=postdoc_table)
 
+    person_id = db.Column(Integer, ForeignKey('People'))
     person=db.relationship('People', back_populates='postdoc')
-
+    
     def __repr__(self):
         return self.person.name
 
@@ -96,7 +101,7 @@ class Positions(db.Model):
     id=db.Column(db.Integer, primary_key=True)
    
     position = db.Column(db.String())
-    dates = db.relationship('Dates', back_populates='position')
+    dates = db.relationship('Dates', back_populates='position', cascade='all, delete-orphan')
 
     #link to the person
     staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
@@ -144,7 +149,7 @@ class Dates(db.Model):
     postdoc=db.relationship('PostDoc', back_populates='dates')
     
     position_id=db.Column(db.Integer, db.ForeignKey('positions.id'))
-    position=db.relationship('Positions', back_populates='dates')
+    position = db.relationship('Positions', back_populates='dates')
 
     def __init__(self, start, end):
         self.start=start
@@ -162,22 +167,18 @@ class People(db.Model):
     name = db.Column(db.String())
     url = db.Column(db.String())
     location = db.Column(db.String())
-    dates = db.relationship('Dates', back_populates='person')
+    dates = db.relationship('Dates', back_populates='person', cascade='all, delete-orphan')
     
     #number of positions (1-3)
     size=db.Column(db.Integer)
     
-    staff_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
-    staff=db.relationship('Staff', back_populates='person')
+    staff=db.relationship('Staff', back_populates='person', uselist=False, cascade='all, delete-orphan')
 
-    phd_id=db.Column(db.Integer, db.ForeignKey('phd.id'))
-    phd=db.relationship('PhD',back_populates='person')
+    phd=db.relationship('PhD',back_populates='person', uselist=False, cascade='all, delete-orphan')
 
-    associate_id=db.Column(db.Integer, db.ForeignKey('associates.id'))
-    associate=db.relationship('Associates', back_populates='person')
+    associate=db.relationship('Associates', back_populates='person', uselist=False, cascade='all, delete-orphan')
 
-    postdoc_id=db.Column(db.Integer, db.ForeignKey('postdocs.id'))
-    postdoc=db.relationship('PostDoc', back_populates='person')
+    postdoc=db.relationship('PostDoc', back_populates='person', uselist=False, cascade='all, delete-orphan')
 
     search_vector=db.Column(TSVectorType(
         'name',
