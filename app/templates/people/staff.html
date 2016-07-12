@@ -5,9 +5,10 @@
 </div>
 <div class="row">
     <div class="col-xs-4">
+        <p><b>Positions</b></p>
         <table class="table table-hover">
             <thead>
-                <th>Position</th>
+                <th>Title</th>
                 <th>Dates</th>
             </thead>
             <tbody>
@@ -24,9 +25,10 @@
         </table>
     </div>
     <div class="col-xs-4">
+        <p><b>Students</b></p>
         <table class="table table-hover">
             <thead>
-                <th>Students</th>
+                <th>PhD</th>
             </thead>
             <tbody>
             {% for student in person.staff.students %}
@@ -48,7 +50,7 @@
             <tbody>
             {% for postdoc in person.staff.postdocs %}
             <tr>
-                <td><a href="/person/{{student.person.id}}" id="student">{{student.person.name}}</a></td>
+                <td><a href="/person/{{postdoc.person.id}}" id="student">{{postdoc.person.name}}</a></td>
             </tr>
             {% endfor %}
             </tbody>
@@ -60,7 +62,7 @@
             <tbody>
             {% for postdoc in person.staff.postdocs_secondary %}
             <tr>
-                <td><a href="/person/{{student.person.id}}" id="student">{{student.person.name}}</a></td>
+                <td><a href="/person/{{postdoc.person.id}}" id="student">{{postdoc.person.name}}</a></td>
             </tr>
             {% endfor %}
             </tbody>

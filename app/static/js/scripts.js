@@ -16,7 +16,6 @@ $(document).ready(function() {
 
 });
 
-
 //dynamic form functions
 
 //on first load, replace all non-needed + with -

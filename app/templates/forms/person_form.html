@@ -1,90 +1,124 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class='container'>
-    <div>
-        <form id="info" role="form" action="{{url_for('updatesend', num=person.id)}}" method="POST">
-            <div id="name" class="form-group col-xs-12">
-                <label>Name</label>
-                <input class="form-control" name="name" type="text" value="{{person.name}}"/>
+    <!-- delete person --> 
+    <div style="padding-top:10px; padding-right:10px">
+        <form id='delete-person' role='form' action='{{url_for("delete_person", id=person.id)}}' method='POST'>
+            <div align="right">
+                <button class='btn btn-lg btn-danger' type='button' data-toggle='modal' data-target='#delete-confirm'>
+                    <i class="glyphicon glyphicon-trash"></i>
+                </button>
             </div>
-            <label class="col-xs-12">Dates</label>
-            <div class="dynamic-form">
-                {% with type="info" %}
-                {% for date in person.dates %}
-                {% include 'forms/dates.html' %}
-                {% endfor %}
-                {% endwith %}
-            </div>
-            <div id="url" class="form-group col-xs-12">
-                <label>Website</label>
-                <input class="form-control" name="url" type="text" value="{{person.url}}"/>
-            </div>
-            <div id="location" class="form-group col-xs-12">
-                <label>Location</label>
-                <input class="form-control" name="location" type="text" value="{{person.location}}"/>
-            </div>
-            {% if person.staff %}
-            {% include 'forms/staff_form.html' %}
-            {% endif %}
-            {% if person.phd %}
-            {% include 'forms/phd_form.html' %}
-            {% endif %}
-            {% if person.postdoc %}
-            {% include 'forms/postdoc_form.html' %}
-            {% endif %}
-            {% if person.associate %}
-            {% include 'forms/associate_form.html' %}
-            {% endif %}
 
-            {% if not(person.staff and person.phd and person.postdoc and person.associate) %}
-            <div class="col-xs-12">
-                <h2>Add Category</h2>
-            </div>
-            <div class="input-group col-xs-12">
-                <div class='col-xs-3'>
-                    <select name='new_category' id='new_cat' style='width:100%'>
-                        <option value=''></option>
-                        {% if not person.staff %}
-                        <option value="staff">Staff</option>
-                        {% endif %}
-                        {% if not person.phd %}
-                        <option value="phd">Phd</option>
-                        {% endif %}
-                        {% if not person.postdoc %}
-                        <option value="postdoc">PostDoc</option>
-                        {% endif %}
-                        {% if not person.associate %}
-                        <option value="associate">Associate</option>
-                        {% endif %}
-                    </select>
-                </div>
-                <div class='col-xs-9'>
-                    <span class='input-group-btn'>
-                        <button class='btn cat-add' type='submit' value='cat-add-btn' name='cat-add-btn'>
-                            <i class='glyphicon glyphicon-plus'></i>
-                        </button>
-                    </span>
+            <div class="modal fade" id="delete-confirm" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+                <div class="modal-dialog" role="dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id='modal-title'>Are you sure?</h4>
+                        </div>
+                        <div class="modal-body">
+                            {% if person.name != None and person.name != '' %}
+                            <p>You are about to delete {{person.name}}.<p>
+                            {% else %}
+                            <p>You are about to delete this person.<p>
+                            {% endif %}
+                            <p>This cannot be undone, do you wish to proceed?<p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel <i class='glyphicon glyphicon-remove'></i></button>
+                            <button type="submit" class="btn btn-danger">Delete <i class='glyphicon glyphicon-trash'></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {% endif %}
+        </form>
+    </div>
+    <form id="info" role="form" action="{{url_for('updatesend', num=person.id)}}" method="POST">
+        <div id="name" class="form-group col-xs-12">
+            <label>Name</label>
+            <input class="form-control" name="name" type="text" value="{{person.name}}"/>
+        </div>
+        <label class="col-xs-12">Dates</label>
+        <div class="dynamic-form">
+            {% with type="info" %}
+            {% for date in person.dates %}
+            {% include 'forms/dates.html' %}
+            {% else %}
+            {% include 'forms/default_date.html' %}
+            {% endfor %}
+            {% endwith %}
+        </div>
+        <div id="url" class="form-group col-xs-12">
+            <label>Website</label>
+            <input class="form-control" name="url" type="text" value="{{person.url}}"/>
+        </div>
+        <div id="location" class="form-group col-xs-12">
+            <label>Location</label>
+            <input class="form-control" name="location" type="text" value="{{person.location}}"/>
+        </div>
+        {% if person.staff %}
+        {% include 'forms/staff_form.html' %}
+        {% endif %}
+        {% if person.phd %}
+        {% include 'forms/phd_form.html' %}
+        {% endif %}
+        {% if person.postdoc %}
+        {% include 'forms/postdoc_form.html' %}
+        {% endif %}
+        {% if person.associate %}
+        {% include 'forms/associate_form.html' %}
+        {% endif %}
 
-            <div class="col-xs-10"></div>
+        {% if not(person.staff and person.phd and person.postdoc and person.associate) %}
+        <div class="col-xs-12">
+            <h2>Add Category</h2>
+        </div>
+        <div class="input-group col-xs-12">
+            <div class='col-xs-3'>
+                <select name='new_category' id='new_cat' style='width:100%'>
+                    <option value=''></option>
+                    {% if not person.staff %}
+                    <option value="staff">Staff</option>
+                    {% endif %}
+                    {% if not person.phd %}
+                    <option value="phd">Phd</option>
+                    {% endif %}
+                    {% if not person.postdoc %}
+                    <option value="postdoc">PostDoc</option>
+                    {% endif %}
+                    {% if not person.associate %}
+                    <option value="associate">Associate</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class='col-xs-9'>
+                <span class='input-group-btn'>
+                    <button class='btn cat-add' type='submit' value='cat-add-btn' name='cat-add-btn'>
+                        <i class='glyphicon glyphicon-plus'></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-xs-10"></div>
+        <div style="padding-bottom: 8%">
             <div class="col-xs-1">
                 <span class="input-group-btn col-xs-2" style="margin-top: 30px; float: right">
-                    <a href="{{url_for('update', id=person.id)}}" class="btn btn-default btn-danger">
-                        <i class="glyphicon glyphicon-remove"></i>
+                    <a href="{{url_for('person', id=person.id)}}" class="btn btn-lg btn-danger">
+                        <i class="glyphicon glyphicon-floppy-remove"></i>
                     </a>
                 </span>
             </div>
             <div class="col-xs-1">
                 <span class="input-group-btn col-xs-2" style="margin-top: 30px">
-                    <button class="btn btn-default btn-success" type="submit" value='submit' name='submit'>
-                        <i class="glyphicon glyphicon-ok"></i>
+                    <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
+                        <i class="glyphicon glyphicon-floppy-saved"></i>
                     </button>
                 </span>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 {% endblock %}
 

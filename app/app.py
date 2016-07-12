@@ -27,7 +27,12 @@ def results(query):
 
 @app.route('/person/<id>')
 def person(id):
-    return render_template('people/person_detail.html', person=func.People.query.get(id))
+    person=func.People.query.get(id)
+    if person:
+        return render_template('people/person_detail.html', person=person)
+    else:
+        #should add error page
+        return redirect(url_for('index'))
 
 @app.route('/update/<id>', methods=['GET'])
 def update(id):
@@ -35,7 +40,11 @@ def update(id):
     students = [student.person for student in func.PhD.query.all()]
     staff = [staff.person for staff in func.Staff.query.all()]
     postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
-    return render_template('forms/person_form.html', person=person, students=students, staff=staff, postdocs=postdocs)
+    if person:
+        return render_template('forms/person_form.html', person=person, students=students, staff=staff, postdocs=postdocs)
+    else:
+        #should add error page
+        return redirect(url_for('index'))
 
 @app.route('/updatesend/<num>', methods=['POST','GET'])
 def updatesend(num):
@@ -97,14 +106,20 @@ def updatesend(num):
         if request.form.get('cat-add-btn'):
             cat = request.form.get('new_category')
             func.add_cat(num, cat)
+
+            func.db.session.commit()
+            return redirect(url_for('update', id=num))
         
         #removing categories
         rm = request.form.get('rm-cat')
         if rm:
             func.rm_cat(num, rm)
+            
+            func.db.session.commit()
+            return redirect(url_for('update', id=num))
 
         func.db.session.commit()
-        return redirect(url_for('update', id=num))
+        return redirect(url_for('person', id=num))
 
 @app.route('/addcategory/<id>', methods=['POST'])
 def add_category(id):
@@ -112,16 +127,25 @@ def add_category(id):
     func.add_cat(id, cat)
     func.db.session.commit()
     return redirect(url_for('update', id=id))
-    
-@app.route('/test')
+
+@app.route('/addperson')
+def add_person():
+    new_id = func.add_person()
+    return redirect(url_for('update', id=new_id))
+
+@app.route('/deleteperson/<id>', methods=['POST'])
+def delete_person(id):
+    func.delete_person(id)
+    return redirect(url_for('index'))
+
+@app.route('/test', methods=['POST','GET'])
 def test():
-    person = func.base_search('sannella')[0]
-    return render_template('test.html', person=person)
+    return render_template('test.html')
 
 @app.route('/testsend', methods=['POST'])
 def testsend():
-    data = request.form.getlist('test')
-    print data
+    if request.method == 'POST':
+        print "posted"
     return redirect(url_for('test'))
 
 if __name__ == '__main__':

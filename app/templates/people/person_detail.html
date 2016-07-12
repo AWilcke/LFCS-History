@@ -1,25 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <h1 id="name">{{person.name}}</h1>
-    {% for date in person.dates %}
+    <div class="row" style='padding-bottom: 20px'>
+        <div class="col-xs-11">
+            <h1 style='display: inline' id='name'>{{person.name}}</h1>
+        </div>
+        <div class="col-xs-1" align='right' style='padding-top: 10px'>
+            <a href='/update/{{person.id}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        {% for date in person.dates %}
         <h3 id="dates">{{date.start}}-{{date.end}}</h3>
-    {% endfor %}
-
+        {% endfor %}
+    </div>
     {% if person.staff %}
+    <div class="col-xs-12">
         {% include 'people/staff.html' %}
+    </div>
     {% endif %}
 
     {% if person.postdoc %}
+    <div class="col-xs-12">
         {% include 'people/postdoc.html' %}
+    </div>
     {% endif %}
 
     {% if person.phd %}
+    <div class="col-xs-12">
         {% include 'people/phd.html' %}
+    </div>
     {% endif %}
 
     {% if person.associate %}
+    <div class="col-xs-12">
         {% include 'people/associate.html' %}
+    </div>
     {% endif %}
-
+</div>
 {% endblock %}

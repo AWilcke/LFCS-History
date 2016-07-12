@@ -185,7 +185,7 @@ class People(db.Model):
     def __repr__(self):
         return self.name
 
-    def __init__(self, name, url=None, location=None):
+    def __init__(self, name=None, url=None, location=None):
         self.name = name
         self.url = url
         self.location = location

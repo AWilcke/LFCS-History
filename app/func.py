@@ -1,146 +1,6 @@
 from database import *
 import re
 
-def add_person(name, category, dates=None, extra=None, thesis=None, location=None, url=None):
-    person = People.query.filter(People.name==name).first()
-    if not person:
-        person = People(name=name, url=url, location=location)
-        db.session.add(person)
-
-    if category:
-        if category.lower()=='staff':
-            if not person.staff:
-                person.staff = Staff()
-            if extra:
-                person.staff.position=[]
-                for role in extra.split(' & '):
-                    m = re.match('(.*) \((\d\d\d\d)-(\d\d\d\d)\)', role)
-                    if m:
-                        p = Positions(m.group(1))
-                        p.dates.append(Dates(m.group(2), m.group(3)))
-                    else:
-                        p = Positions(role)
-                        p.dates.append(Dates(None, None))
-                    person.staff.position.append(p)
-
-            if dates:
-                person.staff.dates=[]
-                for pair in dates.split(' ,'):
-                    try:
-                        start, end = pair.split('-')
-                    except:
-                        print pair
-                        raise
-                    start=start.strip('?')
-                    end=end.strip('?')
-                    try:
-                        int(start)
-                    except:
-                        start=None
-                    try:
-                        int(end)
-                    except:
-                        end=None
-                    person.staff.dates.append(Dates(start, end))
-                        
-        
-        elif category.lower()=='phd':
-            if not person.phd:
-                person.phd = PhD(thesis=thesis)
-            elif thesis:
-                person.phd.thesis=thesis
-            
-            if dates:
-                person.phd.dates=[]
-                for pair in dates.split(' ,'):
-                    start, end = pair.split('-')
-                    start=start.strip('?')
-                    end=end.strip('?')
-                    try:
-                        int(start)
-                    except:
-                        start=None
-                    try:
-                        int(end)
-                    except:
-                        end=None
-
-                    person.phd.dates.append(Dates(start, end))
-
-        elif category.lower()=='pg' or category.lower()=='postdoc':
-            if not person.postdoc:
-                person.postdoc = PostDoc()
-           
-            if dates:
-                person.postdoc.dates=[]
-                for pair in dates.split(' ,'):
-                    start, end = pair.split('-')
-                    start=start.strip('?')
-                    end=end.strip('?')
-                    try:
-                        int(start)
-                    except:
-                        start=None
-                    try:
-                        int(end)
-                    except:
-                        end=None
-                    person.postdoc.dates.append(Dates(start, end))
-
-        else:
-            if not person.associate:
-                person.associate = Associates()
-            if extra:
-                person.associate.position=[]
-                for role in extra.split(' & '):
-                    m = re.match('(.*) \((\d\d\d\d)-(\d\d\d\d)\)', role)
-                    if m:
-                        p = Positions(m.group(1))
-                        p.dates.append(Dates(m.group(2), m.group(3)))
-                    else:
-                        p = Positions(role)
-                        p.dates.append(Dates(None, None))
-                    person.associate.position.append(p)
-            
-            if dates:
-                person.associate.dates=[]
-                for pair in dates.split(' ,'):
-                    start, end = pair.split('-')
-                    start=start.strip('?')
-                    end=end.strip('?')
-                    try:
-                        int(start)
-                    except:
-                        start=None
-                    try:
-                        int(end)
-                    except:
-                        end=None
-                    person.associate.dates.append(Dates(start, end))
-    
-    if dates:
-        person.dates=[]
-        for pair in dates.split(' ,'):
-            start, end = pair.split('-')
-            start=start.strip('?')
-            end=end.strip('?')
-            try:
-                int(start)
-            except:
-                start=None
-            try:
-                int(end)
-            except:
-                end=None
-            person.dates.append(Dates(start, end))
-    
-    if location:
-        person.location=location
-    if url:
-        person.url=url
-
-    db.session.commit()
-
 def base_search(query):
     people = People.query.search(query).all()
     positions = Positions.query.search(query).all()
@@ -196,6 +56,16 @@ def update_info(id, name, url, location, starts, ends):
         except:
             end=None
         person.dates.append(Dates(start, end))
+
+def add_person():
+    person = People()
+    db.session.add(person)
+    db.session.commit()
+    return person.id
+
+def delete_person(id):
+    db.session.delete(People.query.get(id))
+    db.session.commit()
 
 def update_staff(id, positions, pos_starts, pos_ends, starts, ends, students, primary, secondary):
     person = People.query.get(id).staff
