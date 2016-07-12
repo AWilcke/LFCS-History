@@ -93,10 +93,26 @@ def updatesend(num):
 
             func.update_associate(num, position_names, pos_starts, pos_ends, starts, ends)
 
+        #adding categories
+        if request.form.get('cat-add-btn'):
+            cat = request.form.get('new_category')
+            func.add_cat(num, cat)
+        
+        #removing categories
+        rm = request.form.get('rm-cat')
+        if rm:
+            func.rm_cat(num, rm)
+
         func.db.session.commit()
         return redirect(url_for('update', id=num))
 
-
+@app.route('/addcategory/<id>', methods=['POST'])
+def add_category(id):
+    cat = request.form.get('new_category')
+    func.add_cat(id, cat)
+    func.db.session.commit()
+    return redirect(url_for('update', id=id))
+    
 @app.route('/test')
 def test():
     person = func.base_search('sannella')[0]

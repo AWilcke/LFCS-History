@@ -34,7 +34,7 @@ class Staff(db.Model):
     postdocs = db.relationship('PostDoc', back_populates='primary_investigator')
     postdocs_secondary = db.relationship('PostDoc', back_populates='investigators', secondary=postdoc_table)
 
-    person_id = db.Column(Integer, ForeignKey('People'))
+    person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
     person = db.relationship('People', back_populates='staff')
     
     def __repr__(self):
@@ -50,7 +50,7 @@ class PhD(db.Model):
 
     supervisor = db.relationship('Staff', back_populates='students', secondary=supervising_table) 
     
-    person_id = db.Column(Integer, ForeignKey('People'))
+    person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
     person = db.relationship('People', back_populates='phd')
 
     search_vector = db.Column(TSVectorType(
@@ -71,7 +71,7 @@ class Associates(db.Model):
     position=db.relationship('Positions', back_populates='associate', cascade='all, delete-orphan')
     dates = db.relationship('Dates', back_populates='associate', cascade='all, delete-orphan')
 
-    person_id = db.Column(Integer, ForeignKey('People'))
+    person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
     person=db.relationship('People',back_populates='associate')
 
     def __repr__(self):
@@ -88,7 +88,7 @@ class PostDoc(db.Model):
 
     investigators=db.relationship('Staff', back_populates='postdocs_secondary', secondary=postdoc_table)
 
-    person_id = db.Column(Integer, ForeignKey('People'))
+    person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
     person=db.relationship('People', back_populates='postdoc')
     
     def __repr__(self):
@@ -169,9 +169,6 @@ class People(db.Model):
     location = db.Column(db.String())
     dates = db.relationship('Dates', back_populates='person', cascade='all, delete-orphan')
     
-    #number of positions (1-3)
-    size=db.Column(db.Integer)
-    
     staff=db.relationship('Staff', back_populates='person', uselist=False, cascade='all, delete-orphan')
 
     phd=db.relationship('PhD',back_populates='person', uselist=False, cascade='all, delete-orphan')
@@ -189,7 +186,6 @@ class People(db.Model):
         return self.name
 
     def __init__(self, name, url=None, location=None):
-        self.size = 0
         self.name = name
         self.url = url
         self.location = location

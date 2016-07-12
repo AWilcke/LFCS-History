@@ -1,7 +1,7 @@
 <div class="entry">
     <div class="col-xs-6">
         <select name="{{linkname}}_link" style="width: 100%">
-            <option value={{link_person.person.id}}>{{link_person.person.name}}</option>
+            <option value="{{link_person.person.id}}">{{link_person.person.name}}</option>
             <option value=''>None</option>
             {% for person in people %}
             <option value="{{person.id}}">{{person.name}}</option>

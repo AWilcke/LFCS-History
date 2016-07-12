@@ -11,7 +11,6 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
         if category.lower()=='staff':
             if not person.staff:
                 person.staff = Staff()
-                person.size+=1
             if extra:
                 person.staff.position=[]
                 for role in extra.split(' & '):
@@ -48,7 +47,6 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
         elif category.lower()=='phd':
             if not person.phd:
                 person.phd = PhD(thesis=thesis)
-                person.size+=1
             elif thesis:
                 person.phd.thesis=thesis
             
@@ -72,7 +70,6 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
         elif category.lower()=='pg' or category.lower()=='postdoc':
             if not person.postdoc:
                 person.postdoc = PostDoc()
-                person.size+=1
            
             if dates:
                 person.postdoc.dates=[]
@@ -93,7 +90,6 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
         else:
             if not person.associate:
                 person.associate = Associates()
-                person.size+=1
             if extra:
                 person.associate.position=[]
                 for role in extra.split(' & '):
@@ -321,3 +317,27 @@ def update_postdoc(id, starts, ends, primary, secondary):
     for id in secondary:
         if id:
             person.investigators.append(People.query.get(id).staff)
+
+def add_cat(id, cat):
+    person = People.query.get(id)
+
+    if cat=='staff' and not person.staff:
+        person.staff = Staff()
+    elif cat=='phd' and not person.phd:
+        person.phd = PhD()
+    elif cat=='postdoc' and not person.postdoc:
+        person.postdoc = PostDoc()
+    elif cat=='associate' and not person.associate:
+        person.associate = Associates()
+
+def rm_cat(id, cat):
+    person = People.query.get(id)
+    
+    if cat=='rm-staff' and person.staff:
+        person.staff = None
+    elif cat=='rm-phd' and person.phd:
+        person.phd = None
+    elif cat=='rm-postdoc' and person.postdoc:
+        person.postdoc = None
+    elif cat=='rm-associate' and person.associate:
+        person.associate = None

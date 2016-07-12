@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="dynamic-form">
-    <div class="entry">
-        <div class="col-xs-6">
-            <select name="test" style="width: 100%">
-                <option></option>
-                {% for person in people %}
-                <option value="{{person.id}}">{{person.name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class='col-xs-1'>
-            <span class="input-group-btn">
-                <button class="btn btn-add" type="button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </button>
-            </span>
+<div id='first' class='container'>
+    <div class='category'>
+        <div class='row'>
+            <div class='col-xs-3'>
+                <select name='new_category' id='new_cat' style='width:100%'>
+                    <option value="staff">Staff</option>
+                    <option value="PhD">Phd</option>
+                    <option value="PostDoc">PostDoc</option>
+                    <option value="Associate">Associate</option>
+                </select>
+            </div>
+            <div>
+                <span class='input-group-btn'>
+                    <button class='btn cat-add' type='button'>
+                        <i class='glyphicon glyphicon-plus'></i>
+                    </button>
+                </span>
+            </div>
         </div>
     </div>
 </div>

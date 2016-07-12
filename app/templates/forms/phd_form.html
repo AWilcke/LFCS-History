@@ -1,4 +1,9 @@
-<h2 class="col-xs-12">PhD</h2>
+<div class="col-xs-12">
+        <h2 style='display: inline; padding-right: 10px'>PhD</h2>
+        <button class="btn btn-danger cat-rm" type="submit" value="rm-phd" name="rm-cat" style="vertical-align: top">
+            <i class="glyphicon glyphicon-remove"></i>
+        </button>
+</div>
 <div class="form-group">
     <label class="col-xs-12">Dates</label>
     {% with type="phd" %}
@@ -6,7 +11,7 @@
         {% for date in person.phd.dates %}
         {% include 'forms/dates.html' %}
         {% else %}
-        {% include 'forms/default_dates.html' %}
+        {% include 'forms/default_date.html' %}
         {% endfor %}
     </div>
 </div>
