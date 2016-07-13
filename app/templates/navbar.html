@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="brand" href="{{url_for('index')}}"><img src="{{url_for('static', filename='lfcs.png')}}"</img></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                <div>
+                    <a href="#"><button class="btn btn-default navbar-btn">Login</button></a>
+                </div>
+                </li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i style="font-size:1.8em" class="glyphicon glyphicon-cog"></i><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{url_for('add_person')}}">Add Person</a></li>
+                    <li><a href="#">Authorisations</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

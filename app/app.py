@@ -140,7 +140,8 @@ def delete_person(id):
 
 @app.route('/test', methods=['POST','GET'])
 def test():
-    return render_template('test.html')
+    person = func.base_search('david aspinall')[0]
+    return render_template('test.html', person=person)
 
 @app.route('/testsend', methods=['POST'])
 def testsend():

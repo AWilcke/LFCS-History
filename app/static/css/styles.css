@@ -1,13 +1,9 @@
 html, body {
   height: 100%;
 }
-
-h1 {
-  font-family: 'Open Sans', sans-serif;
-  margin-top: 30px;
-  margin-bottom: 70px;
-}
-
+body {
+  padding-top:50px;
+} 
 #searchbar {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -27,4 +23,8 @@ h1 {
   min-height:100%;
   background-color:#faf5f0;
   overflow:hidden;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }

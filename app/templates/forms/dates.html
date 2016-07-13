@@ -1,13 +1,19 @@
 <div id="{{type}}-dates" class="form-group entry">
-    <div class="col-xs-5">
-        <input class="form-control" name="{{type}}_start" value="{{date.start}}"/>
-    </div>
-    <div class="col-xs-5">
-        <input class="form-control" name="{{type}}_end" value="{{date.end}}"/>
+    <div class="col-xs-10">
+        <div class="input-group">
+            <input class="form-control" name="{{type}}_start" value="{{date.start}}"/>
+            <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+            <input class="form-control" name="{{type}}_end" value="{{date.end}}"/>
+        </div>
     </div>
     <div class="col-xs-2">
-        <button class="btn btn-add btn-secondary" type="button">
-            <i class="glyphicon glyphicon-plus"></i>
-        </button>
+        <div class="btn-group">
+            <button class="btn btn-remove" type="button">
+                <i class="glyphicon glyphicon-remove"></i>
+            </button>
+            <button class="btn btn-add btn-primary" type="button">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </div>
     </div>
 </div>
