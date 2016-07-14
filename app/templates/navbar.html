@@ -8,20 +8,26 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+                {% if not current_user.authenticated %}
                 <li>
                 <div>
-                    <a href="#"><button class="btn btn-default navbar-btn">Login</button></a>
+                    <button style="margin-right: 20px" class="btn btn-default navbar-btn" type="button" data-toggle="modal" data-target="#login">Login</button>
                 </div>
                 </li>
+                {% else %}
+                <li><p class='navbar-text'>Logged in as {{current_user.first_name}}</p></li>
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i style="font-size:1.8em" class="glyphicon glyphicon-cog"></i><span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="{{url_for('add_person')}}">Add Person</a></li>
-                    <li><a href="#">Authorisations</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li><a href="{{url_for('update_user')}}">Update account</a></li>
+                    <li><a href="{{url_for('add_user')}}">Add account</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{{url_for('logout')}}">Log Out</a></li>
                 </ul>
                 </li>
+                {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

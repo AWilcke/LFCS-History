@@ -3,7 +3,6 @@ $(document).ready(function() {
       $("select").select2();
 });
 
-
 //DataTables ini
 $(document).ready(function() {
   $('#results').dataTable({
@@ -160,4 +159,41 @@ $(function()
             e.preventDefault();
             return false;
         });
+});
+
+//for password confirmation
+$(function()
+{
+    $(document)
+    .on('click', '.user-update', function(e)
+        {
+            var password = document.getElementById('password'),
+                confirmation = document.getElementById('confirm_password');
+            
+            if (password.value != confirmation.value){
+                if ($(confirmation).parents('div:first').find('.errormsg').length==0){
+                    
+                    var errorMessage = document.createElement('div'),
+                        passForm = $(confirmation).parents('.form-group:first');
+                    
+                    $(errorMessage).attr('class','col-xs-12 errormsg');
+                    $(errorMessage).attr('style','color: red');
+                    errorMessage.innerHTML = 'Passwords do not match'
+                    $(errorMessage).insertAfter(confirmation);
+                    
+                    passForm.attr('class','form-group has-error');    
+                }
+                return false;
+            }
+            return true;
+        });
+});
+
+$(function()
+{
+    $(document)
+    .on('click', '.notify', function(e)
+    {
+        $.notify('wooooo',{position:'bottom-center'})
+    });
 });

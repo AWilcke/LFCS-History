@@ -211,3 +211,16 @@ def rm_cat(id, cat):
         person.postdoc = None
     elif cat=='rm-associate' and person.associate:
         person.associate = None
+
+def update_user(first, last, email, password):
+    current_user.first_name = first
+    current_user.last_name = last
+    current_user.email = email
+    if password:
+        current_user.password = bcrypt.generate_password_hash(password)
+
+def add_user(first, last, email, password):
+    new_user = Users(first_name=first, last_name=last, email=email)
+    new_user.password = bcrypt.generate_password_hash(password)
+
+    db.session.add(new_user)

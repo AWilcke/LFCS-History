@@ -1,15 +1,29 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, current_app, session
 from flask_sqlalchemy import SQLAlchemy, BaseQuery
+from flask_login import LoginManager, login_required, login_user, logout_user, current_user
+from flask_bcrypt import Bcrypt
+
 import func
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lfcs-test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+app.secret_key = "thisisaverysecretkeyyouwillneverguess"
+
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+bcrypt = Bcrypt()
+
 
 @app.route('/')
 def index():
-    return render_template('search.html')
+    message = session.get('message')
+    session['message'] = ''
+    notif_type = session.get('notif_type')
+    session['notif_type'] = ''
+    return render_template('search.html', message=message, notif_type=notif_type)
 
 # Save e-mail to database and send to success page
 @app.route('/search', methods=['POST'])
@@ -34,7 +48,91 @@ def person(id):
         #should add error page
         return redirect(url_for('index'))
 
+@login_manager.user_loader
+def user_loader(user_id):
+    return func.Users.query.get(user_id)
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+    
+    user = func.Users.query.get(username)
+    
+    if user:
+        if bcrypt.check_password_hash(user.password, password):
+            print "everything checks out"
+            user.authenticated = True
+            func.db.session.commit()
+            login_user(user, remember=True)
+            session['message'] = user.first_name + " logged in!"
+            session['notif_type'] = "success"
+            return redirect(url_for('index'))
+    
+    session['message'] = "Invalid credentials"
+    session['notif_type'] = "error"
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    user = current_user
+    user.authenticated = False
+    session['message'] = user.first_name + " logged out!"
+    session['notif_type'] = "success"
+    func.db.session.commit()
+    logout_user()
+
+    return redirect(url_for('index'))
+
+@app.route('/updateuser')
+@login_required
+def update_user():
+    return render_template('users/user.html')
+
+@app.route('/updateusersend', methods=["POST"])
+@login_required
+def update_user_send():
+    first_name = request.form.get('firstname')
+    last_name = request.form.get('lastname')
+    email = request.form.get('email')
+    pasw = request.form.get('password')
+
+    func.update_user(first_name, last_name, email, pasw)
+    func.db.session.commit()
+    
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    else:
+        return redirect(url_for('index'))
+
+@app.route('/adduser')
+@login_required
+def add_user():
+    return render_template('users/add_user.html')
+
+@app.route('/addusersend', methods=['POST'])
+@login_required
+def add_user_send():
+    first_name = request.form.get('firstname')
+    last_name = request.form.get('lastname')
+    email = request.form.get('email')
+    pasw = request.form.get('password')
+
+    func.add_user(first_name, last_name, email, pasw)
+    func.db.session.commit()
+    
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    else:
+        return redirect(url_for('index'))
+
+
 @app.route('/update/<id>', methods=['GET'])
+@login_required
 def update(id):
     person = func.People.query.get(id)
     students = [student.person for student in func.PhD.query.all()]
@@ -47,6 +145,7 @@ def update(id):
         return redirect(url_for('index'))
 
 @app.route('/updatesend/<num>', methods=['POST','GET'])
+@login_required
 def updatesend(num):
     if request.method == 'POST':
         #basic info
@@ -122,6 +221,7 @@ def updatesend(num):
         return redirect(url_for('person', id=num))
 
 @app.route('/addcategory/<id>', methods=['POST'])
+@login_required
 def add_category(id):
     cat = request.form.get('new_category')
     func.add_cat(id, cat)
@@ -129,11 +229,13 @@ def add_category(id):
     return redirect(url_for('update', id=id))
 
 @app.route('/addperson')
+@login_required
 def add_person():
     new_id = func.add_person()
     return redirect(url_for('update', id=new_id))
 
 @app.route('/deleteperson/<id>', methods=['POST'])
+@login_required
 def delete_person(id):
     func.delete_person(id)
     return redirect(url_for('index'))
