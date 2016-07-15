@@ -121,6 +121,8 @@ def update_user_send():
     func.update_user(first_name, last_name, email, pasw)
     func.db.session.commit()
     
+    flash('Updated account information for ' + email, ('success','bottom right'))
+
     previous = request.referrer
     if previous:
         return redirect(previous)
@@ -143,6 +145,8 @@ def add_user_send():
     func.add_user(first_name, last_name, email, pasw)
     func.db.session.commit()
     
+    flash('Added user account for ' + email, ('success','bottom right'))
+
     previous = request.referrer
     if previous:
         return redirect(previous)
@@ -160,7 +164,6 @@ def update(id):
     if person:
         return render_template('forms/person_form.html', person=person, students=students, staff=staff, postdocs=postdocs)
     else:
-        #should add error page
         return redirect(url_for('index'))
 
 @app.route('/updatesend/<num>', methods=['POST','GET'])
@@ -237,6 +240,7 @@ def updatesend(num):
             return redirect(url_for('update', id=num))
 
         func.db.session.commit()
+        flash('Updated information for ' + name, ('success','bottom right'))
         return redirect(url_for('person', id=num))
 
 @app.route('/addperson')
@@ -261,12 +265,13 @@ def add_person_send():
 
             func.db.session.commit()
             return redirect(url_for('update', id=person.id))
-
+        flash('Added ' + name + ' to the database', ('success','bottom right'))
         return redirect(url_for('person', id=person.id))
 
 @app.route('/deleteperson/<id>', methods=['POST'])
 @login_required
 def delete_person(id):
+    flash('Deleted ' + func.People.query.get(id).name + ' from the database', ('success','bottom right'))
     func.delete_person(id)
     return redirect(url_for('index'))
 
