@@ -25,13 +25,15 @@
 <script src="{{url_for('static', filename='js/notify.min.js')}}"></script>
 </head>
 
-{% if message %}
+{% with messages = get_flashed_messages(with_categories=true) %}
 <script type='text/javascript'>
+{% for (category, position), message in messages %}
 $(document).ready(function(e){
-        $.notify('{{message}}',{position:'bottom-center', className:'{{notif_type}}'});
+        $.notify('{{message}}',{globalPosition:'{{position}}', className:'{{category}}'});
 });
+{% endfor %}
 </script>
-{% endif %}
+{% endwith %}
 
 {% include 'navbar.html' %} 
 

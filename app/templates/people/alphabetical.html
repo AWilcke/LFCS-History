@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% include 'searchbar.html' %}
+    <div clas='row'>
+        <div align='center' class='col-xs-12'>
+            {% if not letter %}
+            <a class='btn btn-default btn-primary' href='{{url_for("view_all")}}'>All</a>
+            {% else %}
+            <a class='btn btn-default' href='{{url_for("view_all")}}'>All</a>
+            {% endif %}
+            {% for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"|list %}
+            {% if letter==char %}
+            <a class='btn btn-default btn-primary' href='{{url_for("view_letter", letter=char)}}'>{{char}}</a>
+            {% else %}
+            <a class='btn btn-default' href='{{url_for("view_letter", letter=char)}}'>{{char}}</a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <table id='results' class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Category</th>
+            <th>Dates</th>
+        </thead>
+        <tbody>
+        {% for result in results %}
+        {% include 'people/person.html' %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

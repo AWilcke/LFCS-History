@@ -8,10 +8,15 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                <div>
+                    <a class='btn btn-default navbar-btn' href='{{url_for("view_all")}}'>View All</a>
+                </div>
+                </li>
                 {% if not current_user.authenticated %}
                 <li>
                 <div>
-                    <button style="margin-right: 20px" class="btn btn-default navbar-btn" type="button" data-toggle="modal" data-target="#login">Login</button>
+                    <button class="btn btn-default navbar-btn" type="button" data-toggle="modal" data-target="#login">Login</button>
                 </div>
                 </li>
                 {% else %}

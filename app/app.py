@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, current_app, session
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy, BaseQuery
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
@@ -19,11 +19,7 @@ bcrypt = Bcrypt()
 
 @app.route('/')
 def index():
-    message = session.get('message')
-    session['message'] = ''
-    notif_type = session.get('notif_type')
-    session['notif_type'] = ''
-    return render_template('search.html', message=message, notif_type=notif_type)
+    return render_template('search.html')
 
 # Save e-mail to database and send to success page
 @app.route('/search', methods=['POST'])
@@ -38,6 +34,14 @@ def results(query):
     results=func.base_search(query)
     return render_template('results.html', results=results, query=query)
 
+@app.route('/viewall')
+def view_all():
+    return render_template('people/alphabetical.html', results=func.People.query.all())
+
+@app.route('/viewall/<letter>')
+def view_letter(letter):
+    results = func.People.query.filter(func.People.name.like(letter + "%")).all()
+    return render_template('people/alphabetical.html', results=results, letter=letter)
 
 @app.route('/person/<id>')
 def person(id):
@@ -52,6 +56,15 @@ def person(id):
 def user_loader(user_id):
     return func.Users.query.get(user_id)
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash("Oops! It looks like you tried to access an unauthorized page! Please log in", ("warn","bttom right"))
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    
+    return redirect(url_for('index'))
+
 @app.route('/login', methods=['GET','POST'])
 def login():
 
@@ -62,16 +75,19 @@ def login():
     
     if user:
         if bcrypt.check_password_hash(user.password, password):
-            print "everything checks out"
             user.authenticated = True
             func.db.session.commit()
             login_user(user, remember=True)
-            session['message'] = user.first_name + " logged in!"
-            session['notif_type'] = "success"
-            return redirect(url_for('index'))
+            flash(user.first_name + ' logged in!', ("success", "bottom right"))
+        else:
+            flash("Invalid credentials", ("error", "bottom right"))
+    else:
+        flash("Invalid credentials", ("error", "bottom right"))
+
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
     
-    session['message'] = "Invalid credentials"
-    session['notif_type'] = "error"
     return redirect(url_for('index'))
 
 @app.route('/logout')
@@ -79,11 +95,9 @@ def login():
 def logout():
     user = current_user
     user.authenticated = False
-    session['message'] = user.first_name + " logged out!"
-    session['notif_type'] = "success"
+    flash(user.first_name + ' logged out!', ("success", "bottom right"))
     func.db.session.commit()
     logout_user()
-
     return redirect(url_for('index'))
 
 @app.route('/updateuser')
