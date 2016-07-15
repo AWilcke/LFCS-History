@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy, BaseQuery
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
 
@@ -11,7 +10,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 app.secret_key = "thisisaverysecretkeyyouwillneverguess"
 
-db = SQLAlchemy(app)
+func.SQLAlchemy(app)
+
+@app.before_first_request
+def init_database():
+    #mappers for vectoring, for the search
+    func.db.configure_mappers()
+    func.db.create_all()
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt()

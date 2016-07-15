@@ -1,6 +1,8 @@
-from app import *
+from flask_sqlalchemy import SQLAlchemy, BaseQuery
 from sqlalchemy_searchable import make_searchable, SearchQueryMixin
 from sqlalchemy_utils.types import TSVectorType
+
+db = SQLAlchemy()
 
 #config for search
 make_searchable()
@@ -215,7 +217,3 @@ class Users(db.Model):
 
     def __repr__(self):
         return self.email
-
-#mappers for vectoring, for the search
-db.configure_mappers()
-db.create_all()
