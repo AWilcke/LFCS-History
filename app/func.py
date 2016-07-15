@@ -57,11 +57,26 @@ def update_info(id, name, url, location, starts, ends):
             end=None
         person.dates.append(Dates(start, end))
 
-def add_person():
-    person = People()
     db.session.add(person)
-    db.session.commit()
-    return person.id
+
+def add_person(name, url, location, starts, ends):
+    person = People()
+    person.name = name
+    person.url = url
+    person.location = location
+    person.dates = []    
+    for (start, end) in zip(starts, ends):
+        try:
+            start = int(start)
+        except:
+            start=None
+        try:
+            end = int(end)
+        except:
+            end=None
+        person.dates.append(Dates(start, end))
+    db.session.add(person)
+    return person
 
 def delete_person(id):
     db.session.delete(People.query.get(id))

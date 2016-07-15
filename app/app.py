@@ -22,7 +22,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt()
 
-
 @app.route('/')
 def index():
     return render_template('search.html')
@@ -240,19 +239,30 @@ def updatesend(num):
         func.db.session.commit()
         return redirect(url_for('person', id=num))
 
-@app.route('/addcategory/<id>', methods=['POST'])
-@login_required
-def add_category(id):
-    cat = request.form.get('new_category')
-    func.add_cat(id, cat)
-    func.db.session.commit()
-    return redirect(url_for('update', id=id))
-
 @app.route('/addperson')
 @login_required
 def add_person():
-    new_id = func.add_person()
-    return redirect(url_for('update', id=new_id))
+    return render_template('forms/add.html')
+
+@app.route('/addpersonsend', methods=['GET','POST'])
+def add_person_send():
+    if request.method == 'POST':
+        name = request.form['name']
+        url = request.form['url']
+        location = request.form['location']
+        starts = request.form.getlist('info_start')
+        ends = request.form.getlist('info_end')
+        person = func.add_person(name, url, location, starts, ends)
+        func.db.session.commit()
+        
+        if request.form.get('cat-add-btn'):
+            cat = request.form.get('new_category')
+            func.add_cat(person.id, cat)
+
+            func.db.session.commit()
+            return redirect(url_for('update', id=person.id))
+
+        return redirect(url_for('person', id=person.id))
 
 @app.route('/deleteperson/<id>', methods=['POST'])
 @login_required
