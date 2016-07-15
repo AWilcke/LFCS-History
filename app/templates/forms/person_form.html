@@ -2,9 +2,9 @@
 {% block content %}
 <div class='container'>
     <!-- delete person --> 
-    <div style="padding-top:10px; padding-right:10px">
+    <div class='col-xs-12' >
         <form id='delete-person' role='form' action='{{url_for("delete_person", id=person.id)}}' method='POST'>
-            <div align="right">
+            <div class="pull-right">
                 <button class='btn btn-lg btn-danger' type='button' data-toggle='modal' data-target='#delete-confirm'>
                     <i class="glyphicon glyphicon-trash"></i>
                 </button>
@@ -100,20 +100,15 @@
             </div>
         </div>
         {% endif %}
-
-        <div class='row'>
-            <div style='padding-bottom: 30px' class='col-xs-2 col-xs-offset-9'>
-                <div class='row'>
-                    <div class='col-xs-6'>
-                        <a href="{{request.referrer}}" class='btn btn-lg btn-danger'>
-                            <i class="glyphicon glyphicon-floppy-remove"></i>
-                        </a>
-                    </div>
-                    <div class='col-xs-6'>
-                        <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
-                            <i class="glyphicon glyphicon-floppy-saved"></i>
-                        </button>
-                    </div>
+        <div style="padding-bottom:30px" class="col-xs-12">
+            <div class="pull-right">
+                <div class='btn-group'>
+                    <a href="{{url_for('person', id=person.id)}}" class='btn btn-lg btn-danger'>
+                        <i class="glyphicon glyphicon-floppy-remove"></i>
+                    </a>
+                    <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
+                        <i class="glyphicon glyphicon-floppy-saved"></i>
+                    </button>
                 </div>
             </div>
         </div>

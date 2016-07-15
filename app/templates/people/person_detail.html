@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <div class="row" style='padding-bottom: 20px'>
-        <div class="col-xs-11">
-            <h1 style='display: inline' id='name'>{{person.name}}</h1>
-        </div>
-        <div class="col-xs-1" align='right' style='padding-top: 10px'>
-            <a href='/update/{{person.id}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+    <div class='col-xs-12' style='padding-bottom: 20px'>
+        <h1 style="display: inline">{{person.name}}</h1>
+        <div class="pull-right" style="display: inline-block">
+            <a style='padding-right:20px' href='/update/{{person.id}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
     <div class="col-xs-12">
