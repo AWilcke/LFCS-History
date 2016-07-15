@@ -1,10 +1,10 @@
 <div class='row'>
     <div id='postdoc' class='col-xs-12'>
         <h2>PostDoc</h2>
-        <p>Primary Investigator: <a href='/person/{{person.postdoc.primary_investigator.id}}'>{{person.postdoc.primary_investigator.name}}</a><p>
+        <p>Primary Investigator: <a href='{{url_for("person", id=person.postdoc.primary_investigator.person.id)}}'>{{person.postdoc.primary_investigator.person.name}}</a><p>
         <p>Secondary Investigators:
         {% for investigator in person.postdoc.investigators %}
-        <a href='/person/{{investigator.id}}'>{{investigator.name}}</a>
+        <a href='{{url_for("person", id=investigator.person.id)}}'>{{investigator.person.name}}</a>
         {% endfor %}
         <p>
     </div>

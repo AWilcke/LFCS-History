@@ -1,5 +1,8 @@
 from database import *
+from flask_bcrypt import Bcrypt
 import re
+
+bcrypt = Bcrypt()
 
 def base_search(query):
     people = People.query.search(query).all()

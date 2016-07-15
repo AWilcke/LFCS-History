@@ -176,7 +176,7 @@ $(function()
                     var errorMessage = document.createElement('div'),
                         passForm = $(confirmation).parents('.form-group:first');
                     
-                    $(errorMessage).attr('class','col-xs-12 errormsg');
+                    $(errorMessage).attr('class','errormsg');
                     $(errorMessage).attr('style','color: red');
                     errorMessage.innerHTML = 'Passwords do not match'
                     $(errorMessage).insertAfter(confirmation);
@@ -187,13 +187,4 @@ $(function()
             }
             return true;
         });
-});
-
-$(function()
-{
-    $(document)
-    .on('click', '.notify', function(e)
-    {
-        $.notify('wooooo',{position:'bottom-center'})
-    });
 });

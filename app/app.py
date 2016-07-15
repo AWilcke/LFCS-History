@@ -153,6 +153,15 @@ def add_user_send():
     else:
         return redirect(url_for('index'))
 
+@app.route('/deleteuser', methods=['POST'])
+@login_required
+def delete_user():
+    flash('User account for ' + current_user.email + ' deleted', ('success','bottom right'))
+    logout_user()
+    func.db.session.delete(func.Users.query.get(current_user.email))
+    func.db.session.commit()
+    return redirect(url_for('index'))
+    
 
 @app.route('/update/<id>', methods=['GET'])
 @login_required
