@@ -1,26 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from flask_bcrypt import Bcrypt
-
-import func
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lfcs-test'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-app.secret_key = "thisisaverysecretkeyyouwillneverguess"
-
-func.SQLAlchemy(app)
-
-@app.before_first_request
-def init_database():
-    #mappers for vectoring, for the search
-    func.db.configure_mappers()
-    func.db.create_all()
+from lfcsapp import app, bcrypt
+import lfcsapp.func as func
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-bcrypt = Bcrypt()
 
 @app.route('/')
 def index():
@@ -295,6 +279,3 @@ def testsend():
         print "posted"
     return redirect(url_for('test'))
 
-if __name__ == '__main__':
-    app.debug = True
-    app.run()

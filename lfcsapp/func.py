@@ -1,8 +1,7 @@
-from database import *
-from flask_bcrypt import Bcrypt
+from database import People, Staff, PhD, PostDoc, Associates, Positions, Dates, Users
+from lfcsapp import db, bcrypt
+from flask_login import current_user
 import re
-
-bcrypt = Bcrypt()
 
 def base_search(query):
     people = People.query.search(query).all()
@@ -29,7 +28,7 @@ def base_search(query):
         elif position.associate:
             if position.associate.person in results.keys():
                 if results[position.associate.person]<rank:
-                    result[position.associate.person] = rank
+                    results[position.associate.person] = rank
             else:
                 results[position.associate.person] = rank
 

@@ -1,4 +1,4 @@
-from func import *
+from lfcsapp.func import *
 
 def add_all():
     with open('full.tsv') as f:
@@ -12,46 +12,53 @@ def add_all():
 
         add_person(name=line[0] + ' ' + line[1], category=line[3], dates=line[2], extra=line[4], thesis=line[5], location=line[6], url=line[8])
 
-'''
 def link_all():
     with open('full.tsv') as f:
-        data= f.read().splitlines()[5:]
+        data = f.read().splitlines()[5:]
 
     for line in data:
-        line=line.split('\t')
+        line = line.split('\t')
         for i in range(0, len(line)):
             if line[i] == '':
                 line[i] = None
-       
-        try:
-            person=People.query.search(line[0] + ' ' + line[1])[0]
-        except:
-            #print line[0] + ' ' + line[1]
-            pass 
-        if line[3]:
-            if line[3].lower()=='phd':
-                #person.phd.supervisor=[]
-                if line[4]:
-                    for sup in line[4].split(', '):
-                        try:
-                            print People.query.search(sup)[0].staff
-                        except:
-                            pass
-        elif line[3].lower()=='pg' or line[3].lower()=='postdoc':
-            try:
-                person.postdoc.primary_investigator=People.query.search(line[4].split(', ')[0])[0].staff
-            except:
-                person.postdoc.primary_investigator=None
+        if line[4] and line[3] and (line[3].lower()=='phd' or line[3].lower()=='pg' or line[3].lower()=='postdoc'):
+            link_person(line[0], line[1], line[3], line[4].split(', '))
 
-            person.postdoc.investigators=[]
-            if line[4]:
-                for sup in line[4].split(', ')[1:]:
-                    try:
-                        person.postdoc.investigators.append(People.query.search(sup)[0].staff)
-                    except:
-                        pass
+def link_person(first, last, cat, supervisors):
+    first = unicode(first, 'utf-8')
+    last = unicode(last, 'utf-8')
+    
+    person = People.query.search(first + ' ' + last).first()
+    if not person:
+        return
+    if cat.lower() == 'phd':
+        person.phd.supervisor = []
+        for sup in supervisors:
+            try:
+                p = People.query.search(sup).first().staff
+            except:
+                p=None
+            if p:
+                person.phd.supervisor.append(p)
+
+    elif cat.lower() == 'pg' or cat.lower() == 'postdoc':
+        try:
+            p = People.query.search(supervisors[0]).first().staff
+        except:
+            p = None
+        if p:
+            person.postdoc.primary_investigator = p
+        person.postdoc.investigators = []
+        for sup in supervisors[1:]:
+            try:
+                p = People.query.search(sup).first().staff
+            except:
+                p=None
+            if p:
+                person.postdoc.investigators.append(p)
+
+    db.session.add(person)
     db.session.commit()
-'''
 
 def add_person(name, category, dates=None, extra=None, thesis=None, location=None, url=None):
     person = People.query.filter(People.name==name).first()

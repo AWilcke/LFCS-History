@@ -1,11 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy, BaseQuery
-from sqlalchemy_searchable import make_searchable, SearchQueryMixin
+from flask_sqlalchemy import BaseQuery
+from sqlalchemy_searchable import SearchQueryMixin
 from sqlalchemy_utils.types import TSVectorType
-
-db = SQLAlchemy()
-
-#config for search
-make_searchable()
+from lfcsapp import db
 
 #phd supervisor table
 supervising_table = db.Table('supervising_table',
