@@ -1,11 +1,17 @@
-<div class="col-xs-12">
+<div class="row">
+    <div class="col-xs-12">
         <h2 style='display: inline; padding-right: 10px'>Associate</h2>
         <button class="btn btn-danger cat-rm" type="submit" value="rm-associate" name="rm-cat" style="vertical-align: top">
             <i class="glyphicon glyphicon-remove"></i>
         </button>
+    </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">Dates</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>Dates</label>
+        </div>
+    </div>
     {% with type="associate" %}
     <div class="dynamic-form">
         {% for date in person.associate.dates %}
@@ -16,7 +22,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">Positions</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>Positions</label>
+        </div>
+    </div>
     <div class="dynamic-form">
         {% with num = 0 %}
         {% for position in person.associate.position %}

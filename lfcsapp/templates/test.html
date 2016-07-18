@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div class='container'>
-    <button class="btn btn-lg btn-success notify" type="button">
-        <i class="glyphicon glyphicon-floppy-saved"></i>
-    </button>
+    <form role='form' action='{{url_for("testsend")}}' method='POST'>
+        <input class="form-control" type="text" required/>
+        <button class="btn btn-lg btn-success" type="submit">
+            <i class="glyphicon glyphicon-floppy-saved"></i>
+        </button>
+    </form>
 </div>
 {% endblock %}

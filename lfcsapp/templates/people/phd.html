@@ -1,11 +1,11 @@
 <div class='row'>
-<div id="phd" class="col-xs-12">
-    <h2>PhD</h2>
-    <p>Thesis: {{person.phd.thesis}}</p>
-    <p>Supervisors:
-    {% for supervisor in person.phd.supervisor %}
-    <a href='/person/{{supervisor.person.id}}' id="supervisor">{{supervisor.person.name}} </a>
-    {% endfor %}
-    </p>
-</div>
+    <div id="phd" class="col-xs-12">
+        <h2>PhD</h2>
+        <p>Thesis: {{person.phd.thesis}}</p>
+        <p>Supervisors:
+        {% for supervisor in person.phd.supervisor %}
+        <a href='/person/{{supervisor.person.id}}' id="supervisor">{{supervisor.person.name}} </a>
+        {% endfor %}
+        </p>
+    </div>
 </div>

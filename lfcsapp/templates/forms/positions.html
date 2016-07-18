@@ -1,46 +1,48 @@
 <div id="{{type}}-positions" class="form-group entry">
-    <div class="col-xs-4">
-        <input class="form-control" name="{{type}}_position" value="{{position.position}}" placeholder="Position"/>
-    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <input class="form-control" name="{{type}}_position" value="{{position.position}}" placeholder="Position"/>
+        </div>
 
-    <div class="position-date-form">
-        {% for date in position.dates %}
-        <div class="date-entry">
-            <div id="dates" class="col-xs-6">
-                <div class="row">
-                    <div class="col-xs-8" style="padding-right:3">
-                        <div class="row">
-                            <div class="input-group">
-                                <input class="form-control datestart" name="{{type}}_{{num}}_start" value="{{date.start}}" placeholder="Start"/>
-                                <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+        <div class="position-date-form">
+            {% for date in position.dates %}
+            <div class="date-entry">
+                <div id="dates" class="col-xs-6">
+                    <div class="row">
+                        <div class="col-xs-8" style="padding-right:3">
+                            <div class="row">
+                                <div class="input-group">
+                                    <input class="form-control datestart" name="{{type}}_{{num}}_start" value="{{date.start}}" placeholder="Start"/>
+                                    <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
 
-                                <input class="form-control dateend" name="{{type}}_{{num}}_end" value="{{date.end}}" placeholder="End"/>
+                                    <input class="form-control dateend" name="{{type}}_{{num}}_end" value="{{date.end}}" placeholder="End"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-4" style='padding-left:0'>
-                        <div class="btn-group">
-                            <button class="btn date-remove btn-default" type="button">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </button>
-                            <button class="btn date-add btn-default" type="button">
-                                <i class="glyphicon glyphicon-plus"></i>
-                            </button>
+                        <div class="col-xs-4" style='padding-left:0'>
+                            <div class="btn-group">
+                                <button class="btn date-remove btn-default" type="button">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                                <button class="btn date-add btn-default" type="button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    <div class="col-xs-2">
-        <div class="btn-group">
-            <button class="btn btn-remove" type="button">
-                <i class="glyphicon glyphicon-remove"></i>
-            </button>
-            <button class="btn btn-add btn-primary" type="button">
-                <i class="glyphicon glyphicon-plus"></i>
-            </button>
+        <div class="col-xs-2">
+            <div class="btn-group">
+                <button class="btn btn-remove" type="button">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+                <button class="btn btn-add btn-primary" type="button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>

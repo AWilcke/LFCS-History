@@ -1,11 +1,17 @@
-<div class="col-xs-12">
+<div class="row">
+    <div class="col-xs-12">
         <h2 style='display: inline; padding-right: 10px'>Staff</h2>
         <button class="btn btn-danger cat-rm" type="submit" value="rm-staff" name="rm-cat" style="vertical-align: top">
             <i class="glyphicon glyphicon-remove"></i>
         </button>
+    </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">Dates</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>Dates</label>
+        </div>
+    </div>
     {% with type="staff" %}
     <div class="dynamic-form">
         {% for date in person.staff.dates %}
@@ -16,7 +22,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">Positions</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>Positions</label>
+        </div>
+    </div>
     <div class="dynamic-form">
         {% with num = 0 %}
         {% for position in person.staff.position %}
@@ -29,7 +39,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">Students</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>Students</label>
+        </div>
+    </div>
     <div class="dynamic-form">
         {% with linkname = 'staff_phd' %}
         {% with people = students %}
@@ -43,7 +57,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">PostDocs (Primary Investigator)</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>PostDocs (Primary Investigator)</label>
+        </div>
+    </div>
     <div class="dynamic-form">
         {% with linkname = 'staff_primary' %}
         {% with people = postdocs %}
@@ -57,7 +75,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="col-xs-12">PostDocs (Secondary Investigator)</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>PostDocs (Secondary Investigator)</label>
+        </div>
+    </div>
     <div class="dynamic-form">
         {% with linkname = 'staff_secondary' %}
         {% with people = postdocs %}

@@ -1,39 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <div class='col-xs-12' style='padding-bottom: 20px'>
-        <h1 style="display: inline">{{person.name}}</h1>
-        <div class="pull-right" style="display: inline-block">
-            <a style='padding-right:20px' href='/update/{{person.id}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+    <div class='row' style='padding-bottom: 20px'>
+        <div class='col-xs-12'>
+            <h1 style="display: inline">{{person.name}}</h1>
+            <div class="pull-right" style="display: inline-block">
+                <a style='padding-right:20px' href='{{url_for("update", id=person.id)}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+            </div>
         </div>
     </div>
-    <div class="col-xs-12">
-        {% for date in person.dates %}
-        <h3 id="dates">{{date.start}}-{{date.end}}</h3>
-        {% endfor %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% for date in person.dates %}
+            <h3 id="dates">{{date.start}}-{{date.end}}</h3>
+            {% endfor %}
+        </div>
     </div>
     {% if person.staff %}
-    <div class="col-xs-12">
-        {% include 'people/staff.html' %}
-    </div>
+    {% include 'people/staff.html' %}
     {% endif %}
 
     {% if person.postdoc %}
-    <div class="col-xs-12">
-        {% include 'people/postdoc.html' %}
-    </div>
+    {% include 'people/postdoc.html' %}
     {% endif %}
 
     {% if person.phd %}
-    <div class="col-xs-12">
-        {% include 'people/phd.html' %}
-    </div>
+    {% include 'people/phd.html' %}
     {% endif %}
 
     {% if person.associate %}
-    <div class="col-xs-12">
-        {% include 'people/associate.html' %}
-    </div>
+    {% include 'people/associate.html' %}
     {% endif %}
 </div>
 {% endblock %}

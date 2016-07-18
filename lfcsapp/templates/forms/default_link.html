@@ -1,20 +1,22 @@
 <div class="entry">
-    <div class="col-xs-6">
-        <select name="{{linkname}}_link" style="width: 100%">
-            <option value=''>None</option>
-            {% for person in people %}
-            <option value="{{person.id}}">{{person.name}}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="col-xs-2">
-        <div class="btn-group">
-            <button class="btn btn-remove" type="button">
-                <i class="glyphicon glyphicon-remove"></i>
-            </button>
-            <button class="btn btn-add btn-primary" type="button">
-                <i class="glyphicon glyphicon-plus"></i>
-            </button>
+    <div class="row">
+        <div class="col-xs-6">
+            <select name="{{linkname}}_link" style="width: 100%">
+                <option value=''>None</option>
+                {% for person in people %}
+                <option value="{{person.id}}">{{person.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-xs-2">
+            <div class="btn-group">
+                <button class="btn btn-remove" type="button">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+                <button class="btn btn-add btn-primary" type="button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>
