@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lfcs-test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
+
 app.secret_key = "thisisaverysecretkeyyouwillneverguess"
 
 db = SQLAlchemy(app)

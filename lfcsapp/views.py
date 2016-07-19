@@ -18,6 +18,20 @@ def search():
         search = request.form['search']
         return redirect(url_for('results', query=search))
 
+@app.route('/advancedsearch')
+def advanced():
+    return render_template('advanced.html')
+
+@app.route('/advancedsend', methods=['POST'])
+def advanced_send():
+    name = request.form.get('name')
+    location = request.form.get('location')
+    start = request.form.get('start')
+    end = request.form.get('end')
+    cat = request.form.get('category')
+    results = func.advanced_search(name, location, start, end, cat)
+    return render_template('results.html', results=results)
+
 @app.route('/results/<query>')
 def results(query):
     results=func.base_search(query)
@@ -47,7 +61,7 @@ def user_loader(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    flash("Oops! It looks like you tried to access an unauthorized page! Please log in", ("warn","bttom right"))
+    flash("It looks like you tried to access an unauthorized page! Please log in.", ("warn","bottom right"))
     previous = request.referrer
     if previous:
         return redirect(previous)

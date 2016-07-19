@@ -8,39 +8,40 @@ def base_search(query):
     positions = Positions.query.search(query).all()
     phd = PhD.query.search(query).all()
 
-    results = {}
-    for p in people:
-        rank = db.engine.execute(db.func.ts_rank(p.search_vector, db.func.plainto_tsquery(query))).fetchone()[0]
-        if p in results.keys():
-            if results[p]<rank:
-                results[p]=rank
-        else:
-            results[p] = rank
-
     for position in positions:
-        rank = db.engine.execute(db.func.ts_rank(position.search_vector, db.func.plainto_tsquery(query))).fetchone()[0]
         if position.staff:
-            if position.staff.person in results.keys():
-                if results[position.staff.person]<rank:
-                    results[position.staff.person] = rank
-            else:
-                results[position.staff.person] = rank
+            people.append(position.staff.person)
         elif position.associate:
-            if position.associate.person in results.keys():
-                if results[position.associate.person]<rank:
-                    results[position.associate.person] = rank
-            else:
-                results[position.associate.person] = rank
+            people.append(position.associate.person)
 
-    for s in phd:
-        rank = db.engine.execute(db.func.ts_rank(s.search_vector, db.func.plainto_tsquery(query))).fetchone()[0]
-        if s.person in results.keys():
-            if results[s.person]<rank:
-                results[s.person]=rank
-        else:
-            results[s.person]=rank
+    for student in phd:
+        people.append(student.person)
 
-    return sorted(results, key=results.get, reverse=True)
+    return set(people)
+
+def advanced_search(name, location, start, end, cat):
+    results = People.query
+    dates = Dates.query.filter(Dates.person)
+
+    if name:
+        results = results.filter_by(name=name)
+    if location:
+        results = results.filter_by(location=location)
+    if cat=='staff':
+        results = results.filter(People.staff)
+    if cat=='phd':
+        results = results.filter(People.phd)
+    if cat=='postdoc':
+        results = results.filter(People.postdoc)
+    if cat=='associate':
+        results = results.filter(People.associate)
+    if start:
+        dates = dates.filter(Dates.start==start)
+    if end:
+        dates = dates.filter(Dates.end==end)
+
+    dates = [date.person for date in dates]
+    return set.intersection(set(results), set(dates))
 
 def update_info(id, name, url, location, starts, ends):
     person = People.query.get(id)
