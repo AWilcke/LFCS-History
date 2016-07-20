@@ -1,0 +1,48 @@
+<div id="grants" class="form-group entry">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class='input-group'>
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">Title</span>
+                <input class="form-control" name="grant_title" value="{{grant.title}}" placeholder="Title"/>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class='input-group'>
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">Value</span>
+                <input class="form-control" name="grant_value" value="{{grant.value}}" placeholder="Value"/>
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">£</span>
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class="col-xs-6">
+            <div class="input-group">
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">URL</span>
+                <input class="form-control" name="grant_url" value="{{grant.url}}" placeholder="url"/>
+            </div>
+        </div>
+
+        <div class="grant-date-form">
+            <div class="date-entry">
+                <div id="dates" class="col-xs-4">
+                    <div class="input-group">
+                        <input class="form-control datestart" name="grant_{{num}}_start" value="{{grant.dates[0].start}}" placeholder="Start"/>
+                        <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+
+                        <input class="form-control dateend" name="grant_{{num}}_end" value="{{grant.dates[0].end}}" placeholder="End"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="btn-group">
+                <button class="btn btn-remove" type="button">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+                <button class="btn btn-add btn-primary" type="button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

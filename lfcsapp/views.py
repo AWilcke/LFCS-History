@@ -195,10 +195,21 @@ def updatesend(num):
             for i in range(0, len(position_names)):
                 pos_starts.append(request.form.getlist('staff_' + str(i) + '_start'))
                 pos_ends.append(request.form.getlist('staff_' + str(i) + '_end'))
+
+            grant_titles = request.form.getlist('grant_title')
+            grant_urls = request.form.getlist('grant_url')
+            grant_values = request.form.getlist('grant_value')
+            grant_starts = []
+            grant_ends = []
+            for i in range(0, len(grant_titles)):
+                grant_starts.append(request.form.getlist('grant_' + str(i) + '_start'))
+                grant_ends.append(request.form.getlist('grant_' + str(i) + '_end'))
+                
             students = request.form.getlist('staff_phd_link')
             primary = request.form.getlist('staff_primary_link')
             secondary = request.form.getlist('staff_secondary_link')
-            func.update_staff(num, position_names, pos_starts, pos_ends, starts, ends, students, primary, secondary)
+            
+            func.update_staff(num, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_starts, grant_ends, starts, ends, students, primary, secondary)
 
         #phd
         starts = request.form.getlist('phd_start')

@@ -27,6 +27,7 @@ class Staff(db.Model):
 
     position = db.relationship('Positions', back_populates='staff', cascade='all, delete-orphan')
     dates = db.relationship('Dates', back_populates='staff', cascade='all, delete-orphan')
+    grants = db.relationship('Grants', back_populates='staff', cascade='all, delete-orphan')
 
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     postdocs = db.relationship('PostDoc', back_populates='primary_investigator')
@@ -122,6 +123,26 @@ class Positions(db.Model):
             dates.append('(' + str(pair.start) + '-' + str(pair.end) + ')')
         return self.position + ' ' + ' and '.join(dates)
 
+#grants for staff
+class Grants(db.Model):
+    __tablename__ = 'grants'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String())
+    dates = db.relationship('Dates', back_populates='grant', cascade='all, delete-orphan')
+    value = db.Column(db.Integer)
+    url = db.Column(db.String())
+
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
+    staff = db.relationship('Staff', back_populates='grants')
+
+    def __repr__(self):
+        return self.title + ' for ' + self.staff.person.name
+    
+    def __init__(self, title, value, url):
+        self.title = title
+        self.value = value
+        self.url = url
+
 #table for pairs of start-end dates
 class Dates(db.Model):
     __tablename__='dates'
@@ -148,6 +169,9 @@ class Dates(db.Model):
     
     position_id=db.Column(db.Integer, db.ForeignKey('positions.id'))
     position = db.relationship('Positions', back_populates='dates')
+
+    grant_id = db.Column(db.Integer, db.ForeignKey('grants.id'))
+    grant = db.relationship('Grants', back_populates='dates')
 
     def __init__(self, start, end):
         self.start=start

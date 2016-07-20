@@ -41,6 +41,24 @@
 <div class="form-group">
     <div class="row">
         <div class="col-xs-12">
+            <label>Grants</label>
+        </div>
+    </div>
+    <div class="dynamic-form">
+        {% with num = 0 %}
+        {% for grant in person.staff.grants %}
+        {% include 'forms/grant.html' %}
+        {% set num = num + 1 %}
+        {% else %}
+        {% include 'forms/default_grant.html' %}
+        {% endfor %}
+        {% endwith %}
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-xs-12">
             <label>Students</label>
         </div>
     </div>

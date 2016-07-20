@@ -14,6 +14,14 @@ $(document).ready(function() {
   });
 
 });
+$(document).ready(function() {
+  $('#datatable').dataTable({
+      paging: false,
+      "order":[[1, 'desc']],
+      "dom":'rt',
+  });
+
+});
 
 //dynamic form functions
 
@@ -102,6 +110,13 @@ $(function()
                 dateForm.eq(i).find('.dateend').attr('name',type.concat('_').concat(i.toString().concat('_end')));
             }
 
+            //update grant indexes
+            var grantForm = $('.grant-date-form');
+            
+            for(i=0;i<grantForm.length;i++){
+                grantForm.eq(i).find('.datestart').attr('name','grant_'.concat(i.toString().concat('_start')));
+                grantForm.eq(i).find('.dateend').attr('name','grant_'.concat(i.toString().concat('_end')));
+            }
             e.preventDefault();
             return false;
         });

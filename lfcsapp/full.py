@@ -1,4 +1,5 @@
 from lfcsapp.func import *
+import json
 
 def add_all():
     with open('full.tsv') as f:
@@ -199,3 +200,29 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
         person.url=url
 
     db.session.commit()
+
+def grant_person(name, title, start, end, value, url):
+    person = People.query.filter_by(name=name).first()
+    if not person:
+        return
+
+    grant = Grants()
+    grant.title = title
+    grant.dates = [Dates(start.split(' ')[-1], end.split(' ')[-1])]
+    grant.value = int(value.replace(',',''))
+    grant.url = url
+
+    person.staff.grants.append(grant)
+
+def grant_all():
+    with open('grants.json','r') as f:
+        data = f.read().splitlines()
+
+    for line in data[1:-1]:
+        js = json.loads(line.rstrip(','))
+        grant_person(js['person'], js['title'], js['start'], js['end'], js['value'], js['url'])
+
+    db.session.commit()
+    
+
+

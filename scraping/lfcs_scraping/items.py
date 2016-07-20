@@ -10,7 +10,7 @@ import scrapy
 
 class PersonItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    name = scrapy.Field()
     url = scrapy.Field()
     last = scrapy.Field()
     first = scrapy.Field()
@@ -25,3 +25,11 @@ class ReportItem(scrapy.Item):
     first=scrapy.Field()
     last=scrapy.Field()
     thesis=scrapy.Field()
+
+class GrantItem(scrapy.Item):
+    title = scrapy.Field()
+    person = scrapy.Field()
+    start = scrapy.Field()
+    end = scrapy.Field()
+    value = scrapy.Field()
+    url = scrapy.Field()
