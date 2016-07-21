@@ -11,7 +11,7 @@ def add_all():
             if line[i] == '':
                 line[i] = None
 
-        add_person(name=line[0] + ' ' + line[1], category=line[3], dates=line[2], extra=line[4], thesis=line[5], location=line[6], url=line[8])
+        add_person(name=line[0] + ' ' + line[1], category=line[3], dates=line[2], extra=line[4], thesis=line[5], location=line[7], url=line[9])
 
 def link_all():
     with open('full.tsv') as f:
