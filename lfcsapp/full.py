@@ -201,7 +201,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
 
     db.session.commit()
 
-def grant_person(name, title, start, end, value, url):
+def grant_person(name, title, start, end, value, url, ref):
     person = People.query.filter_by(name=name).first()
     if not person:
         return
@@ -211,7 +211,7 @@ def grant_person(name, title, start, end, value, url):
     grant.dates = [Dates(start.split(' ')[-1], end.split(' ')[-1])]
     grant.value = int(value.replace(',',''))
     grant.url = url
-
+    grant.ref = ref
     person.staff.grants.append(grant)
 
 def grant_all():
@@ -220,7 +220,7 @@ def grant_all():
 
     for line in data[1:-1]:
         js = json.loads(line.rstrip(','))
-        grant_person(js['person'], js['title'], js['start'], js['end'], js['value'], js['url'])
+        grant_person(js['person'], js['title'], js['start'], js['end'], js['value'], js['url'], js['ref'])
 
     db.session.commit()
 
@@ -230,18 +230,18 @@ def grant2_all():
 
     for line in data[1:-1]:
         js = json.loads(line.rstrip(','))
-        grant_secondary_person(js['person'], js['title'], js['primary'])
+        grant_secondary_person(js['person'], js['title'], js['primary'], js['ref'])
 
     db.session.commit()
 
 
-def grant_secondary_person(name, g_title, primary):
+def grant_secondary_person(name, g_title, primary, ref):
     person = People.query.filter(People.name==name).first()
     if not person:
         return
     primary = People.query.search(primary.split(',')[0]).filter(People.staff).all()
     for pos in primary:
-        match = Grants.query.filter(Grants.staff==pos.staff, Grants.title==g_title).first()
+        match = Grants.query.filter(Grants.staff==pos.staff, Grants.ref==ref).first()
         print match
         if match:
             match.secondary.append(person.staff)

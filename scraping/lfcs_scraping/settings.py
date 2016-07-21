@@ -13,6 +13,7 @@ BOT_NAME = 'lfcs_scraping'
 
 SPIDER_MODULES = ['lfcs_scraping.spiders']
 NEWSPIDER_MODULE = 'lfcs_scraping.spiders'
+DUPEFILTER_CLASS = 'scrapy.dupefilter.BaseDupeFilter' 
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

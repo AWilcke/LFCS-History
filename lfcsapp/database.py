@@ -134,6 +134,7 @@ class Positions(db.Model):
 class Grants(db.Model):
     __tablename__ = 'grants'
     id = db.Column(db.Integer, primary_key=True)
+    ref = db.Column(db.String())
     title = db.Column(db.String())
     dates = db.relationship('Dates', back_populates='grant', cascade='all, delete-orphan')
     value = db.Column(db.Integer)

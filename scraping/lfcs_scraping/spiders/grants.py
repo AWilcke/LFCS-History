@@ -10,9 +10,9 @@ class Grant(scrapy.Spider):
     
     def parse(self, response):
         with open('names.txt','r') as f:
-            names = f.read().split('\n')
+            names = f.read().splitlines()
 
-        for person in names[:-1]:
+        for person in names:
             request = scrapy.FormRequest.from_response(
                     response,
                     formdata={'txtSurname':person.split(' ')[-1]},
@@ -23,11 +23,15 @@ class Grant(scrapy.Spider):
 
     def find_person(self, response):
 
-        people = response.xpath('//tr[./td/text()="Sch of Informatics"]/td/a[@title="University of Edinburgh"]/@href').extract()
+        people = response.xpath('//tr[./td/text()="Sch of Informatics"]/td/a[@title="University of Edinburgh"]')
         for person in people:
-            request = scrapy.Request(response.urljoin(person), callback=self.parse_person)
-            request.meta['person'] = response.meta['person']
-            yield request
+            name = person.xpath('text()').extract()[0]
+            print name
+            if name.split(' ')[-1] == response.meta['person'].split(' ')[-1]:
+                url = person.xpath('@href').extract()[0]
+                request = scrapy.Request(response.urljoin(url), callback=self.parse_person)
+                request.meta['person'] = response.meta['person']
+                yield request
 
     def parse_person(self, response):
 
@@ -45,6 +49,7 @@ class Grant(scrapy.Spider):
         item['value'] = response.xpath('//span[@id="lblValue"]/text()').extract()[0]
         item['person'] = response.meta['person']
         item['url'] = response.url
+        item['ref'] = response.xpath('//span[@id="lblGrantReference"]/text()').extract()[0]
         yield item
 
 
@@ -57,9 +62,9 @@ class Grant2(scrapy.Spider):
     
     def parse(self, response):
         with open('names.txt','r') as f:
-            names = f.read().split('\n')
+            names = f.read().splitlines()
 
-        for person in names[:-1]:
+        for person in names:
             request = scrapy.FormRequest.from_response(
                     response,
                     formdata={'txtSurname':person.split(' ')[-1]},
@@ -70,17 +75,21 @@ class Grant2(scrapy.Spider):
 
     def find_person(self, response):
 
-        people = response.xpath('//tr[./td/text()="Sch of Informatics"]/td/a[@title="University of Edinburgh"]/@href').extract()
+        people = response.xpath('//tr[./td/text()="Sch of Informatics"]/td/a[@title="University of Edinburgh"]')
         for person in people:
-            request = scrapy.Request(response.urljoin(person), callback=self.parse_person)
-            request.meta['person'] = response.meta['person']
-            yield request
+            name = person.xpath('text()').extract()[0]
+            if name.split(' ')[-1] == response.meta['person'].split(' ')[-1]:
+                url = person.xpath('@href').extract()[0]
+                request = scrapy.Request(response.urljoin(url), callback=self.parse_person)
+                request.meta['person'] = response.meta['person']
+                yield request
 
     def parse_person(self, response):
 
-        grants = response.xpath('//tr[./td/text()="(C)" or ./td/text()="(R)"]/td/b/a/@href').extract()
+        grants = response.xpath('//tr[./td/text()="(C)" or ./td/text()="(R)"]/td/b/a/@href')
+
         for grant in grants:
-            request = scrapy.Request(response.urljoin(grant), callback=self.parse_grant)
+            request = scrapy.Request(response.urljoin(grant.extract()), callback=self.parse_grant)
             request.meta['person'] = response.meta['person']
             yield request
 
@@ -89,4 +98,5 @@ class Grant2(scrapy.Spider):
         item['title'] = response.xpath('//span[@id="lblTitle"]/strong/text()').extract()[0]
         item['person'] = response.meta['person']
         item['primary'] = response.xpath('//td[./a[@id="hlPrincipalInvestigator"]]/a[@href]/text()').extract()[0]
+        item['ref'] = response.xpath('//span[@id="lblGrantReference"]/text()').extract()[0]
         yield item

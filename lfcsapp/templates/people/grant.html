@@ -16,6 +16,7 @@
             <b>Primary Investigator:</b> <a href='{{url_for("person", id=grant.staff.person.id)}}'>{{grant.staff.person.name}}</a>
         </div>
     </div>
+    {% if grant.secondary %}
     <div class="row">
         <div class="col-xs-12">
             <b>Secondary Investigators</b>
@@ -36,6 +37,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="row">
         <div class="col-xs-12">
             <b>Value:</b> £{{grant.value}}

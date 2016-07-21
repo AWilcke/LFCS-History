@@ -71,6 +71,11 @@ $(function()
             newEntry.find('.date-entry .dateend').attr('name', type.concat('_').concat(newNum.concat('_end')));
         }
 
+        //also increment grant index
+        var oldNum = newEntry.find('.grant-entry select').attr('name').split('_')[1],
+            newNum = parseInt(oldNum, 10) + 1;
+        newEntry.find('.grant-entry select').attr('name', 'grant_'.concat(newNum).concat('_link'));
+
         //so that the cloning only picks up one date-entry
         if(newEntry.find('.date-entry').length>1){
             newEntry.find('.date-entry:not(:last)').remove();
@@ -114,7 +119,7 @@ $(function()
             var grantForm = $('.grant-secondary-form');
             
             for(i=0;i<grantForm.length;i++){
-                grantForm.eq(i).find('.grant_link').attr('name','grant_'.concat(i.toString().concat('_start')));
+                grantForm.eq(i).find('.grant_link').attr('name','grant_'.concat(i.toString().concat('_link')));
             }
             e.preventDefault();
             return false;

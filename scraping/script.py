@@ -2,8 +2,8 @@ from scrapy.utils.project import get_project_settings
 import scrapy
 import json
 from scrapy.crawler import CrawlerProcess
-from lfcs_scraping.items import GrantItem
-from lfcs_scraping.spiders.grants import Grant
+from lfcs_scraping.items import Grant2Item
+from lfcs_scraping.spiders.grants import Grant2
 
 class JsonWriterPipeline(object):
     def __init__(self):
@@ -20,6 +20,6 @@ settings.set('ITEM_PIPELINES', {
 })
 
 process = CrawlerProcess(settings)
-spider = Grant(person='sannella')
+spider = Grant2()
 process.crawl(spider)
 process.start()
