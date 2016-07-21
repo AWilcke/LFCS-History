@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 });
 $(document).ready(function() {
-  $('#datatable').dataTable({
+  $('.datatable').dataTable({
       paging: false,
       "order":[[1, 'desc']],
       "dom":'rt',

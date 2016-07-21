@@ -223,6 +223,27 @@ def grant_all():
         grant_person(js['person'], js['title'], js['start'], js['end'], js['value'], js['url'])
 
     db.session.commit()
-    
 
+def grant2_all():
+    with open('grants2.json','r') as f:
+        data = f.read().splitlines()
+
+    for line in data[1:-1]:
+        js = json.loads(line.rstrip(','))
+        grant_secondary_person(js['person'], js['title'], js['primary'])
+
+    db.session.commit()
+
+
+def grant_secondary_person(name, g_title, primary):
+    person = People.query.filter(People.name==name).first()
+    if not person:
+        return
+    primary = People.query.search(primary.split(',')[0]).filter(People.staff).all()
+    for pos in primary:
+        match = Grants.query.filter(Grants.staff==pos.staff, Grants.title==g_title).first()
+        print match
+        if match:
+            match.secondary.append(person.staff)
+            return
 

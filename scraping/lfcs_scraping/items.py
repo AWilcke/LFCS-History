@@ -33,3 +33,8 @@ class GrantItem(scrapy.Item):
     end = scrapy.Field()
     value = scrapy.Field()
     url = scrapy.Field()
+
+class Grant2Item(scrapy.Item):
+    person = scrapy.Field()
+    title = scrapy.Field()
+    primary = scrapy.Field()

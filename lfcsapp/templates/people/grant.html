@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>{{grant.title}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <b>Dates:</b> {{grant.dates[0].start}} - {{grant.dates[0].end}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <b>Primary Investigator:</b> <a href='{{url_for("person", id=grant.staff.person.id)}}'>{{grant.staff.person.name}}</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <b>Secondary Investigators</b>
+            <div class="row">
+                <div class="col-xs-4">
+                    <table class="table table-hover">
+                        <tbody>
+                        {% for second in grant.secondary %}
+                        <tr>
+                            <td>
+                                <a href='{{url_for("person", id=second.person.id)}}'>{{second.person.name}}</a>
+                            </td> 
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <b>Value:</b> £{{grant.value}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <b>More information:</b> <a href="{{grant.url}}">Grants on the Web</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -121,7 +121,6 @@ def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values
                 end=None
             newGrant.dates.append(Dates(start, end))
             
-            print grant_secondary
             for staff in grant_secondary[i]:
                 if staff:
                     newGrant.secondary.append(People.query.get(staff).staff)

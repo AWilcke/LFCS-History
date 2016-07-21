@@ -8,9 +8,8 @@
         </div>
         <div class="col-xs-4">
             <div class='input-group'>
-                <span class="input-group-addon" style="border-left: 0; border-right: 0;">Value</span>
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">Value (£)</span>
                 <input class="form-control" name="grant_value" value="{{grant.value}}" placeholder="Value"/>
-                <span class="input-group-addon" style="border-left: 0; border-right: 0;">£</span>
             </div>
         </div>
         <div class="col-xs-2">
@@ -45,25 +44,23 @@
             </div>
         </div>
     </div>
-    <div class='row'>
-        <div class='col-xs-11 col-xs-offset-1'>
-            <label>Secondary Investigators</label>
-        </div>
-    </div>
     <div class="grant-secondary-form">
         {% for secondary in grant.secondary %}
         <div class='grant-entry'>
             <div class="row">
-                <div class='col-xs-6' style='padding-right: 0'>
-                    <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
-                        <option value='{{secondary.person.id}}'>{{secondary.person.name}}</option>
-                        <option value=''>None</option>
-                        {% for person in people %}
-                        <option value="{{person.id}}">{{person.name}}</option>
-                        {% endfor %}
-                    </select>
+                <div class='col-xs-6'>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="border-left: 0; border-right: 0;">Secondary Investigator</span>
+                        <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
+                            <option value='{{secondary.person.id}}'>{{secondary.person.name}}</option>
+                            <option value=''>None</option>
+                            {% for person in people %}
+                            <option value="{{person.id}}">{{person.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div class="col-xs-2" style='padding-left:0'>
+                <div class="col-xs-2">
                     <div class="btn-group">
                         <button class="grant-remove btn btn-default btn-sm" type="button">
                             <i class="glyphicon glyphicon-remove"></i>
@@ -78,15 +75,18 @@
         {% else %}
         <div class='grant-entry'>
             <div class="row">
-                <div class='col-xs-6' style='padding-right: 0'>
-                    <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
-                        <option value=''>None</option>
-                        {% for person in people %}
-                        <option value="{{person.id}}">{{person.name}}</option>
-                        {% endfor %}
-                    </select>
+                <div class='col-xs-6'>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="border-left: 0; border-right: 0;">Secondary Investigator</span>
+                        <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
+                            <option value=''>None</option>
+                            {% for person in people %}
+                            <option value="{{person.id}}">{{person.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div class="col-xs-2" style='padding-left:0'>
+                <div class="col-xs-2">
                     <div class="btn-group">
                         <button class="grant-remove btn btn-default btn-sm" type="button">
                             <i class="glyphicon glyphicon-remove"></i>

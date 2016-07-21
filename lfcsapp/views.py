@@ -52,7 +52,16 @@ def person(id):
     if person:
         return render_template('people/person_detail.html', person=person)
     else:
-        #should add error page
+        flash('The page you are looking for doesn\'t seem to exist', ('warn','bottom right'))
+        return redirect(url_for('index'))
+
+@app.route('/grant/<id>')
+def grant(id):
+    grant = func.Grants.query.get(id)
+    if grant:
+        return render_template('people/grant.html', grant=grant)
+    else:
+        flash('The page you are looking for doesn\'t seem to exist', ('warn','bottom right'))
         return redirect(url_for('index'))
 
 @login_manager.user_loader
