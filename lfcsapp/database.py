@@ -17,6 +17,12 @@ postdoc_table = db.Table('postdoc_table',
     extend_existing=True
 )
 
+grant_table = db.Table('grant_table',
+    db.Column('staff', db.Integer, db.ForeignKey('staff.id')),
+    db.Column('grants', db.Integer, db.ForeignKey('grants.id')),
+    extend_existing=True
+)
+
 #class for easy searching
 class QueryClass(BaseQuery, SearchQueryMixin):
     pass
@@ -28,6 +34,7 @@ class Staff(db.Model):
     position = db.relationship('Positions', back_populates='staff', cascade='all, delete-orphan')
     dates = db.relationship('Dates', back_populates='staff', cascade='all, delete-orphan')
     grants = db.relationship('Grants', back_populates='staff', cascade='all, delete-orphan')
+    grants_secondary = db.relationship('Grants', back_populates='secondary', secondary='grant_table')
 
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     postdocs = db.relationship('PostDoc', back_populates='primary_investigator')
@@ -135,10 +142,12 @@ class Grants(db.Model):
     staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     staff = db.relationship('Staff', back_populates='grants')
 
+    secondary = db.relationship('Staff', back_populates='grants_secondary', secondary='grant_table')
+
     def __repr__(self):
         return self.title + ' for ' + self.staff.person.name
     
-    def __init__(self, title, value, url):
+    def __init__(self, title=None, value=None, url=None):
         self.title = title
         self.value = value
         self.url = url

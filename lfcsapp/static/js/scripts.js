@@ -99,7 +99,7 @@ $(function()
             }
 
             $(this).parents('.entry:first').remove();
-            form.find('.entry:last div:last').append(button);
+            form.find('.entry:last .cat-btn').append(button);
             
             //update date indexes
             var dateForm = $('.position-date-form');
@@ -111,11 +111,10 @@ $(function()
             }
 
             //update grant indexes
-            var grantForm = $('.grant-date-form');
+            var grantForm = $('.grant-secondary-form');
             
             for(i=0;i<grantForm.length;i++){
-                grantForm.eq(i).find('.datestart').attr('name','grant_'.concat(i.toString().concat('_start')));
-                grantForm.eq(i).find('.dateend').attr('name','grant_'.concat(i.toString().concat('_end')));
+                grantForm.eq(i).find('.grant_link').attr('name','grant_'.concat(i.toString().concat('_start')));
             }
             e.preventDefault();
             return false;
@@ -176,6 +175,58 @@ $(function()
         });
 });
 
+//for grant secondary investigators
+$(document).ready(function(){
+    //get relevant buttons
+    $('.grant-secondary-form').find('.grant-entry:not(:last) .grant-add').remove();
+});
+
+//for nested date forms
+$(function()
+{
+    $(document)
+    .on('click', '.grant-add', function(e)
+    {
+        e.preventDefault();
+        //clone first entry
+        var form = $(this).parents('.grant-secondary-form:first'),
+            current = $(this).parents('.grant-entry:first');
+        
+        current.find('select').select2('destroy');
+
+        var newEntry = $(current.clone());
+        newEntry.insertAfter(current);
+       
+       //clear first
+        $('select').select2();
+        newEntry.find('select').val('').change();
+
+        //get relevant buttons
+        form.find('.grant-entry:not(:last) .grant-add').remove();
+
+    })
+
+    .on('click', '.grant-remove', function(e)
+        {   
+            var form = $(this).parents('.grant-secondary-form:first'),
+                current = $(this).parents('.grant-entry:first'),
+                first = form.find('.grant-entry:first'),
+                last = form.find('.grant-entry:last'),
+                button = $(current.find('.grant-add')).clone();
+
+            if(first.is(last)){
+                current.find('select').val('').change();
+                e.preventDefault();
+                return false;
+            }
+
+            $(this).parents('.grant-entry:first').remove();
+            form.find('.grant-entry:last div:last').append(button);
+
+            e.preventDefault();
+            return false;
+        });
+});
 //for password confirmation
 $(function()
 {

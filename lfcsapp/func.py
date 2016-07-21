@@ -85,7 +85,7 @@ def delete_person(id):
     db.session.delete(People.query.get(id))
     db.session.commit()
 
-def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_starts, grant_ends, starts, ends, students, primary, secondary):
+def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary):
     person = People.query.get(id).staff
     person.position = []
     for i in range(0, len(positions)):
@@ -111,16 +111,20 @@ def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values
             except:
                 grant_values[i] = None
             newGrant = Grants(grant_titles[i], grant_values[i], grant_urls[i])
-            for (start, end) in zip(grant_starts[i], grant_ends[i]):
-                try:
-                    start = int(start)
-                except:
-                    start=None
-                try:
-                    end = int(end)
-                except:
-                    end=None
-                newGrant.dates.append(Dates(start, end))
+            try:
+                start = int(grant_starts[i])
+            except:
+                start=None
+            try:
+                end = int(grant_ends[i])
+            except:
+                end=None
+            newGrant.dates.append(Dates(start, end))
+            
+            print grant_secondary
+            for staff in grant_secondary[i]:
+                if staff:
+                    newGrant.secondary.append(People.query.get(staff).staff)
             person.grants.append(newGrant)
 
     person.dates=[]

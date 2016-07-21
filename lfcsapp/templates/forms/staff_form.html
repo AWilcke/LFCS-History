@@ -45,6 +45,7 @@
         </div>
     </div>
     <div class="dynamic-form">
+        {% with people = staff %}
         {% with num = 0 %}
         {% for grant in person.staff.grants %}
         {% include 'forms/grant.html' %}
@@ -52,6 +53,7 @@
         {% else %}
         {% include 'forms/default_grant.html' %}
         {% endfor %}
+        {% endwith %}
         {% endwith %}
     </div>
 </div>
