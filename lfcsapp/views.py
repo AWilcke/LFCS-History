@@ -349,30 +349,56 @@ def suggestsend(num):
 
             func.update_associate(num, position_names, pos_starts, pos_ends, starts, ends)
 
-        #store submitted form as a dic
-        
         #adding categories
         if request.form.get('cat-add-btn'):
-            person = func.People.query.get(num)
             cat = request.form.get('new_category')
-            func.add_cat(num, cat) 
-            students = [student.person for student in func.PhD.query.all()]
-            staff = [staff.person for staff in func.Staff.query.all()]
-            postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
+            func.add_cat(num, cat)
+            dic = func.person_to_dict(func.People.query.get(num))
+            func.db.session.rollback()
+            index = redis_store.rpush('tempsuggestions', dic)
+            return redirect(url_for('suggest_edit', ind=index))
+        
+        #store submitted form as a dic
+        dic = func.person_to_dict(func.People.query.get(num))
+        func.db.session.rollback()
+        
 
-            return render_template('suggest/initial.html', person=person, staff=staff, students=students, postdocs=postdocs)
 
         #removing categories
         rm = request.form.get('rm-cat')
         if rm:
-            func.rm_cat(num, rm)
-            return "come back later"
+            cat = rm.replace('rm-','')
+            dic[cat] = {}
+            index = redis_store.rpush('tempsuggestions', dic)
+            return redirect(url_for('suggest_edit', ind=index))
 
-        flash('Thank you for your contribution',('bottom right','success'))
-        dic = func.person_to_dict(func.People.query.get(num))
         redis_store.rpush('suggestions', dic)
-        func.db.session.rollback()
+        flash('Thank you for your contribution',('success','bottom right'))
         return redirect(url_for('person',id=num)) 
+
+@app.route('/suggest_edit/<ind>')
+def suggest_edit(ind):
+    dic = redis_store.lindex('tempsuggestions',int(ind)-1)
+    redis_store.lrem('tempsuggestions',0,dic)
+    if dic:
+        dic = eval(dic)
+        categories = func.dic_to_person(dic)
+        person = func.People()
+        person.name = dic['name']
+        person.url = dic['url']
+        person.location = dic['location']
+        for date in dic['dates']:
+            person.dates.append(func.Dates(date[0], date[1]))
+
+        person.staff = categories[0]
+        person.phd = categories[1]
+        person.postdoc = categories[2]
+        person.associate = categories[3]
+
+        students = [student.person for student in func.PhD.query.all()]
+        staff = [staff.person for staff in func.Staff.query.all()]
+        postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
+        return render_template('suggest/initial.html', person=person, students=students, staff=staff, postdocs=postdocs)
 
 @app.route('/addperson')
 @login_required

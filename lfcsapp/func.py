@@ -310,7 +310,10 @@ def person_to_dict(person):
     if person.postdoc:
         postdoc = dic['postdoc']
         postdoc['dates'] = [(date.start, date.end) for date in person.postdoc.dates]
-        postdoc['primary_investigator'] = person.postdoc.primary_investigator.person.id
+        if person.postdoc.primary_investigator:
+            postdoc['primary_investigator'] = person.postdoc.primary_investigator.person.id
+        else:
+            postdoc['primary_investigator'] = None
         postdoc['investigators'] = [inv.person.id for inv in person.postdoc.investigators]
 
     if person.associate:
@@ -364,8 +367,10 @@ def dic_to_person(dic):
             pg.dates.append(Dates(start, end))
         for id in pg_d['investigators']:
             pg.investigators.append(People.query.get(id).staff)
-        pg.primary_investigator = People.query.get(pg_d['primary_investigator']).staff
-
+        if pg_d['primary_investigator']:
+            pg.primary_investigator = People.query.get(pg_d['primary_investigator']).staff
+        else:
+            pg.primary_investigator = None
     if dic['associate']:
         a_d = dic['associate']
         assoc = Associates()

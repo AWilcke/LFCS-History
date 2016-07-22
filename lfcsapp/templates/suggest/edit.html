@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form id="info" role="form" action="{{url_for('updatesend', num=person.id)}}" method="POST">
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="name" class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="name" type="text" value="{{person.name}}" required/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <label>Dates</label>
+            </div>
+        </div>
+        <div class="dynamic-form">
+            {% with type="info" %}
+            {% for date in person.dates %}
+            {% include 'forms/dates.html' %}
+            {% else %}
+            {% include 'forms/default_date.html' %}
+            {% endfor %}
+            {% endwith %}
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="url" class="form-group">
+                    <label>Website</label>
+                    <input class="form-control" name="url" type="text" value="{{person.url}}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="location" class="form-group">
+                    <label>Location</label>
+                    <input class="form-control" name="location" type="text" value="{{person.location}}"/>
+                </div>
+            </div>
+        </div>
+        {% if person.staff %}
+        {% include 'forms/staff_form.html' %}
+        {% endif %}
+        {% if person.phd %}
+        {% include 'forms/phd_form.html' %}
+        {% endif %}
+        {% if person.postdoc %}
+        {% include 'forms/postdoc_form.html' %}
+        {% endif %}
+        {% if person.associate %}
+        {% include 'forms/associate_form.html' %}
+        {% endif %}
+
+        {% if not(person.staff and person.phd and person.postdoc and person.associate) %}
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Add Category</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <div class='col-xs-3'>
+                    <select name='new_category' id='new_cat' style='width:100%'>
+                        <option value=''></option>
+                        {% if not person.staff %}
+                        <option value="staff">Staff</option>
+                        {% endif %}
+                        {% if not person.phd %}
+                        <option value="phd">Phd</option>
+                        {% endif %}
+                        {% if not person.postdoc %}
+                        <option value="postdoc">PostDoc</option>
+                        {% endif %}
+                        {% if not person.associate %}
+                        <option value="associate">Associate</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class='col-xs-1'>
+                    <span class='input-group-btn'>
+                        <button class='btn cat-add' type='submit' value='cat-add-btn' name='cat-add-btn'>
+                            <i class='glyphicon glyphicon-plus'></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row" style="padding-bottom:30px">
+            <div class="col-xs-12">
+                    <div class="pull-right">
+                        <div class='btn-group'>
+                            <a href="{{url_for('person', id=person.id)}}" class='btn btn-lg btn-danger'>
+                                <i class="glyphicon glyphicon-floppy-remove"></i>
+                            </a>
+                            <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
+                                <i class="glyphicon glyphicon-floppy-saved"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

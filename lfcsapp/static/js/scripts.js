@@ -72,10 +72,12 @@ $(function()
         }
 
         //also increment grant index
-        var oldNum = newEntry.find('.grant-entry select').attr('name').split('_')[1],
-            newNum = parseInt(oldNum, 10) + 1;
-        newEntry.find('.grant-entry select').attr('name', 'grant_'.concat(newNum).concat('_link'));
-
+        var name = newEntry.find('.grant-entry select').attr('name');
+        if(name){
+            var oldNum = name.split('_')[1],
+                newNum = parseInt(oldNum, 10) + 1;
+            newEntry.find('.grant-entry select').attr('name', 'grant_'.concat(newNum).concat('_link'));
+        }
         //so that the cloning only picks up one date-entry
         if(newEntry.find('.date-entry').length>1){
             newEntry.find('.date-entry:not(:last)').remove();
