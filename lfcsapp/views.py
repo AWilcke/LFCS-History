@@ -1,10 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from lfcsapp import app, bcrypt
+from flask_login import login_required, login_user, logout_user, current_user
+from lfcsapp import app, bcrypt, login_manager, redis_store
 import lfcsapp.func as func
+import json
 
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 @app.route('/')
 def index():
@@ -208,6 +207,7 @@ def updatesend(num):
             grant_titles = request.form.getlist('grant_title')
             grant_urls = request.form.getlist('grant_url')
             grant_values = request.form.getlist('grant_value')
+            grant_refs = request.form.getlist('grant_ref')
             grant_starts = request.form.getlist('grant_start')
             grant_ends = request.form.getlist('grant_end')
             grant_secondary = []
@@ -218,7 +218,7 @@ def updatesend(num):
             primary = request.form.getlist('staff_primary_link')
             secondary = request.form.getlist('staff_secondary_link')
             
-            func.update_staff(num, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+            func.update_staff(num, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -269,6 +269,110 @@ def updatesend(num):
         func.db.session.commit()
         flash('Updated information for ' + name, ('success','bottom right'))
         return redirect(url_for('person', id=num))
+
+@app.route('/suggest/<id>', methods=['GET'])
+def suggest(id):
+    person = func.People.query.get(id)
+    students = [student.person for student in func.PhD.query.all()]
+    staff = [staff.person for staff in func.Staff.query.all()]
+    postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
+    if person:
+        return render_template('suggest/initial.html', person=person, students=students, staff=staff, postdocs=postdocs)
+    else:
+        return redirect(url_for('index'))
+
+@app.route('/suggestsend/<num>', methods=['POST'])
+def suggestsend(num):
+    if request.method == 'POST':
+        #basic info
+        name = request.form['name']
+        url = request.form['url']
+        location = request.form['location']
+        starts = request.form.getlist('info_start')
+        ends = request.form.getlist('info_end')
+        func.update_info(num, name, url, location, starts, ends)
+
+        #staff
+        starts = request.form.getlist('staff_start')
+        if starts:
+            ends = request.form.getlist('staff_end')
+            position_names = request.form.getlist('staff_position')
+            pos_starts = []
+            pos_ends = []
+            for i in range(0, len(position_names)):
+                pos_starts.append(request.form.getlist('staff_' + str(i) + '_start'))
+                pos_ends.append(request.form.getlist('staff_' + str(i) + '_end'))
+
+            grant_titles = request.form.getlist('grant_title')
+            grant_urls = request.form.getlist('grant_url')
+            grant_values = request.form.getlist('grant_value')
+            grant_refs = request.form.getlist('grant_ref')
+            grant_starts = request.form.getlist('grant_start')
+            grant_ends = request.form.getlist('grant_end')
+            grant_secondary = []
+            for i in range(0, len(grant_titles)):
+                grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
+                
+            students = request.form.getlist('staff_phd_link')
+            primary = request.form.getlist('staff_primary_link')
+            secondary = request.form.getlist('staff_secondary_link')
+            
+            func.update_staff(num, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+
+        #phd
+        starts = request.form.getlist('phd_start')
+        if starts:
+            ends = request.form.getlist('phd_end')
+            thesis = request.form['thesis']
+            supervisors = request.form.getlist('phd_staff_link')
+            func.update_phd(num, thesis, starts, ends, supervisors)
+
+
+        #postdoc
+        starts = request.form.getlist('postdoc_start')
+        if starts:
+            ends = request.form.getlist('postdoc_end')
+            primary = request.form['postdoc_primary']
+            secondary = request.form.getlist('postdoc_secondary_link')
+            func.update_postdoc(num, starts, ends, primary, secondary)
+
+        #associates
+        starts = request.form.getlist('associate_start')
+        if starts:
+            ends = request.form.getlist('associate_end')
+            position_names = request.form.getlist('associate_position')
+            pos_starts = []
+            pos_ends = []
+            for i in range(0, len(position_names)):
+                pos_starts.append(request.form.getlist('associate_' + str(i) + '_start'))
+                pos_ends.append(request.form.getlist('associate_' + str(i) + '_end'))
+
+            func.update_associate(num, position_names, pos_starts, pos_ends, starts, ends)
+
+        #store submitted form as a dic
+        
+        #adding categories
+        if request.form.get('cat-add-btn'):
+            person = func.People.query.get(num)
+            cat = request.form.get('new_category')
+            func.add_cat(num, cat) 
+            students = [student.person for student in func.PhD.query.all()]
+            staff = [staff.person for staff in func.Staff.query.all()]
+            postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
+
+            return render_template('suggest/initial.html', person=person, staff=staff, students=students, postdocs=postdocs)
+
+        #removing categories
+        rm = request.form.get('rm-cat')
+        if rm:
+            func.rm_cat(num, rm)
+            return "come back later"
+
+        flash('Thank you for your contribution',('bottom right','success'))
+        dic = func.person_to_dict(func.People.query.get(num))
+        redis_store.rpush('suggestions', dic)
+        func.db.session.rollback()
+        return redirect(url_for('person',id=num)) 
 
 @app.route('/addperson')
 @login_required

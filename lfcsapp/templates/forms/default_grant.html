@@ -1,12 +1,12 @@
 <div id="grants" class="form-group entry">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             <div class='input-group'>
                 <span class="input-group-addon" style="border-left: 0; border-right: 0;">Title</span>
                 <input class="form-control" name="grant_title" placeholder="Title"/>
             </div>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-5">
             <div class='input-group'>
                 <span class="input-group-addon" style="border-left: 0; border-right: 0;">Value</span>
                 <input class="form-control" name="grant_value" placeholder="Value"/>
@@ -25,43 +25,46 @@
         </div>
     </div>
     <div class='row'>
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             <div class="input-group">
                 <span class="input-group-addon" style="border-left: 0; border-right: 0;">URL</span>
                 <input class="form-control" name="grant_url" placeholder="url"/>
             </div>
         </div>
 
-        <div class="grant-date-form">
-            <div class="date-entry">
-                <div id="dates" class="col-xs-4">
-                    <div class="input-group">
-                        <input class="form-control datestart" name="grant_start" placeholder="Start"/>
-                        <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+        <div class="col-xs-2" style="padding-right:0">
+            <div class="input-group">
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">Ref</span>
+                <input class="form-control" name="grant_ref" placeholder="Ref"/>
+            </div>
+        </div>
 
-                        <input class="form-control dateend" name="grant_end" placeholder="End"/>
-                    </div>
-                </div>
+        <div id="dates" class="col-xs-3" style="padding-left:0">
+            <div class="input-group">
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">Dates</span>
+                <input class="form-control datestart" name="grant_start" placeholder="Start"/>
+                <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+
+                <input class="form-control dateend" name="grant_end" placeholder="End"/>
             </div>
         </div>
     </div>
-    <div class='row'>
-        <div class='col-xs-11 col-xs-offset-1'>
-            <label>Secondary Investigators</label>
-        </div>
-    </div>
+
     <div class="grant-secondary-form">
         <div class='grant-entry'>
             <div class="row">
-                <div class='col-xs-6' style='padding-right: 0'>
-                    <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
-                        <option value=''>None</option>
-                        {% for person in people %}
-                        <option value="{{person.id}}">{{person.name}}</option>
-                        {% endfor %}
-                    </select>
+                <div class='col-xs-5'>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="border-left: 0; border-right: 0;">Secondary Investigator</span>
+                        <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
+                            <option value=''>None</option>
+                            {% for person in people %}
+                            <option value="{{person.id}}">{{person.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div class="col-xs-2" style='padding-left:0'>
+                <div class="col-xs-2">
                     <div class="btn-group">
                         <button class="grant-remove btn btn-default btn-sm" type="button">
                             <i class="glyphicon glyphicon-remove"></i>

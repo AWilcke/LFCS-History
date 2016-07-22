@@ -208,7 +208,7 @@ def grant_person(name, title, start, end, value, url, ref):
 
     grant = Grants()
     grant.title = title
-    grant.dates = [Dates(start.split(' ')[-1], end.split(' ')[-1])]
+    grant.dates = Dates(start.split(' ')[-1], end.split(' ')[-1])
     grant.value = int(value.replace(',',''))
     grant.url = url
     grant.ref = ref

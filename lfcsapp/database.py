@@ -136,7 +136,7 @@ class Grants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ref = db.Column(db.String())
     title = db.Column(db.String())
-    dates = db.relationship('Dates', back_populates='grant', cascade='all, delete-orphan')
+    dates = db.relationship('Dates', back_populates='grant', cascade='all, delete-orphan', uselist=False)
     value = db.Column(db.Integer)
     url = db.Column(db.String())
 
@@ -148,10 +148,11 @@ class Grants(db.Model):
     def __repr__(self):
         return self.title + ' for ' + self.staff.person.name
     
-    def __init__(self, title=None, value=None, url=None):
+    def __init__(self, title=None, value=None, url=None, ref=None):
         self.title = title
         self.value = value
         self.url = url
+        self.ref = ref
 
 #table for pairs of start-end dates
 class Dates(db.Model):

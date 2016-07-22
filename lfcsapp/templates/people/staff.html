@@ -89,9 +89,7 @@
                 <td><a href='{{url_for("grant", id=grant.id)}}'>{{grant.title}}</a></td>
                 <td>{{grant.value}}</td>
                 <td>
-                    {% for date in grant.dates %}
-                    <p>{{date.start}}-{{date.end}}</p>
-                    {% endfor %}
+                    <p>{{grant.dates.start}}-{{grant.dates.end}}</p>
                 </td>
             </tr>
             {% endfor %}
@@ -112,9 +110,7 @@
                 <td><a href='{{url_for("grant", id=grant.id)}}'>{{grant.title}}</a></td>
                 <td>{{grant.value}}</td>
                 <td>
-                    {% for date in grant.dates %}
-                    <p>{{date.start}}-{{date.end}}</p>
-                    {% endfor %}
+                    <p>{{grant.dates.start}}-{{grant.dates.end}}</p>
                 </td>
             </tr>
             {% endfor %}
