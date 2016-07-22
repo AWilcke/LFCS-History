@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form id="info" role="form" action="{{url_for('updatesend', num=person.id)}}" method="POST">
+<div class="container">
+    <form id="info" role="form" action="{{url_for('suggest_edit_send', ind=ind, id=id)}}" method="POST">
         <div class="row">
             <div class="col-xs-12">
                 <div id="name" class="form-group">
@@ -89,20 +90,20 @@
         {% endif %}
         <div class="row" style="padding-bottom:30px">
             <div class="col-xs-12">
-                    <div class="pull-right">
-                        <div class='btn-group'>
-                            <a href="{{url_for('person', id=person.id)}}" class='btn btn-lg btn-danger'>
-                                <i class="glyphicon glyphicon-floppy-remove"></i>
-                            </a>
-                            <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
-                                <i class="glyphicon glyphicon-floppy-saved"></i>
-                            </button>
-                        </div>
+                <div class="pull-right">
+                    <div class='btn-group'>
+                        <a href="{{url_for('person', id=id)}}" class='btn btn-lg btn-danger'>
+                            <i class="glyphicon glyphicon-floppy-remove"></i>
+                        </a>
+                        <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
+                            <i class="glyphicon glyphicon-floppy-saved"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 </div>
 {% endblock %}
 

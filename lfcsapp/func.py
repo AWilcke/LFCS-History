@@ -43,8 +43,7 @@ def advanced_search(name, location, start, end, cat):
     dates = [date.person for date in dates]
     return set.intersection(set(results), set(dates))
 
-def update_info(id, name, url, location, starts, ends):
-    person = People.query.get(id)
+def update_info(person, name, url, location, starts, ends):
     person.name = name
     person.url = url
     person.location = location
@@ -59,8 +58,6 @@ def update_info(id, name, url, location, starts, ends):
         except:
             end=None
         person.dates.append(Dates(start, end))
-
-    db.session.add(person)
 
 def add_person(name, url, location, starts, ends):
     person = People()
@@ -86,7 +83,7 @@ def delete_person(id):
     db.session.commit()
 
 def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary):
-    person = People.query.get(id).staff
+    person = id.staff
     person.position = []
     for i in range(0, len(positions)):
         if positions[i]:
@@ -155,7 +152,7 @@ def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values
 
 
 def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
-    person = People.query.get(id).associate
+    person = (id).associate
     person.position = []
     for i in range(0, len(positions)):
         if positions[i]:
@@ -186,7 +183,7 @@ def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
 
 
 def update_phd(id, thesis, starts, ends, supervisors):
-    person = People.query.get(id).phd
+    person = (id).phd
     
     person.dates = []
     for (start, end) in zip(starts, ends):
@@ -208,7 +205,7 @@ def update_phd(id, thesis, starts, ends, supervisors):
     person.thesis = thesis
 
 def update_postdoc(id, starts, ends, primary, secondary):
-    person = People.query.get(id).postdoc
+    person = (id).postdoc
     
     person.dates = []
     for (start, end) in zip(starts, ends):
@@ -231,9 +228,7 @@ def update_postdoc(id, starts, ends, primary, secondary):
         if id:
             person.investigators.append(People.query.get(id).staff)
 
-def add_cat(id, cat):
-    person = People.query.get(id)
-
+def add_cat(person, cat):
     if cat=='staff' and not person.staff:
         person.staff = Staff()
     elif cat=='phd' and not person.phd:
@@ -243,9 +238,7 @@ def add_cat(id, cat):
     elif cat=='associate' and not person.associate:
         person.associate = Associates()
 
-def rm_cat(id, cat):
-    person = People.query.get(id)
-    
+def rm_cat(person, cat):
     if cat=='rm-staff' and person.staff:
         person.staff = None
     elif cat=='rm-phd' and person.phd:
@@ -268,13 +261,17 @@ def add_user(first, last, email, password):
 
     db.session.add(new_user)
 
-def person_to_dict(person):
+def person_to_dict(person, id=None):
     dic = {'staff':{}, 'phd':{}, 'postdoc':{}, 'associate':{}}
     dic['name'] = person.name
     dic['url'] = person.url
     dic['location'] = person.location
     dic['dates'] = [(date.start, date.end) for date in person.dates]
-    dic['id'] = person.id
+    #this is to pass the id down to the final suggestion
+    if id:
+        dic['id'] = id
+    else:
+        dic['id'] = person.id
     if person.staff:
         staff = dic['staff']
         staff['position'] = [(position.position, [(date.start, date.end) for date in position.dates]) for position in person.staff.position]
@@ -323,9 +320,16 @@ def person_to_dict(person):
 
     return dic
 
-#takes a dict and returns a list of 4 categories
 def dic_to_person(dic):
     staff, phd, pg, assoc = None, None, None, None
+   
+    person = People()
+    person.name = dic['name']
+    person.url = dic['url']
+    person.location = dic['location']
+    for date in dic['dates']:
+        person.dates.append(Dates(date[0], date[1]))
+    
     if dic['staff']:
         staff_d = dic['staff']
         staff = Staff()
@@ -350,7 +354,7 @@ def dic_to_person(dic):
             g = Grants(grant['title'],grant['value'],grant['url'],grant['ref'])
             g.dates = Dates(grant['dates'][0], grant['dates'][1])
             staff.grants_secondary.append(g)
-
+        
     if dic['phd']:
         phd_d = dic['phd']
         phd = PhD()
@@ -381,4 +385,10 @@ def dic_to_person(dic):
         for (start, end) in a_d['dates']:
             assoc.dates.append(Dates(start, end))
 
-    return staff, phd, pg, assoc
+
+    person.staff = staff
+    person.phd = phd
+    person.postdoc = pg
+    person.associate = assoc
+
+    return person, dic['id']
