@@ -1,9 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user, current_user
-from lfcsapp import app, bcrypt, login_manager, redis_store
+from lfcsapp import app, bcrypt, login_manager
 import lfcsapp.func as func
-import json
-
 
 @app.route('/')
 def index():
@@ -51,7 +49,7 @@ def person(id):
     if person:
         return render_template('people/person_detail.html', person=person)
     else:
-        flash('The page you are looking for doesn\'t seem to exist', ('warn','bottom right'))
+        flash("The page you are looking for doesn't seem to exist", ('warn','bottom right'))
         return redirect(url_for('index'))
 
 @app.route('/grant/<id>')
@@ -60,7 +58,7 @@ def grant(id):
     if grant:
         return render_template('people/grant.html', grant=grant)
     else:
-        flash('The page you are looking for doesn\'t seem to exist', ('warn','bottom right'))
+        flash("The page you are looking for doesn't seem to exist", ('warn','bottom right'))
         return redirect(url_for('index'))
 
 @login_manager.user_loader
@@ -271,6 +269,7 @@ def updatesend(num):
         flash('Updated information for ' + name, ('success','bottom right'))
         return redirect(url_for('person', id=num))
 
+#initial suggestion
 @app.route('/suggest/<id>', methods=['GET'])
 def suggest(id):
     person = func.People.query.get(id)
@@ -286,6 +285,11 @@ def suggest(id):
 def suggestsend(num):
     if request.method == 'POST':
         person = func.People.query.get(num)
+        suggest = func.Suggestions()
+        suggest.person = person
+        func.db.session.add(suggest)
+        func.db.session.commit()
+        
         #basic info
         name = request.form['name']
         url = request.form['url']
@@ -357,46 +361,60 @@ def suggestsend(num):
             func.add_cat(person, cat)
             dic = func.person_to_dict(person)
             func.db.session.rollback()
-            index = redis_store.rpush('tempsuggestions', dic)
-            return redirect(url_for('suggest_edit', ind=index))
+            suggest.dict = str(dic)
+            func.db.session.commit()
+            return redirect(url_for('suggest_edit', ind=suggest.id))
         
         #store submitted form as a dic
         dic = func.person_to_dict(person)
         func.db.session.rollback()
         
-
-
         #removing categories
         rm = request.form.get('rm-cat')
         if rm:
             cat = rm.replace('rm-','')
             dic[cat] = {}
-            index = redis_store.rpush('tempsuggestions', dic)
-            return redirect(url_for('suggest_edit', ind=index))
+            suggest.dict = str(dic)
+            func.db.session.commit()
+            return redirect(url_for('suggest_edit', ind=suggest.id))
 
-        redis_store.rpush('suggestions', dic)
+        suggest.dict = str(dic)
+        suggest.final = True
+        func.db.session.commit()
         flash('Thank you for your contribution',('success','bottom right'))
         return redirect(url_for('person',id=num)) 
 
 #for editing an initial suggestion (adding categories)
 @app.route('/suggest_edit/<ind>')
 def suggest_edit(ind):
-    dic = redis_store.lindex('tempsuggestions',int(ind)-1)
+    suggest = func.Suggestions.query.get(ind)
+    if suggest.final:
+        flash("This suggestion has already been submitted, please submit another one", ("danger","bottom right"))
+        return redirect(url_for('index'))
+
+    dic = suggest.dict
     if dic:
         dic = eval(dic)
-        person, id = func.dic_to_person(dic)
+        person = func.dic_to_person(dic)
         students = [student.person for student in func.PhD.query.all()]
         staff = [staff.person for staff in func.Staff.query.all()]
         postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
-        return render_template('suggest/edit.html', id=id, ind=ind, person=person, students=students, staff=staff, postdocs=postdocs)
+        return render_template('suggest/edit.html', ind=ind, person=person, students=students, staff=staff, postdocs=postdocs)
 
-@app.route('/suggest_edit_send/<ind>&<id>', methods=['POST'])
-def suggest_edit_send(ind, id):
+@app.route('/suggest_edit_send/<ind>', methods=['POST'])
+def suggest_edit_send(ind):
+    suggest = func.Suggestions.query.get(ind)
+    dic = suggest.dict
     if request.method == 'POST':
-        dic = redis_store.lindex('tempsuggestions',int(ind)-1)
-        redis_store.lrem('tempsuggestions',0,dic)
         dic = eval(dic)
-        person, id = func.dic_to_person(dic)
+        person = func.dic_to_person(dic)
+        
+        cancel = request.form.get('cancel')
+        if cancel:
+            func.db.session.delete(suggest)
+            func.db.session.commit()
+            flash('Cancelled suggestion for ' + person.name, ('danger','bottom right'))
+            return redirect(url_for('person', id=suggest.person_id))
         
         #basic info
         name = request.form['name']
@@ -468,30 +486,168 @@ def suggest_edit_send(ind, id):
             cat = request.form.get('new_category')
             func.add_cat(person, cat)
             dic = func.person_to_dict(person)
-            dic['id'] = id
             func.db.session.rollback()
-            index = redis_store.rpush('tempsuggestions', dic)
-            return redirect(url_for('suggest_edit', ind=index))
+            suggest.dict = str(dic)
+            func.db.session.commit()
+            return redirect(url_for('suggest_edit', ind=suggest.id))
         
         #store submitted form as a dic
         dic = func.person_to_dict(person)
-        dic['id'] = id
         func.db.session.rollback()
         
-
-
         #removing categories
         rm = request.form.get('rm-cat')
         if rm:
             cat = rm.replace('rm-','')
             dic[cat] = {}
-            index = redis_store.rpush('tempsuggestions', dic)
+            suggest.dict = str(dic)
+            func.db.session.commit()
             return redirect(url_for('suggest_edit', ind=index))
 
-        redis_store.rpush('suggestions', dic)
+        suggest.dict = str(dic)
+        suggest.final = True
+        func.db.session.commit()
         flash('Thank you for your contribution',('success','bottom right'))
-        #change this later
-        return redirect(url_for('person', id=id)) 
+        return redirect(url_for('person', id=suggest.person_id)) 
+
+@login_required
+@app.route('/approve_suggestions')
+def get_first_suggestion():
+    first = func.Suggestions.query.filter_by(final=True).first()
+    if first:
+        return redirect(url_for('approve_suggestion', id=first))
+    else:
+        flash('There are no more suggestions!',('warn','bottom right'))
+        return redirect(url_for('index'))
+
+@login_required
+@app.route('/approve_suggestions/<id>')
+def approve_suggestion(id):
+    suggest = func.Suggestions.query.get(id)
+    if not suggest.final:
+        return redirect(url_for('get_first_suggestion'))
+    person = func.dic_to_person(eval(suggest.dict))
+    students = [student.person for student in func.PhD.query.all()]
+    staff = [staff.person for staff in func.Staff.query.all()]
+    postdocs = [postdoc.person for postdoc in func.PostDoc.query.all()]
+    return render_template('suggest/confirm.html', id=suggest.id, num=suggest.person_id, person=person, students=students, staff=staff, postdocs=postdocs)
+
+@login_required
+@app.route('/approve_suggest_send/<num>/<id>', methods=['POST'])
+def approve_suggest_send(num, id):
+    if request.method == 'POST':
+        
+        suggest = func.Suggestions.query.get(id)
+        func.db.session.delete(suggest)
+        
+        person = func.People.query.get(num)
+        
+        cancel = request.form.get('cancel')
+        if cancel:
+            func.db.session.commit()
+            flash('Refused update suggestion for ' + person.name, ('danger','bottom right'))
+            return redirect(url_for('get_first_suggestion'))
+       
+        
+        #basic info
+        name = request.form['name']
+        url = request.form['url']
+        location = request.form['location']
+        starts = request.form.getlist('info_start')
+        ends = request.form.getlist('info_end')
+        func.update_info(person, name, url, location, starts, ends)
+
+        #staff
+        starts = request.form.getlist('staff_start')
+        if starts:
+            if not person.staff:
+                person.staff = func.Staff()
+            ends = request.form.getlist('staff_end')
+            position_names = request.form.getlist('staff_position')
+            pos_starts = []
+            pos_ends = []
+            for i in range(0, len(position_names)):
+                pos_starts.append(request.form.getlist('staff_' + str(i) + '_start'))
+                pos_ends.append(request.form.getlist('staff_' + str(i) + '_end'))
+
+            grant_titles = request.form.getlist('grant_title')
+            grant_urls = request.form.getlist('grant_url')
+            grant_values = request.form.getlist('grant_value')
+            grant_refs = request.form.getlist('grant_ref')
+            grant_starts = request.form.getlist('grant_start')
+            grant_ends = request.form.getlist('grant_end')
+            grant_secondary = []
+            for i in range(0, len(grant_titles)):
+                grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
+                
+            students = request.form.getlist('staff_phd_link')
+            primary = request.form.getlist('staff_primary_link')
+            secondary = request.form.getlist('staff_secondary_link')
+            
+            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+        elif person.staff:
+            person.staff = None
+
+        #phd
+        starts = request.form.getlist('phd_start')
+        if starts:
+            if not person.phd:
+                person.phd = func.Phd()
+            ends = request.form.getlist('phd_end')
+            thesis = request.form['thesis']
+            supervisors = request.form.getlist('phd_staff_link')
+            func.update_phd(person, thesis, starts, ends, supervisors)
+        elif person.phd:
+            person.phd = None
+
+        #postdoc
+        starts = request.form.getlist('postdoc_start')
+        if starts:
+            if not person.postdoc:
+                person.postdoc = func.PostDoc()
+            ends = request.form.getlist('postdoc_end')
+            primary = request.form['postdoc_primary']
+            secondary = request.form.getlist('postdoc_secondary_link')
+            func.update_postdoc(person, starts, ends, primary, secondary)
+        elif person.postdoc:
+            person.postdoc = None
+
+        #associates
+        starts = request.form.getlist('associate_start')
+        if starts:
+            if not person.associate:
+                person.associate = func.Associates()
+            ends = request.form.getlist('associate_end')
+            position_names = request.form.getlist('associate_position')
+            pos_starts = []
+            pos_ends = []
+            for i in range(0, len(position_names)):
+                pos_starts.append(request.form.getlist('associate_' + str(i) + '_start'))
+                pos_ends.append(request.form.getlist('associate_' + str(i) + '_end'))
+
+            func.update_associate(person, position_names, pos_starts, pos_ends, starts, ends)
+        elif person.associate:
+            person.associate = None
+
+        flash('Accepted edit suggestion for ' + name, ('success','bottom right'))
+        #adding categories
+        if request.form.get('cat-add-btn'):
+            cat = request.form.get('new_category')
+            func.add_cat(person, cat)
+            func.db.session.commit()
+            return redirect(url_for('update', id=num))
+        
+        #removing categories
+        rm = request.form.get('rm-cat')
+        if rm:
+            func.rm_cat(person, rm)
+            func.db.session.commit()
+            return redirect(url_for('update', id=num))
+
+
+        func.db.session.commit()
+        return redirect(url_for('get_first_suggestion'))
+
 
 @app.route('/addperson')
 @login_required

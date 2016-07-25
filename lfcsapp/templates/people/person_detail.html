@@ -5,7 +5,11 @@
         <div class='col-xs-12'>
             <h1 style="display: inline">{{person.name}}</h1>
             <div class="pull-right" style="display: inline-block">
+                {% if current_user.authenticated %}
                 <a style='padding-right:20px' href='{{url_for("update", id=person.id)}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                {% else %}
+                <a style='padding-right:20px' href='{{url_for("suggest", id=person.id)}}' class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_searchable import make_searchable
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_redis import FlaskRedis
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lfcs-test'
@@ -22,6 +21,5 @@ db.create_all()
 
 bcrypt = Bcrypt()
 login_manager = LoginManager(app)
-redis_store = FlaskRedis(app)
 
 import lfcsapp.views

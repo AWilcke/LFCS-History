@@ -1,6 +1,11 @@
 <div class="row">    
     <div id="assoc" class="col-xs-12">
-        <h2>Associate</h2>
+        <h2>
+            Associate
+            {% for date in person.associate.dates %}
+            ({{date.start}}-{{date.end}})
+            {% endfor%}
+        </h2>
         {% for position in person.associate.position %}
         <p id="assoc_pos">{{position.position}}
         {% for date in position.dates %}

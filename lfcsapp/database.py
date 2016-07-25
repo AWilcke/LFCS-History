@@ -248,3 +248,20 @@ class Users(db.Model):
 
     def __repr__(self):
         return self.email
+
+class Suggestions(db.Model):
+    
+    __tablename__ = 'suggestions'
+    id = db.Column(db.Integer, primary_key=True)
+    
+    person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
+    person = db.relationship('People', backref='suggestions')
+
+    dict = db.Column(db.String())
+    final = db.Column(db.Boolean)
+
+    def __repr__(self):
+        return "Suggestion for " + self.person.name
+
+    def __init__(self):
+        self.final = False

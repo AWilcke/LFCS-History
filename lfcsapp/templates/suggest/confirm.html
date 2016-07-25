@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <form id="info" role="form" action="{{url_for('suggest_edit_send', ind=ind)}}" method="POST">
+    <form id="info" role="form" action="{{url_for('approve_suggest_send', id=id, num=num)}}" method="POST">
         <div class="row">
             <div class="col-xs-12">
                 <div id="name" class="form-group">
@@ -95,7 +95,7 @@
                         <button class="btn btn-lg btn-danger" type="submit" value='cancel' name='cancel'>
                             <i class="glyphicon glyphicon-floppy-remove"></i>
                         </button>
-                        <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
+                        <button class="btn btn-lg btn-success" type="submit" value='approve' name='approve'>
                             <i class="glyphicon glyphicon-floppy-saved"></i>
                         </button>
                     </div>
@@ -106,3 +106,4 @@
 </form>
 </div>
 {% endblock %}
+

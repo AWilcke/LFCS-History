@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-xs-12">
-        <h2>Staff</h2>
+        <h2>
+            Staff
+            {% for date in person.staff.dates %}
+            ({{date.start}}-{{date.end}})
+            {% endfor%}
+        </h2>
     </div>
 </div>
 <div class="row">

@@ -1,4 +1,4 @@
-from database import People, Staff, PhD, PostDoc, Associates, Positions, Dates, Users, Grants
+from database import People, Staff, PhD, PostDoc, Associates, Positions, Dates, Users, Grants, Suggestions
 from lfcsapp import db, bcrypt
 from flask_login import current_user
 import re
@@ -391,4 +391,4 @@ def dic_to_person(dic):
     person.postdoc = pg
     person.associate = assoc
 
-    return person, dic['id']
+    return person

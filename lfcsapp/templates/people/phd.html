@@ -1,6 +1,11 @@
 <div class='row'>
     <div id="phd" class="col-xs-12">
-        <h2>PhD</h2>
+        <h2>
+            PhD
+            {% for date in person.phd.dates %}
+            ({{date.start}}-{{date.end}})
+            {% endfor%}
+        </h2>
         <p>Thesis: {{person.phd.thesis}}</p>
         <p>Supervisors:
         {% for supervisor in person.phd.supervisor %}
