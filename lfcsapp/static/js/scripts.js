@@ -1,3 +1,15 @@
+//Update active
+/*
+$(document).ready(function() {
+    $('.nav').find('.active').removeClass('active');
+    var url = document.URL,
+        viewAllre = /.*viewall.*//*;
+    if (viewAllre.exec(url)) {
+        $('.nav').find('#viewall').addClass('active');
+    }
+}); 
+*/
+
 //Select2
 $(document).ready(function() {
       $("select").select2();

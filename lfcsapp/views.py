@@ -515,7 +515,7 @@ def suggest_edit_send(ind):
 def get_first_suggestion():
     first = func.Suggestions.query.filter_by(final=True).first()
     if first:
-        return redirect(url_for('approve_suggestion', id=first))
+        return redirect(url_for('approve_suggestion', id=first.id))
     else:
         flash('There are no more suggestions!',('warn','bottom right'))
         return redirect(url_for('index'))
@@ -592,7 +592,7 @@ def approve_suggest_send(num, id):
         starts = request.form.getlist('phd_start')
         if starts:
             if not person.phd:
-                person.phd = func.Phd()
+                person.phd = func.PhD()
             ends = request.form.getlist('phd_end')
             thesis = request.form['thesis']
             supervisors = request.form.getlist('phd_staff_link')

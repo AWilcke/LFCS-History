@@ -8,10 +8,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                <div>
-                    <a class='btn btn-default navbar-btn' href='{{url_for("view_all")}}'>View All</a>
-                </div>
+                <li id='viewall'>
+                    <a href='{{url_for("view_all")}}'>View All</a>
                 </li>
                 {% if not current_user.authenticated %}
                 <li>
@@ -25,6 +23,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="{{url_for('add_person')}}">Add Person</a></li>
+                    <li><a href="{{url_for('get_first_suggestion')}}">Review Suggestions</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{{url_for('update_user')}}">Update account</a></li>
                     <li><a href="{{url_for('add_user')}}">Add account</a></li>

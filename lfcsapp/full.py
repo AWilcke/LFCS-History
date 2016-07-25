@@ -32,6 +32,9 @@ def link_person(first, last, cat, supervisors):
     person = People.query.search(first + ' ' + last).first()
     if not person:
         return
+
+    print person.name
+
     if cat.lower() == 'phd':
         person.phd.supervisor = []
         for sup in supervisors:
@@ -66,6 +69,8 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
     if not person:
         person = People(name=name, url=url, location=location)
         db.session.add(person)
+
+    print person.name
 
     if category:
         if category.lower()=='staff':
@@ -212,6 +217,7 @@ def grant_person(name, title, start, end, value, url, ref):
     grant.value = int(value.replace(',',''))
     grant.url = url
     grant.ref = ref
+    print title
     person.staff.grants.append(grant)
 
 def grant_all():

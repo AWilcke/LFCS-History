@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class='container'>
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>You are not logged in!</strong> The information you put in this form will be sent to authorised staff, so that they may review your suggestion.
+    </div>
     <form id="info" role="form" action="{{url_for('suggestsend', num=person.id)}}" method="POST">
         <div class="row">
             <div class="col-xs-12">
@@ -90,20 +94,20 @@
         {% endif %}
         <div class="row" style="padding-bottom:30px">
             <div class="col-xs-12">
-                    <div class="pull-right">
-                        <div class='btn-group'>
-                            <a href="{{url_for('person', id=person.id)}}" class='btn btn-lg btn-danger'>
-                                <i class="glyphicon glyphicon-floppy-remove"></i>
-                            </a>
-                            <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
-                                <i class="glyphicon glyphicon-floppy-saved"></i>
-                            </button>
-                        </div>
+                <div class="pull-right">
+                    <div class='btn-group'>
+                        <a href="{{url_for('person', id=person.id)}}" class='btn btn-lg btn-danger'>
+                            <i class="glyphicon glyphicon-floppy-remove"></i>
+                        </a>
+                        <button class="btn btn-lg btn-success" type="submit" value='submit' name='submit'>
+                            <i class="glyphicon glyphicon-floppy-saved"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 </div>
 {% endblock %}
 
