@@ -4,6 +4,11 @@ from lfcsapp import app, bcrypt, login_manager, os
 import lfcsapp.func as func
 import lfcsapp.backup as backup
 
+@app.errorhandler(404)
+def page_not_found(e):
+        flash("The page you are looking for does not seem to exist", ('warn','bottom right'))
+        return redirect(url_for('index'))
+
 @app.route('/')
 def index():
     return render_template('search.html')
@@ -50,7 +55,7 @@ def person(id):
     if person:
         return render_template('people/person_detail.html', person=person)
     else:
-        flash("The page you are looking for doesn't seem to exist", ('warn','bottom right'))
+        flash("The page you are looking for does not seem to exist", ('warn','bottom right'))
         return redirect(url_for('index'))
 
 @app.route('/grant/<id>')
@@ -711,14 +716,12 @@ def delete_backup(version):
     else:
         return redirect(url_for('index'))
 
-@app.route('/test', methods=['POST','GET'])
-def test():
-    person = func.base_search('david aspinall')[0]
-    return render_template('test.html', person=person)
-
-@app.route('/testsend', methods=['POST'])
-def testsend():
-    if request.method == 'POST':
-        print "posted"
-    return redirect(url_for('test'))
-
+@login_required
+@app.route('/clean')
+def clean():
+    backup.clean_backups()
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    else:
+        return redirect(url_for('index'))

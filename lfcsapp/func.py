@@ -3,6 +3,7 @@ from lfcsapp import db, bcrypt
 from flask_login import current_user
 import re
 
+#search on basic keywords
 def base_search(query):
     people = People.query.search(query).all()
     positions = Positions.query.search(query).all()
@@ -19,6 +20,7 @@ def base_search(query):
 
     return set(people)
 
+#search on specific parameters
 def advanced_search(name, location, start, end, cat):
     results = People.query
     dates = Dates.query.filter(Dates.person)
@@ -43,6 +45,7 @@ def advanced_search(name, location, start, end, cat):
     dates = [date.person for date in dates]
     return set.intersection(set(results), set(dates))
 
+#updates information of person
 def update_info(person, name, url, location, starts, ends):
     person.name = name
     person.url = url
@@ -59,6 +62,7 @@ def update_info(person, name, url, location, starts, ends):
             end=None
         person.dates.append(Dates(start, end))
 
+#adds person to database with information
 def add_person(name, url, location, starts, ends):
     person = People()
     person.name = name
@@ -82,6 +86,7 @@ def delete_person(id):
     db.session.delete(People.query.get(id))
     db.session.commit()
 
+#updates information given from form for staff
 def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdoc):
     person = id.staff
     person.position = []
@@ -145,6 +150,7 @@ def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values
         if id:
             person.postdocs.append(People.query.get(id).postdoc)
 
+#updates information given from form for associates
 def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
     person = (id).associate
     person.position = []
@@ -175,7 +181,7 @@ def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
             end=None
         person.dates.append(Dates(start, end))
 
-
+#updates information given from form for phd
 def update_phd(id, thesis, starts, ends, supervisors):
     person = (id).phd
     
@@ -198,6 +204,7 @@ def update_phd(id, thesis, starts, ends, supervisors):
     
     person.thesis = thesis
 
+#updates information given from form for postdoc
 def update_postdoc(id, starts, ends, investigators):
     person = (id).postdoc
     
@@ -218,6 +225,7 @@ def update_postdoc(id, starts, ends, investigators):
         if id:
             person.investigators.append(People.query.get(id).staff)
 
+#adds category to person
 def add_cat(person, cat):
     if cat=='staff' and not person.staff:
         person.staff = Staff()
@@ -228,6 +236,7 @@ def add_cat(person, cat):
     elif cat=='associate' and not person.associate:
         person.associate = Associates()
 
+#removes category from person
 def rm_cat(person, cat):
     if cat=='rm-staff' and person.staff:
         person.staff = None
@@ -238,6 +247,7 @@ def rm_cat(person, cat):
     elif cat=='rm-associate' and person.associate:
         person.associate = None
 
+#updates information from form for user
 def update_user(first, last, email, password):
     current_user.first_name = first
     current_user.last_name = last
@@ -245,12 +255,14 @@ def update_user(first, last, email, password):
     if password:
         current_user.password = bcrypt.generate_password_hash(password)
 
+#adds user with information
 def add_user(first, last, email, password):
     new_user = Users(first_name=first, last_name=last, email=email)
     new_user.password = bcrypt.generate_password_hash(password)
 
     db.session.add(new_user)
 
+#return a dictionary representation of a person
 def person_to_dict(person, id=None):
     dic = {'staff':{}, 'phd':{}, 'postdoc':{}, 'associate':{}}
     dic['name'] = person.name
@@ -305,6 +317,7 @@ def person_to_dict(person, id=None):
 
     return dic
 
+#return a person object generated from a dictionary
 def dic_to_person(dic):
     staff, phd, pg, assoc = None, None, None, None
    
