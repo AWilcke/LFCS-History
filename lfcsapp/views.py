@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user, current_user
-from lfcsapp import app, bcrypt, login_manager
+from lfcsapp import app, bcrypt, login_manager, os
 import lfcsapp.func as func
+import lfcsapp.backup as backup
 
 @app.route('/')
 def index():
@@ -672,6 +673,43 @@ def delete_person(id):
     flash('Deleted ' + func.People.query.get(id).name + ' from the database', ('success','bottom right'))
     func.delete_person(id)
     return redirect(url_for('index'))
+
+@login_required
+@app.route('/create_backup')
+def create_backup():
+    backup.backup(os.environ['DB_NAME'])
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    else:
+        return redirect(url_for('index'))
+
+@login_required
+@app.route('/backup')
+def view_backups():
+    backups = backup.get_backups()
+    return render_template('backup.html', list=backups)
+
+@login_required
+@app.route('/restore_backup/<version>')
+def restore_backup(version):
+    time = backup.restore(os.environ['DB_NAME'], version)
+    flash("Restored database version from %s" % (time), ('success','bottom right'))
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    else:
+        return redirect(url_for('index'))
+
+@login_required
+@app.route('/delete_backup/<version>')
+def delete_backup(version):
+    backup.delete_backup(version)
+    previous = request.referrer
+    if previous:
+        return redirect(previous)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/test', methods=['POST','GET'])
 def test():

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='container'>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped" id='results'>
+                <thead>
+                    <th>Backup Name</th>
+                    <th>Restore</th>
+                    <th>Delete</th>
+                </thead>
+                <tbody>
+                {% for backup in list %}
+                <tr>
+                    <td>{{backup}}</td>
+                    <td><a href='{{url_for("restore_backup", version=backup)}}' class='btn btn-default'>Restore</a></td>
+                    <td><a href='{{url_for("delete_backup", version=backup)}}' class='btn btn-danger glyphicon glyphicon-trash'></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
