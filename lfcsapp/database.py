@@ -37,8 +37,7 @@ class Staff(db.Model):
     grants_secondary = db.relationship('Grants', back_populates='secondary', secondary='grant_table')
 
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
-    postdocs = db.relationship('PostDoc', back_populates='primary_investigator')
-    postdocs_secondary = db.relationship('PostDoc', back_populates='investigators', secondary=postdoc_table)
+    postdocs = db.relationship('PostDoc', back_populates='investigators', secondary=postdoc_table)
 
     person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
     person = db.relationship('People', back_populates='staff')
@@ -89,10 +88,7 @@ class PostDoc(db.Model):
 
     dates = db.relationship('Dates', back_populates='postdoc', cascade='all, delete-orphan')
 
-    primary_investigator_id=db.Column(db.Integer, db.ForeignKey('staff.id'))
-    primary_investigator=db.relationship('Staff', back_populates='postdocs')
-
-    investigators=db.relationship('Staff', back_populates='postdocs_secondary', secondary=postdoc_table)
+    investigators=db.relationship('Staff', back_populates='postdocs', secondary=postdoc_table)
 
     person_id = db.Column(db.Integer, db.ForeignKey('people.id'))
     person=db.relationship('People', back_populates='postdoc')

@@ -82,7 +82,7 @@ def delete_person(id):
     db.session.delete(People.query.get(id))
     db.session.commit()
 
-def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary):
+def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdoc):
     person = id.staff
     person.position = []
     for i in range(0, len(positions)):
@@ -141,15 +141,9 @@ def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values
             person.students.append(People.query.get(id).phd)
 
     person.postdocs = []
-    for id in primary:
+    for id in postdoc:
         if id:
             person.postdocs.append(People.query.get(id).postdoc)
-
-    person.postdocs_secondary = []
-    for id in secondary:
-        if id:
-            person.postdocs_secondary.append(People.query.get(id).postdoc)
-
 
 def update_associate(id, positions, pos_starts, pos_ends, starts, ends):
     person = (id).associate
@@ -204,7 +198,7 @@ def update_phd(id, thesis, starts, ends, supervisors):
     
     person.thesis = thesis
 
-def update_postdoc(id, starts, ends, primary, secondary):
+def update_postdoc(id, starts, ends, investigators):
     person = (id).postdoc
     
     person.dates = []
@@ -218,13 +212,9 @@ def update_postdoc(id, starts, ends, primary, secondary):
         except:
             end=None
         person.dates.append(Dates(start, end))
-    if primary:
-        person.primary_investigator = People.query.get(primary).staff
-    else:
-        person.primary_investigator = None
 
     person.investigators = []
-    for id in secondary:
+    for id in investigators:
         if id:
             person.investigators.append(People.query.get(id).staff)
 
@@ -278,7 +268,6 @@ def person_to_dict(person, id=None):
         staff['dates'] = [(date.start, date.end) for date in person.staff.dates]
         staff['students'] = [student.person.id for student in person.staff.students]
         staff['postdocs'] = [postdoc.person.id for postdoc in person.staff.postdocs]
-        staff['postdocs_secondary'] = [postdoc.person.id for postdoc in person.staff.postdocs_secondary]
         staff['grants'] = []
         for grant in person.staff.grants:
             g = {}
@@ -307,10 +296,6 @@ def person_to_dict(person, id=None):
     if person.postdoc:
         postdoc = dic['postdoc']
         postdoc['dates'] = [(date.start, date.end) for date in person.postdoc.dates]
-        if person.postdoc.primary_investigator:
-            postdoc['primary_investigator'] = person.postdoc.primary_investigator.person.id
-        else:
-            postdoc['primary_investigator'] = None
         postdoc['investigators'] = [inv.person.id for inv in person.postdoc.investigators]
 
     if person.associate:
@@ -343,8 +328,6 @@ def dic_to_person(dic):
             staff.students.append(People.query.get(id).phd)
         for id in staff_d['postdocs']:
             staff.postdocs.append(People.query.get(id).postdoc)
-        for id in staff_d['postdocs_secondary']:
-            staff.postdocs_secondary.append(People.query.get(id).postdoc)
 
         for grant in staff_d['grants']:
             g = Grants(grant['title'],grant['value'],grant['url'],grant['ref'])
@@ -371,10 +354,6 @@ def dic_to_person(dic):
             pg.dates.append(Dates(start, end))
         for id in pg_d['investigators']:
             pg.investigators.append(People.query.get(id).staff)
-        if pg_d['primary_investigator']:
-            pg.primary_investigator = People.query.get(pg_d['primary_investigator']).staff
-        else:
-            pg.primary_investigator = None
     if dic['associate']:
         a_d = dic['associate']
         assoc = Associates()

@@ -29,49 +29,40 @@
             </tbody>
         </table>
     </div>
-    <div class="col-xs-4">
-        <p><b>Students</b></p>
-        <table class="table table-hover">
-            <thead>
-                <th>PhD</th>
-            </thead>
-            <tbody>
-            {% for student in person.staff.students %}
-            <tr>
-                <td>
-                    <a href="/person/{{student.person.id}}" id="student">{{student.person.name}}</a>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="col-xs-4">
-        <p><b>PostDocs</b></p>
-        <table class="table table-hover">
-            <thead>
-                <th>Primary Investigator</th>
-            </thead>
-            <tbody>
-            {% for postdoc in person.staff.postdocs %}
-            <tr>
-                <td><a href="/person/{{postdoc.person.id}}" id="student">{{postdoc.person.name}}</a></td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <table class="table table-hover">
-            <thead>
-                <th>Secondary Investigator</th>
-            </thead>
-            <tbody>
-            {% for postdoc in person.staff.postdocs_secondary %}
-            <tr>
-                <td><a href="/person/{{postdoc.person.id}}" id="student">{{postdoc.person.name}}</a></td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="col-xs-8">
+        <p><strong>Students</strong></p>
+        <div class="row">
+            <div class="col-xs-6">
+                <table class="table table-hover">
+                    <thead>
+                        <th>PhD</th>
+                    </thead>
+                    <tbody>
+                    {% for student in person.staff.students %}
+                    <tr>
+                        <td>
+                            <a href="/person/{{student.person.id}}" id="student">{{student.person.name}}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-6">
+                <table class="table table-hover">
+                    <thead>
+                        <th>PostDocs</th>
+                    </thead>
+                    <tbody>
+                    {% for postdoc in person.staff.postdocs %}
+                    <tr>
+                        <td><a href="/person/{{postdoc.person.id}}" id="student">{{postdoc.person.name}}</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -81,7 +72,7 @@
 </div>
 <div class="row">
     <div class="col-xs-6">
-        <p><b>Primary Investigator</b></p>
+        <p><b>Principal Investigator</b></p>
         <table class="table table-hover datatable">
             <thead>
                 <th>Title</th>
@@ -102,7 +93,7 @@
         </table>
     </div>
     <div class="col-xs-6">
-        <p><b>Secondary Investigator</b></p>
+        <p><b>Co-Investigator</b></p>
         <table class="table table-hover datatable">
             <thead>
                 <th>Title</th>

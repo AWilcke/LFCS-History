@@ -214,10 +214,9 @@ def updatesend(num):
                 grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
                 
             students = request.form.getlist('staff_phd_link')
-            primary = request.form.getlist('staff_primary_link')
-            secondary = request.form.getlist('staff_secondary_link')
+            postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -232,9 +231,8 @@ def updatesend(num):
         starts = request.form.getlist('postdoc_start')
         if starts:
             ends = request.form.getlist('postdoc_end')
-            primary = request.form['postdoc_primary']
-            secondary = request.form.getlist('postdoc_secondary_link')
-            func.update_postdoc(person, starts, ends, primary, secondary)
+            inv = request.form.getlist('postdoc_primary_link')
+            func.update_postdoc(person, starts, ends, inv)
 
         #associates
         starts = request.form.getlist('associate_start')
@@ -320,10 +318,9 @@ def suggestsend(num):
                 grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
                 
             students = request.form.getlist('staff_phd_link')
-            primary = request.form.getlist('staff_primary_link')
-            secondary = request.form.getlist('staff_secondary_link')
+            postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -338,9 +335,8 @@ def suggestsend(num):
         starts = request.form.getlist('postdoc_start')
         if starts:
             ends = request.form.getlist('postdoc_end')
-            primary = request.form['postdoc_primary']
-            secondary = request.form.getlist('postdoc_secondary_link')
-            func.update_postdoc(person, starts, ends, primary, secondary)
+            inv = request.form.getlist('postdoc_primary_link')
+            func.update_postdoc(person, starts, ends, inv)
 
         #associates
         starts = request.form.getlist('associate_start')
@@ -446,10 +442,9 @@ def suggest_edit_send(ind):
                 grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
                 
             students = request.form.getlist('staff_phd_link')
-            primary = request.form.getlist('staff_primary_link')
-            secondary = request.form.getlist('staff_secondary_link')
+            postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -464,9 +459,8 @@ def suggest_edit_send(ind):
         starts = request.form.getlist('postdoc_start')
         if starts:
             ends = request.form.getlist('postdoc_end')
-            primary = request.form['postdoc_primary']
-            secondary = request.form.getlist('postdoc_secondary_link')
-            func.update_postdoc(person, starts, ends, primary, secondary)
+            inv = request.form.getlist('postdoc_primary_link')
+            func.update_postdoc(person, starts, ends, inv)
 
         #associates
         starts = request.form.getlist('associate_start')
@@ -581,10 +575,9 @@ def approve_suggest_send(num, id):
                 grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
                 
             students = request.form.getlist('staff_phd_link')
-            primary = request.form.getlist('staff_primary_link')
-            secondary = request.form.getlist('staff_secondary_link')
+            inv = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, primary, secondary)
+            func.update_staff(person, position_names, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, inv)
         elif person.staff:
             person.staff = None
 
@@ -606,9 +599,8 @@ def approve_suggest_send(num, id):
             if not person.postdoc:
                 person.postdoc = func.PostDoc()
             ends = request.form.getlist('postdoc_end')
-            primary = request.form['postdoc_primary']
-            secondary = request.form.getlist('postdoc_secondary_link')
-            func.update_postdoc(person, starts, ends, primary, secondary)
+            inv = request.form.getlist('postdoc_primary_link')
+            func.update_postdoc(person, starts, ends, inv)
         elif person.postdoc:
             person.postdoc = None
 

@@ -1,9 +1,12 @@
 from lfcsapp.func import *
 import json
 
-def add_all():
+def add_all(num=None):
     with open('full.tsv') as f:
-        data = f.read().splitlines()[5:]
+        if num:
+            data = f.read().splitlines()[num]
+        else:
+            data = f.read().splitlines()[5:]
 
     for line in data:
         line = line.split('\t')
@@ -35,7 +38,7 @@ def link_person(first, last, cat, supervisors):
 
     print person.name
 
-    if cat.lower() == 'phd':
+    if cat.lower() == 'pg' or cat.lower() == 'phd':
         person.phd.supervisor = []
         for sup in supervisors:
             try:
@@ -45,15 +48,9 @@ def link_person(first, last, cat, supervisors):
             if p:
                 person.phd.supervisor.append(p)
 
-    elif cat.lower() == 'pg' or cat.lower() == 'postdoc':
-        try:
-            p = People.query.search(supervisors[0]).first().staff
-        except:
-            p = None
-        if p:
-            person.postdoc.primary_investigator = p
+    elif cat.lower() == 'postdoc':
         person.postdoc.investigators = []
-        for sup in supervisors[1:]:
+        for sup in supervisors:
             try:
                 p = People.query.search(sup).first().staff
             except:
@@ -109,7 +106,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
                     person.staff.dates.append(Dates(start, end))
                         
         
-        elif category.lower()=='phd':
+        elif category.lower()=='pg'or category.lower()=='phd':
             if not person.phd:
                 person.phd = PhD(thesis=thesis)
             elif thesis:
@@ -132,7 +129,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
 
                     person.phd.dates.append(Dates(start, end))
 
-        elif category.lower()=='pg' or category.lower()=='postdoc':
+        elif category.lower()=='postdoc':
             if not person.postdoc:
                 person.postdoc = PostDoc()
            
