@@ -6,6 +6,7 @@ from flask_login import LoginManager
 import os
 import subprocess
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lfcs-test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True

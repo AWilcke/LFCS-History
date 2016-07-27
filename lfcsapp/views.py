@@ -3,6 +3,21 @@ from flask_login import login_required, login_user, logout_user, current_user
 from lfcsapp import app, bcrypt, login_manager, os
 import lfcsapp.func as func
 import lfcsapp.backup as backup
+from apscheduler.schedulers.background import BackgroundScheduler
+
+@app.before_first_request
+def start_jobs():
+    sched = BackgroundScheduler()
+    sched.start()
+    print "Scheduling started"
+    #create automatic backup before midnight
+    sched.add_job(lambda:backup.backup(os.environ['DB_NAME']), 'cron', hour='23', minute='59', second='0')
+    #clean backups at midnight
+    sched.add_job(backup.clean_backups, 'cron', hour='0', minute='0', second='0')
+    #clear non final suggestions at midnight
+    sched.add_job(func.clear_suggestions, 'cron', hour='0', minute='0', second='0')
+    #increment current staffs dates every year
+    sched.add_job(func.new_year, 'cron', month='1', day='1', hour='1', minute='0', second='0')
 
 @app.errorhandler(404)
 def page_not_found(e):

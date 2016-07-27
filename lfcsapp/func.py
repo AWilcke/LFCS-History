@@ -1,6 +1,7 @@
 from database import People, Staff, PhD, PostDoc, Associates, Positions, Dates, Users, Grants, Suggestions
 from lfcsapp import db, bcrypt
 from flask_login import current_user
+from datetime import datetime
 import re
 
 #search on basic keywords
@@ -384,3 +385,48 @@ def dic_to_person(dic):
     person.associate = assoc
 
     return person
+
+#delete all non-final suggestions
+def clear_suggestions():
+    Suggestions.query.filter(Suggestions.final==False).delete()
+    db.session.commit()
+
+#update dates of all people at lfcs
+#I'm sure this can be done with a query, but cannot figure it out
+def new_year():
+    ny = datetime.now().year
+    year = ny-1
+    dates = Dates.query.filter(Dates.end==year).all()
+    current = People.query.filter(People.location=='LFCS').all()
+    for person in current:
+        for date in person.dates:
+            if date in dates:
+                date.end = ny
+        if person.staff:
+            for date in person.staff.dates:
+                if date in dates:
+                    date.end = ny
+            if person.staff.position:
+                for position in person.staff.position:
+                    for date in position.dates:
+                        if date in dates:
+                            date.end = ny
+        if person.phd:
+            for date in person.phd.dates:
+                if date in dates:
+                    date.end = ny
+        if person.postdoc:
+            for date in person.postdoc.dates:
+                if date in dates:
+                    date.end = ny
+        if person.associate:
+            for date in person.associate.dates:
+                if date in dates:
+                    date.end = ny
+            if person.associate.position:
+                for position in person.associate.position:
+                    for date in position.dates:
+                        if date in dates:
+                            date.end = ny
+    db.session.commit()
+
