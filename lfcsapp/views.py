@@ -699,9 +699,10 @@ def delete_person(id):
     return redirect(url_for('index'))
 
 @login_required
-@app.route('/create_backup')
+@app.route('/create_backup', methods=['POST'])
 def create_backup():
-    backup.backup(os.environ['DB_NAME'])
+    name = request.form.get('backup_name')
+    backup.backup(os.environ['DB_NAME'], name=name)
     previous = request.referrer
     if previous:
         return redirect(previous)
@@ -715,7 +716,7 @@ def view_backups():
     return render_template('backup.html', list=backups)
 
 @login_required
-@app.route('/restore_backup/<version>')
+@app.route('/restore_backup/<version>', methods=['POST'])
 def restore_backup(version):
     time = backup.restore(os.environ['DB_NAME'], version)
     flash("Restored database version from %s" % (time), ('success','bottom right'))
@@ -726,7 +727,7 @@ def restore_backup(version):
         return redirect(url_for('index'))
 
 @login_required
-@app.route('/delete_backup/<version>')
+@app.route('/delete_backup/<version>', methods=['POST'])
 def delete_backup(version):
     backup.delete_backup(version)
     previous = request.referrer

@@ -13,10 +13,58 @@
                 {% for backup in list %}
                 <tr>
                     <td>{{backup}}</td>
-                    <td><a href='{{url_for("restore_backup", version=backup)}}' class='btn btn-default'>Restore</a></td>
-                    <td><a href='{{url_for("delete_backup", version=backup)}}' class='btn btn-danger glyphicon glyphicon-trash'></a></td>
+                    <td><button class='btn btn-success glyphicon glyphicon-refresh' data-toggle='modal' data-target="#restoreconfirm-{{backup.split('.')[0]}}"></button></td>
+                    <td><button class='btn btn-danger glyphicon glyphicon-trash' data-toggle='modal' data-target="#deleteconfirm-{{backup.split('.')[0]}}"></button></td>
                 </tr>
+                <!-- delete confirm -->
+                <div class="modal fade" id="deleteconfirm-{{backup.split('.')[0]}}" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+                    <div class="row">
+                        <div class='col-xs-12' >
+                            <form id='delete-backup' role='form' action='{{url_for("delete_backup", version=backup)}}' method='POST'>
+                                <div class="modal-dialog" role="dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id='modal-title'>Delete?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>You are about to delete backup version {{backup}}.<p>
+                                            <p>This cannot be undone, do you wish to proceed?<p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel <i class='glyphicon glyphicon-remove'></i></button>
+                                            <button type="submit" class="btn btn-danger">Delete <i class='glyphicon glyphicon-trash'></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="restoreconfirm-{{backup.split('.')[0]}}" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+                    <div class="row">
+                        <div class='col-xs-12' >
+                            <form id='delete-backup' role='form' action='{{url_for("restore_backup", version=backup)}}' method='POST'>
+                                <div class="modal-dialog" role="dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id='modal-title'>Restore?</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>You are about to restore backup version {{backup}}.<p>
+                                            <p>Do you wish to proceed?<p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel <i class='glyphicon glyphicon-remove'></i></button>
+                                            <button type="submit" class="btn btn-success">Restore <i class='glyphicon glyphicon-refresh'></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>

@@ -24,7 +24,9 @@
             {{date.start}}-{{date.end}}
             {% endfor %}
             </p>
+            {% if person.url %}
             <p><strong>Website</strong> <a href='{{person.url}}'>{{person.url}}</a></p>
+            {% endif %}
             <p><strong>Current Location</strong> {{person.location}}</p>
         </div>
     </div>

@@ -87,7 +87,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
 
             if dates:
                 person.staff.dates=[]
-                for pair in dates.split(' ,'):
+                for pair in dates.split(','):
                     try:
                         start, end = pair.split('-')
                     except:
@@ -114,8 +114,12 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
             
             if dates:
                 person.phd.dates=[]
-                for pair in dates.split(' ,'):
-                    start, end = pair.split('-')
+                for pair in dates.split(','):
+                    try:
+                        start, end = pair.split('-')
+                    except:
+                        print pair
+                        raise
                     start=start.strip('?')
                     end=end.strip('?')
                     try:
@@ -135,7 +139,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
            
             if dates:
                 person.postdoc.dates=[]
-                for pair in dates.split(' ,'):
+                for pair in dates.split(','):
                     start, end = pair.split('-')
                     start=start.strip('?')
                     end=end.strip('?')
@@ -166,7 +170,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
             
             if dates:
                 person.associate.dates=[]
-                for pair in dates.split(' ,'):
+                for pair in dates.split(','):
                     start, end = pair.split('-')
                     start=start.strip('?')
                     end=end.strip('?')
@@ -182,7 +186,7 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
     
     if dates:
         person.dates=[]
-        for pair in dates.split(' ,'):
+        for pair in dates.split(','):
             start, end = pair.split('-')
             start=start.strip('?')
             end=end.strip('?')

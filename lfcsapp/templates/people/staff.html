@@ -68,7 +68,9 @@
 <div class="row">
     <div class="col-xs-12">
         <h3>Grants</h3>
+        {% if person.staff.research_explorer %}
         <p>More information on <a href="{{person.staff.research_explorer}}">Edinburgh Research Explorer</a></p>
+        {% endif %}
     </div>
 </div>
 <div class="row">
