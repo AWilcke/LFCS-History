@@ -41,6 +41,6 @@ class Grant2Item(scrapy.Item):
     ref = scrapy.Field()
     primary = scrapy.Field()
 
-class TestItem(scrapy.Item):
-    num = scrapy.Field()
+class ExplorerItem(scrapy.Item):
     person = scrapy.Field()
+    link = scrapy.Field()

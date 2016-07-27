@@ -35,6 +35,7 @@ class Staff(db.Model):
     dates = db.relationship('Dates', back_populates='staff', cascade='all, delete-orphan')
     grants = db.relationship('Grants', back_populates='staff', cascade='all, delete-orphan')
     grants_secondary = db.relationship('Grants', back_populates='secondary', secondary='grant_table')
+    research_explorer = db.Column(db.String())
 
     students = db.relationship('PhD', back_populates='supervisor', secondary=supervising_table)
     postdocs = db.relationship('PostDoc', back_populates='investigators', secondary=postdoc_table)

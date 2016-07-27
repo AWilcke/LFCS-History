@@ -1,5 +1,5 @@
 import scrapy
-from lfcs_scraping.items import GrantItem, Grant2Item
+from lfcs_scraping.items import GrantItem, Grant2Item, ExplorerItem
 
 class Grant(scrapy.Spider):
 
@@ -99,4 +99,32 @@ class Grant2(scrapy.Spider):
         item['person'] = response.meta['person']
         item['primary'] = response.xpath('//td[./a[@id="hlPrincipalInvestigator"]]/a[@href]/text()').extract()[0]
         item['ref'] = response.xpath('//span[@id="lblGrantReference"]/text()').extract()[0]
+        yield item
+
+class ResearchEx(scrapy.Spider):
+    name = 'research'
+    start_urls = [
+            'http://www.research.ed.ac.uk/portal/'
+            ]
+    
+    def parse(self, response):
+        with open('names.txt','r') as f:
+            names = f.read().splitlines()
+
+        for person in names:
+            request = scrapy.FormRequest.from_response(
+                    response,
+                    formdata = {'searchall':person},
+                    callback=self.getlink
+                    )
+            request.meta['person'] = person
+            yield request
+
+    def getlink(self, response):
+        link = response.xpath('//a[./preceding::h2[1]//span[text()="Staff"]]/@href').extract()
+        if not link:
+            return
+        item = ExplorerItem()
+        item['link'] = link[0]
+        item['person'] = response.meta['person']
         yield item

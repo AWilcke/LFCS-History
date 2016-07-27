@@ -5,6 +5,7 @@ from datetime import datetime
 import re
 
 #search on basic keywords
+#should be done with joins and queries, but can't get it to work
 def base_search(query):
     people = People.query.search(query).all()
     positions = Positions.query.search(query).all()
@@ -88,7 +89,7 @@ def delete_person(id):
     db.session.commit()
 
 #updates information given from form for staff
-def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdoc):
+def update_staff(id, positions, pos_starts, pos_ends, research_explorer, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdoc):
     person = id.staff
     person.position = []
     for i in range(0, len(positions)):
@@ -106,6 +107,7 @@ def update_staff(id, positions, pos_starts, pos_ends, grant_titles, grant_values
                 newPos.dates.append(Dates(start, end))
             person.position.append(newPos)
 
+    person.research_explorer = research_explorer
     person.grants = []
     for i in range(0, len(grant_titles)):
         if grant_titles[i]:
@@ -279,6 +281,7 @@ def person_to_dict(person, id=None):
         staff = dic['staff']
         staff['position'] = [(position.position, [(date.start, date.end) for date in position.dates]) for position in person.staff.position]
         staff['dates'] = [(date.start, date.end) for date in person.staff.dates]
+        staff['research_explorer'] = person.staff.research_explorer
         staff['students'] = [student.person.id for student in person.staff.students]
         staff['postdocs'] = [postdoc.person.id for postdoc in person.staff.postdocs]
         staff['grants'] = []
@@ -338,6 +341,7 @@ def dic_to_person(dic):
             staff.position.append(pos)
         for (start, end) in staff_d['dates']:
             staff.dates.append(Dates(start, end))
+        staff.research_explorer = staff_d['research_explorer']
         for id in staff_d['students']:
             staff.students.append(People.query.get(id).phd)
         for id in staff_d['postdocs']:

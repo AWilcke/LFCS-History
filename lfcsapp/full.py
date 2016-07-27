@@ -250,3 +250,19 @@ def grant_secondary_person(name, g_title, primary, ref):
             match.secondary.append(person.staff)
             return
 
+def research_explorer(name, link):
+    person = People.query.filter(People.name==name).first()
+    if not person.staff:
+        return
+    print name
+    person.staff.research_explorer = link
+
+def research_all():
+    with open('explorer.json','r') as f:
+        data = f.read().splitlines()
+
+    for line in data[1:-1]:
+        js = json.loads(line.rstrip(','))
+        research_explorer(js['person'], js['link'])
+
+    db.session.commit()
