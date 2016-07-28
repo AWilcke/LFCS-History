@@ -108,6 +108,10 @@ def login():
             user.authenticated = True
             func.db.session.commit()
             login_user(user, remember=True)
+            suggestions = func.Suggestions.query.filter(func.Suggestions.final==True).count()
+
+            if suggestions>0:
+                flash("There are %d pending suggestions" % (suggestions), ("warn","bottom right"))
             flash(user.first_name + ' logged in!', ("success", "bottom right"))
         else:
             flash("Invalid credentials", ("error", "bottom right"))

@@ -29,6 +29,7 @@ class ReportItem(scrapy.Item):
 class GrantItem(scrapy.Item):
     title = scrapy.Field()
     ref = scrapy.Field()
+    org = scrapy.Field()
     person = scrapy.Field()
     start = scrapy.Field()
     end = scrapy.Field()
@@ -44,3 +45,7 @@ class Grant2Item(scrapy.Item):
 class ExplorerItem(scrapy.Item):
     person = scrapy.Field()
     link = scrapy.Field()
+
+class RoleItem(scrapy.Item):
+    person = scrapy.Field()
+    role = scrapy.Field()

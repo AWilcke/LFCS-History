@@ -207,17 +207,26 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
 
     db.session.commit()
 
-def grant_person(name, title, start, end, value, url, ref):
+def grant_person(name, title, start, end, value, url, ref, org):
     person = People.query.filter_by(name=name).first()
     if not person:
         return
-
+    grant_refs = [grant.ref for grant in person.staff.grants]
+    if ref in grant_refs:
+        return
     grant = Grants()
     grant.title = title
-    grant.dates = Dates(start.split(' ')[-1], end.split(' ')[-1])
-    grant.value = int(value.replace(',',''))
+    try:
+        grant.dates = Dates(start.split(' ')[-1], end.split(' ')[-1])
+    except:
+        grant.dates = Dates(start, end)
+    try:
+        grant.value = int(value.replace(',',''))
+    except:
+        grant.value = value
     grant.url = url
     grant.ref = ref
+    grant.org = org
     print title
     person.staff.grants.append(grant)
 
@@ -225,17 +234,22 @@ def grant_all():
     with open('grants.json','r') as f:
         data = f.read().splitlines()
 
-    for line in data[1:-1]:
+    with open('exploregrant.json','r') as f:
+        data2 = f.read().splitlines()
+
+    for line in data[1:-1] + data2[1:-1]:
         js = json.loads(line.rstrip(','))
-        grant_person(js['person'], js['title'], js['start'], js['end'], js['value'], js['url'], js['ref'])
+        grant_person(js['person'], js['title'], js['start'], js['end'], js['value'], js['url'], js['ref'], js['org'])
 
     db.session.commit()
 
 def grant2_all():
     with open('grants2.json','r') as f:
         data = f.read().splitlines()
+    with open('exploregrant2.json','r') as f:
+        data2 = f.read().splitlines()
 
-    for line in data[1:-1]:
+    for line in data[1:-1] + data2[1:-1]:
         js = json.loads(line.rstrip(','))
         grant_secondary_person(js['person'], js['title'], js['primary'], js['ref'])
 
@@ -249,9 +263,10 @@ def grant_secondary_person(name, g_title, primary, ref):
     primary = People.query.search(primary.split(',')[0]).filter(People.staff).all()
     for pos in primary:
         match = Grants.query.filter(Grants.staff==pos.staff, Grants.ref==ref).first()
-        print match
         if match:
-            match.secondary.append(person.staff)
+            print match.title.encode('utf-8')
+            if person.staff not in match.secondary:
+                match.secondary.append(person.staff)
             return
 
 def research_explorer(name, link):
@@ -270,3 +285,30 @@ def research_all():
         research_explorer(js['person'], js['link'])
 
     db.session.commit()
+
+def role(name, role):
+    person = People.query.filter(People.name==name).first()
+    if not person.staff:
+        return
+    print name
+    pos_names = [position.position for position in person.staff.position]
+    if role not in pos_names:
+        person.staff.position.append(Positions(role))
+
+def role_all():
+    with open('exploreroles.json','r') as f:
+        data = f.read().splitlines()
+
+    for line in data[1:-1]:
+        js = json.loads(line.rstrip(','))
+        role(js['person'],js['role'])
+
+    db.session.commit()
+
+def build_db():
+    add_all()
+    link_all()
+    grant_all()
+    grant2_all()
+    research_all()
+    role_all()

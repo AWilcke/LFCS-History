@@ -1,5 +1,7 @@
 import scrapy
 from lfcs_scraping.items import GrantItem, Grant2Item, ExplorerItem
+import re
+from datetime import datetime
 
 class Grant(scrapy.Spider):
 
@@ -50,6 +52,7 @@ class Grant(scrapy.Spider):
         item['person'] = response.meta['person']
         item['url'] = response.url
         item['ref'] = response.xpath('//span[@id="lblGrantReference"]/text()').extract()[0]
+        item['org'] = 'EPSRC'
         yield item
 
 
@@ -101,16 +104,16 @@ class Grant2(scrapy.Spider):
         item['ref'] = response.xpath('//span[@id="lblGrantReference"]/text()').extract()[0]
         yield item
 
-class ResearchEx(scrapy.Spider):
-    name = 'research'
+class ExploreGrants(scrapy.Spider):
+    
+    name = 'exploregrant'
     start_urls = [
             'http://www.research.ed.ac.uk/portal/'
             ]
-    
+
     def parse(self, response):
         with open('names.txt','r') as f:
             names = f.read().splitlines()
-
         for person in names:
             request = scrapy.FormRequest.from_response(
                     response,
@@ -121,10 +124,116 @@ class ResearchEx(scrapy.Spider):
             yield request
 
     def getlink(self, response):
-        link = response.xpath('//a[./preceding::h2[1]//span[text()="Staff"]]/@href').extract()
+        link = response.xpath('//div[./ul/li/a[@rel="Organisation"]/span[text()="Laboratory for Foundations of Computer Science"] and ./preceding::h2[1]/a/span[text()="Staff"]]/h2/a/@href').extract()
         if not link:
             return
-        item = ExplorerItem()
-        item['link'] = link[0]
+        request = scrapy.Request(response.urljoin(link[0]), callback=self.get_projects)
+        request.meta['person'] = response.meta['person']
+        yield request
+
+    def get_projects(self, response):
+        link = response.xpath('//a[./span[text()="\n\t\t\t\t\t\t\t\tProjects\n\t\t\t\t\t\t\t"]]/@href').extract()[0]
+        request = scrapy.Request(response.urljoin(link), callback=self.get_all)
+        request.meta['person'] = response.meta['person']
+        request.meta['url'] = response.url
+        yield request
+
+    def get_all(self, response):
+        link = response.xpath('//div[@class="portal_navigator_popup_content"]/ul/li/a[./span[text()="100"]]/@href').extract()[0]
+        request = scrapy.Request(response.urljoin(link), callback=self.get_grants)
+        request.meta['person'] = response.meta['person']
+        request.meta['url'] = response.meta['url']
+        yield request
+
+    def get_grants(self, response):
+        grant_links = response.xpath('//h2[@class="title"]/a[@rel="FundedProject"]/@href').extract()
+        for link in grant_links:
+            request = scrapy.Request(response.urljoin(link), callback=self.parse_grant)
+            request.meta['person'] = response.meta['person']
+            request.meta['url'] = response.meta['url']
+            yield request
+
+    def parse_grant(self, response):
+        principal = response.xpath('//span[@class="dimmed" and text()=" (Principal investigator)"]/preceding-sibling::a[1]/@href').extract()[0]
+        if principal != response.meta['url']:
+            return
+        item = GrantItem()
+        value = response.xpath('//table[@class="properties"]/tbody/tr[@class="total-award"]/td/text()').extract()[0]
+        item['value'] = int(re.sub('[^\d.]','', value).split('.')[0])
+        ref = response.xpath('//table[@class="properties"]/tbody/tr[@class="funder-project-reference"]/td/text()').extract()
+        if ref:
+            item['ref'] = ref[0]
+        else:
+            item['ref'] = None
+        item['org'] = response.xpath('//table[@class="properties"]/tbody/tr[@class="funding-organisation"]/td/text()').extract()[0]
+        item['url'] = response.url
         item['person'] = response.meta['person']
+        item['title'] = response.xpath('//h2/span/text()').extract()[0]
+        dates = response.xpath('//table[@class="properties"]/tbody/tr[@class="period"]/td/span/text()').extract()
+        item['start'] = datetime.strptime(dates[0], '%d/%m/%y').year
+        item['end'] = datetime.strptime(dates[1], '%d/%m/%y').year
+        yield item
+
+class ExploreGrants2(scrapy.Spider):
+    
+    name = 'exploregrant2'
+    start_urls = [
+            'http://www.research.ed.ac.uk/portal/'
+            ]
+
+    def parse(self, response):
+        with open('names.txt','r') as f:
+            names = f.read().splitlines()
+        for person in names:
+            request = scrapy.FormRequest.from_response(
+                    response,
+                    formdata = {'searchall':person},
+                    callback=self.getlink
+                    )
+            request.meta['person'] = person
+            yield request
+
+    def getlink(self, response):
+        link = response.xpath('//div[./ul/li/a[@rel="Organisation"]/span[text()="Laboratory for Foundations of Computer Science"] and ./preceding::h2[1]/a/span[text()="Staff"]]/h2/a/@href').extract()
+        if not link:
+            return
+        request = scrapy.Request(response.urljoin(link[0]), callback=self.get_projects)
+        request.meta['person'] = response.meta['person']
+        yield request
+
+    def get_projects(self, response):
+        link = response.xpath('//a[./span[text()="\n\t\t\t\t\t\t\t\tProjects\n\t\t\t\t\t\t\t"]]/@href').extract()[0]
+        request = scrapy.Request(response.urljoin(link), callback=self.get_all)
+        request.meta['person'] = response.meta['person']
+        request.meta['url'] = response.url
+        yield request
+
+    def get_all(self, response):
+        link = response.xpath('//div[@class="portal_navigator_popup_content"]/ul/li/a[./span[text()="100"]]/@href').extract()[0]
+        request = scrapy.Request(response.urljoin(link), callback=self.get_grants)
+        request.meta['person'] = response.meta['person']
+        request.meta['url'] = response.meta['url']
+        yield request
+
+    def get_grants(self, response):
+        grant_links = response.xpath('//h2[@class="title"]/a[@rel="FundedProject"]/@href').extract()
+        for link in grant_links:
+            request = scrapy.Request(response.urljoin(link), callback=self.parse_grant)
+            request.meta['person'] = response.meta['person']
+            request.meta['url'] = response.meta['url']
+            yield request
+
+    def parse_grant(self, response):
+        principal = response.xpath('//span[@class="dimmed" and text()=" (Principal investigator)"]/preceding-sibling::a[1]/@href').extract()[0]
+        if principal == response.meta['url']:
+            return
+        item = Grant2Item()
+        ref = response.xpath('//table[@class="properties"]/tbody/tr[@class="funder-project-reference"]/td/text()').extract()
+        if ref:
+            item['ref'] = ref[0]
+        else:
+            item['ref'] = None
+        item['person'] = response.meta['person']
+        item['title'] = response.xpath('//h2/span/text()').extract()[0]
+        item['primary'] = response.xpath('//span[@class="dimmed" and text()=" (Principal investigator)"]/preceding-sibling::a[1]/span/text()').extract()[0].split(', ')[0]
         yield item
