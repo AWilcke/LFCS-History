@@ -2,11 +2,63 @@ from database import People, Staff, PhD, PostDoc, Associates, Positions, Dates, 
 from lfcsapp import db, bcrypt
 from flask_login import current_user
 from datetime import datetime
+from sqlalchemy_searchable import parse_search_query
+from sqlalchemy import and_, or_
 import re
 
 #search on basic keywords
-#should be done with joins and queries, but can't get it to work
 def base_search(query):
+    filter_list = []
+    remove_list = []
+
+    if '-phd' in query.lower():
+        remove_list.append(People.phd==None)
+        query = query.replace('-phd','')
+    elif 'phd' in query.lower():
+        filter_list.append(People.phd)
+        query = query.replace('phd','')
+    if '-staff' in query.lower():
+        remove_list.append(People.staff==None)
+        query = query.replace('-staff','')
+    elif 'staff' in query.lower():
+        filter_list.append(People.staff)
+        query = query.replace('staff','')
+    if '-postdoc' in query.lower():
+        remove_list.append(People.postdoc==None)
+        query = query.replace('-postdoc','')
+    elif 'postdoc' in query.lower():
+        filter_list.append(People.postdoc)
+        query = query.replace('postdoc','')
+    if '-associate' in query.lower():
+        remove_list.append(People.associate==None)
+        query = query.replace('-associate','')
+    elif 'associate' in query.lower():
+        filter_list.append(People.associate)
+        query = query.replace('associate','')
+
+    #for a simple "query all" function
+    if '*' in query:
+        all = People.query.filter(and_(*remove_list)).filter(or_(*filter_list))
+        return all.all()
+
+    phd_vec = People.search_vector | PhD.search_vector
+    phd = db.session.query(People).join(PhD).filter(phd_vec.match(parse_search_query(query)))
+
+    pos_vec = People.search_vector | Positions.search_vector
+    staff = db.session.query(People).join(Staff).join(Positions).filter(pos_vec.match(parse_search_query(query)))
+    associates = db.session.query(People).join(Associates).join(Positions).filter(pos_vec.match(parse_search_query(query)))
+    
+    staff_nopos = People.query.join(Staff).filter(~(Staff.position.any())).search(query)
+    assoc_nopos = People.query.join(Associates).filter(~(Associates.position.any())).search(query)
+
+    others = People.query.filter(People.staff==None, People.associate==None, People.phd==None).search(query)
+
+    union = phd.union(staff, staff_nopos, associates, assoc_nopos, others)
+    union = union.filter(and_(*remove_list)).filter(or_(*filter_list))
+    return union.all()
+
+#primitive version of the search
+def old_search(query):
     people = People.query.search(query).all()
     positions = Positions.query.search(query).all()
     phd = PhD.query.search(query).all()

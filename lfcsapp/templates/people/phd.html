@@ -6,11 +6,26 @@
             ({{date.start}}-{{date.end}})
             {% endfor%}
         </h2>
-        <p>Thesis: {{person.phd.thesis}}</p>
-        <p>Supervisors:
-        {% for supervisor in person.phd.supervisor %}
-        <a href='/person/{{supervisor.person.id}}' id="supervisor">{{supervisor.person.name}} </a>
-        {% endfor %}
-        </p>
+    </div>
+</div>
+<div class='row'>
+    <div class="col-xs-12">
+        <strong>Thesis:</strong> {{person.phd.thesis}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <p><strong>Supervisors</strong></p>
+        <table class="table table-hover">
+            <tbody>
+            {% for sup in person.phd.supervisor %}
+            <tr>
+                <td>
+                    <a href="{{url_for('person',id=sup.person.id)}}" id="supervisor">{{sup.person.name}}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>

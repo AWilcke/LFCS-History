@@ -4,6 +4,7 @@ from lfcsapp import app, bcrypt, login_manager, os
 import lfcsapp.func as func
 import lfcsapp.backup as backup
 from apscheduler.schedulers.background import BackgroundScheduler
+import re
 
 @app.before_first_request
 def start_jobs():
@@ -23,6 +24,15 @@ def start_jobs():
 def page_not_found(e):
         flash("The page you are looking for does not seem to exist", ('warn','bottom right'))
         return redirect(url_for('index'))
+
+#checks if previous is safe, else returns to index
+def return_to_previous(request):
+    previous = request.referrer
+    if previous:
+        if re.match('http://localhost.*', previous):
+            return previous
+    
+    return url_for('index')
 
 @app.route('/')
 def index():
@@ -71,7 +81,7 @@ def person(id):
         return render_template('people/person_detail.html', person=person)
     else:
         flash("The page you are looking for does not seem to exist", ('warn','bottom right'))
-        return redirect(url_for('index'))
+        return redirect(return_to_previous(request))
 
 @app.route('/grant/<id>')
 def grant(id):
@@ -80,7 +90,7 @@ def grant(id):
         return render_template('people/grant.html', grant=grant)
     else:
         flash("The page you are looking for doesn't seem to exist", ('warn','bottom right'))
-        return redirect(url_for('index'))
+        return redirect(return_to_previous(request))
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -89,11 +99,7 @@ def user_loader(user_id):
 @login_manager.unauthorized_handler
 def unauthorized():
     flash("It looks like you tried to access an unauthorized page! Please log in.", ("warn","bottom right"))
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    
-    return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -118,11 +124,7 @@ def login():
     else:
         flash("Invalid credentials", ("error", "bottom right"))
 
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    
-    return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @app.route('/logout')
 @login_required
@@ -152,11 +154,7 @@ def update_user_send():
     
     flash('Updated account information for ' + email, ('success','bottom right'))
 
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    else:
-        return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @app.route('/adduser')
 @login_required
@@ -176,11 +174,7 @@ def add_user_send():
     
     flash('Added user account for ' + email, ('success','bottom right'))
 
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    else:
-        return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @app.route('/deleteuser', methods=['POST'])
 @login_required
@@ -202,7 +196,7 @@ def update(id):
     if person:
         return render_template('forms/person_form.html', person=person, students=students, staff=staff, postdocs=postdocs)
     else:
-        return redirect(url_for('index'))
+        return redirect(return_to_previous(request))
 
 @app.route('/updatesend/<num>', methods=['POST','GET'])
 @login_required
@@ -303,7 +297,7 @@ def suggest(id):
     if person:
         return render_template('suggest/initial.html', person=person, students=students, staff=staff, postdocs=postdocs)
     else:
-        return redirect(url_for('index'))
+        return redirect(return_to_previous(request))
 
 @app.route('/suggestsend/<num>', methods=['POST'])
 def suggestsend(num):
@@ -707,11 +701,7 @@ def delete_person(id):
 def create_backup():
     name = request.form.get('backup_name')
     backup.backup(os.environ['DB_NAME'], name=name)
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    else:
-        return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @login_required
 @app.route('/backup')
@@ -724,28 +714,16 @@ def view_backups():
 def restore_backup(version):
     time = backup.restore(os.environ['DB_NAME'], version)
     flash("Restored database version from %s" % (time), ('success','bottom right'))
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    else:
-        return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @login_required
 @app.route('/delete_backup/<version>', methods=['POST'])
 def delete_backup(version):
     backup.delete_backup(version)
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    else:
-        return redirect(url_for('index'))
+    return redirect(return_to_previous(request))
 
 @login_required
 @app.route('/clean')
 def clean():
     backup.clean_backups()
-    previous = request.referrer
-    if previous:
-        return redirect(previous)
-    else:
-        return redirect(url_for('index'))
+    return redirect(return_to_previous(request))

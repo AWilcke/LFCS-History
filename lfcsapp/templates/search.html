@@ -27,9 +27,15 @@
                 <p>ex: "(assistant director) or (director)" returns all people who were either director or assistant director.</p>
                 </li>
                 <li><p><strong>NOT operator</strong> Use "-" before a keyword to excluse results containing it.</p>
-                <p>ex: "smith -john" returns all people called smith, who are not called john.</p>
+                <p>ex: "smith -john" returns all people called Smith, who are not called John.</p>
                 </li>
                 <li><p><strong>Parenthesis</strong> Use parentheses to separate keywords for the aforementioned operators.</p>
+                </li>
+                <li><p><strong>Category operator</strong> There are 4 categories, "staff","postdoc","phd" and "associate". Use any combination of these tags to refine your search.</p>
+                <p>ex: "smith -phd staff" returns all staff members called Smith, who did not do a PhD at the LFCS.</p>
+                </li>
+                <li><p><strong>ALL operator</strong> Use "*" in any query to return all people that match the given category tags</p>
+                <p>ex: "* phd staff" returns all people who were PhD students or staff members.</p>
                 </li>
             </ul>
         </div>

@@ -6,10 +6,21 @@
             ({{date.start}}-{{date.end}})
             {% endfor%}
         </h2>
-        <p>Investigators:
-        {% for investigator in person.postdoc.investigators %}
-        <a href='{{url_for("person", id=investigator.person.id)}}'>{{investigator.person.name}}</a>
-        {% endfor %}
-        <p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <p><strong>Investigators</strong></p>
+        <table class="table table-hover">
+            <tbody>
+            {% for inv in person.postdoc.investigators %}
+            <tr>
+                <td>
+                    <a href="{{url_for('person',id=inv.person.id)}}" id="investigator">{{inv.person.name}}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>

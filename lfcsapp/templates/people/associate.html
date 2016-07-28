@@ -6,12 +6,27 @@
             ({{date.start}}-{{date.end}})
             {% endfor%}
         </h2>
-        {% for position in person.associate.position %}
-        <p id="assoc_pos">{{position.position}}
-        {% for date in position.dates %}
-        ({{date.start}}-{{date.end}})
-        {% endfor %}
-        </p>
-        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4">
+        <p><b>Positions</b></p>
+        <table class="table table-hover">
+            <thead>
+                <th>Title</th>
+                <th>Dates</th>
+            </thead>
+            <tbody>
+            {% for position in person.associate.position %}
+            <tr><td>{{position.position}}</td>
+                <td>
+                    {% for date in position.dates %}
+                    <p>{{date.start}}-{{date.end}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
