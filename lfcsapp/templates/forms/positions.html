@@ -32,6 +32,33 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="date-entry">
+                <div id="dates" class="col-xs-6">
+                    <div class="row">
+                        <div class="col-xs-8" style="padding-right:3">
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="number" class="form-control datestart" name="{{type}}_{{num}}_start" placeholder="Start"/>
+                                    <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+
+                                    <input type="number" class="form-control dateend" name="{{type}}_{{num}}_end" placeholder="End"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" style='padding-left:0'>
+                            <div class="btn-group">
+                                <button class="btn date-remove btn-default" type="button">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                                <button class="btn date-add btn-default" type="button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
         <div class="col-xs-2">

@@ -17,6 +17,9 @@
                 <li id='viewall'>
                 <a href='{{url_for("view_all")}}'>View All</a>
                 </li>
+                <li id='about'>
+                <a href='{{url_for("about")}}'><i class='glyphicon glyphicon-info-sign'></i> About</a>
+                </li>
                 {% if not current_user.authenticated %}
                 <li>
                 <div>

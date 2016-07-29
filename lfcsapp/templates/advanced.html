@@ -9,6 +9,16 @@
     <form role='form' action='{{url_for("advanced_send")}}' method='POST'>
         <div class='row'>
             <div class='col-xs-12'>
+                <input type="text" class="form-control" placeholder="Enter search terms here" name="search" autocomplete="off">
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-xs-12'>
+                <label>Filters</label> (exact matches only)
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-xs-12'>
                 <input class="form-control" name="name" placeholder="Name"/>
             </div>
         </div>
@@ -19,23 +29,23 @@
         </div>
         <div class='row'>
             <div class='col-xs-12'>
-                <div class="input-group">
-                    <input class="form-control" name="start"placeholder="Start"/>
-                    <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
-
-                    <input class="form-control" name="end" placeholder="End"/>
-                </div>
+                <input class="form-control" name="nationality" placeholder="Nationality"/>
             </div>
         </div>
         <div class='row'>
-            <div class='col-xs-12'>
-                <select name='category' style='width:100%'>
-                    <option value=''>Category</option>
-                    <option value='staff'>Staff</option>
-                    <option value='phd'>PhD</option>
-                    <option value='postdoc'>PostDoc</option>
-                    <option value='associate'>Associate</option>
+            <div class='col-xs-4' style='padding-right:0'>
+                <select class="form-control" name='date_type'>
+                    <option value='inclusive'>Between</option>
+                    <option value='exact'>Exactly</option>
                 </select>
+            </div>
+            <div class='col-xs-8' style='padding-left: 0'>
+                <div class="input-group">
+                    <input type='number' class="form-control" name="start"placeholder="Start"/>
+                    <span class="input-group-addon" style="border-left: 0; border-right: 0;">-</span>
+
+                    <input type='number' class="form-control" name="end" placeholder="End"/>
+                </div>
             </div>
         </div>
         <div class='row'>

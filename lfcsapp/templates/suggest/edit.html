@@ -68,25 +68,25 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-group">
-                <div class='col-xs-3'>
-                    <select name='new_category' id='new_cat' style='width:100%'>
-                        <option value=''></option>
-                        {% if not person.staff %}
-                        <option value="staff">Staff</option>
-                        {% endif %}
-                        {% if not person.phd %}
-                        <option value="phd">Phd</option>
-                        {% endif %}
-                        {% if not person.postdoc %}
-                        <option value="postdoc">PostDoc</option>
-                        {% endif %}
-                        {% if not person.associate %}
-                        <option value="associate">Associate</option>
-                        {% endif %}
-                    </select>
-                </div>
-                <div class='col-xs-1'>
+            <div class='col-xs-3'>
+                <select class='form-control' name='new_category' id='new_cat' style='width:100%'>
+                    <option value=''></option>
+                    {% if not person.staff %}
+                    <option value="staff">Staff</option>
+                    {% endif %}
+                    {% if not person.phd %}
+                    <option value="phd">Phd</option>
+                    {% endif %}
+                    {% if not person.postdoc %}
+                    <option value="postdoc">PostDoc</option>
+                    {% endif %}
+                    {% if not person.associate %}
+                    <option value="associate">Associate</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class='col-xs-1'>
+                <div class="input-group">
                     <span class='input-group-btn'>
                         <button class='btn cat-add' type='submit' value='cat-add-btn' name='cat-add-btn'>
                             <i class='glyphicon glyphicon-plus'></i>
@@ -110,7 +110,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>
 {% endblock %}

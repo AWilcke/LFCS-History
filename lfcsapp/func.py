@@ -10,7 +10,9 @@ import re
 def base_search(query):
     filter_list = []
     remove_list = []
-
+    
+    #get list of category flags given
+    #and remove them from the query
     if '-phd' in query.lower():
         remove_list.append(People.phd==None)
         query = query.replace('-phd','')
@@ -37,10 +39,11 @@ def base_search(query):
         query = query.replace('associate','')
 
     #for a simple "query all" function
-    if '*' in query:
+    if ('*' in query) or not query.strip(' '):
         all = People.query.filter(and_(*remove_list)).filter(or_(*filter_list))
-        return all.all()
+        return all
 
+    #for each category, query on the join using combined search vector
     phd_vec = People.search_vector | PhD.search_vector
     phd = db.session.query(People).join(PhD).filter(phd_vec.match(parse_search_query(query)))
 
@@ -52,52 +55,44 @@ def base_search(query):
     assoc_nopos = People.query.join(Associates).filter(~(Associates.position.any())).search(query)
 
     others = People.query.filter(People.staff==None, People.associate==None, People.phd==None).search(query)
-
+    
+    #union all categories, and filter by category tags
     union = phd.union(staff, staff_nopos, associates, assoc_nopos, others)
     union = union.filter(and_(*remove_list)).filter(or_(*filter_list))
-    return union.all()
-
-#primitive version of the search
-def old_search(query):
-    people = People.query.search(query).all()
-    positions = Positions.query.search(query).all()
-    phd = PhD.query.search(query).all()
-
-    for position in positions:
-        if position.staff:
-            people.append(position.staff.person)
-        elif position.associate:
-            people.append(position.associate.person)
-
-    for student in phd:
-        people.append(student.person)
-
-    return set(people)
+    return union
 
 #search on specific parameters
-def advanced_search(name, location, start, end, cat):
-    results = People.query
-    dates = Dates.query.filter(Dates.person)
-
+def advanced_search(query, name, location, nationality, date_type, start, end):
+    #get results of basic search, if provided
+    if query:
+        results = base_search(query)
+    else:
+        results = People.query
+    
+    #filter (case insensitive) on provided arguments
     if name:
-        results = results.filter_by(name=name)
+        results = results.filter(People.name.ilike(name))
     if location:
-        results = results.filter_by(location=location)
-    if cat=='staff':
-        results = results.filter(People.staff)
-    if cat=='phd':
-        results = results.filter(People.phd)
-    if cat=='postdoc':
-        results = results.filter(People.postdoc)
-    if cat=='associate':
-        results = results.filter(People.associate)
-    if start:
-        dates = dates.filter(Dates.start==start)
-    if end:
-        dates = dates.filter(Dates.end==end)
+        results = results.filter(People.location.ilike(location))
+    if nationality:
+        results = results.filter(People.nationality.ilike(nationality))
 
-    dates = [date.person for date in dates]
-    return set.intersection(set(results), set(dates))
+    #filter by dates
+    if start or end:
+        results = results.join(Dates)
+        if date_type == 'inclusive':
+            if start:
+                results = results.filter(Dates.start>=start)
+            if end:
+                results = results.filter(Dates.end<=end)
+
+        elif date_type == 'exact':
+            if start:
+                results = results.filter(Dates.start==start)
+            if end:
+                results = results.filter(Dates.end==end)
+
+    return results
 
 #updates information of person
 def update_info(person, name, url, location, nationality, starts, ends):

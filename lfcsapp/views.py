@@ -11,10 +11,10 @@ def start_jobs():
     sched = BackgroundScheduler()
     sched.start()
     print "Scheduling started"
-    #create automatic backup before midnight
-    sched.add_job(lambda:backup.backup(os.environ['DB_NAME']), 'cron', hour='23', minute='59', second='0')
-    #clean backups at midnight
-    sched.add_job(backup.clean_backups, 'cron', hour='0', minute='0', second='0')
+    #create automatic backup at midnight
+    sched.add_job(lambda:backup.backup(os.environ['DB_NAME']), 'cron', hour='0', minute='0', second='0')
+    #clean backups before midnight
+    sched.add_job(backup.clean_backups, 'cron', hour='23', minute='59', second='0')
     #clear non final suggestions at midnight
     sched.add_job(func.clear_suggestions, 'cron', hour='0', minute='0', second='0')
     #increment current staffs dates every year
@@ -52,13 +52,33 @@ def advanced():
 
 @app.route('/advancedsend', methods=['POST'])
 def advanced_send():
+    query = request.form.get('search')
+    #filters
     name = request.form.get('name')
     location = request.form.get('location')
+    nationality = request.form.get('nationality')
+    date_type = request.form.get('date_type')
     start = request.form.get('start')
     end = request.form.get('end')
-    cat = request.form.get('category')
-    results = func.advanced_search(name, location, start, end, cat)
-    return render_template('results.html', results=results)
+    full_query = '%s&=%s&=%s&=%s&=%s&=%s&=%s' % (query, name, location, nationality, date_type, start, end)
+    return redirect(url_for('advanced_results', full_query=full_query))
+    
+@app.route('/advanced/results/<full_query>')
+def advanced_results(full_query):
+    query, name, location, nationality, date_type, start, end = full_query.split('&=')
+    results = func.advanced_search(query, name, location, nationality, date_type, start, end)
+
+    #to display information about query
+    if date_type=='inclusive':
+        typ = 'between'
+    else:
+        typ = 'exactly'
+    
+    if query=='' or query=='*':
+        query='all'
+
+    display_query = query + ', filters: name: %s, location: %s, nationality: %s, %s start: %s, end: %s' % (name, location, nationality, typ, start, end)
+    return render_template('results.html', results=results, query=display_query)
 
 @app.route('/results/<query>')
 def results(query):
@@ -73,6 +93,14 @@ def view_all():
 def view_letter(letter):
     results = func.People.query.filter(func.People.name.like(letter + "%")).all()
     return render_template('people/alphabetical.html', results=results, letter=letter)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 @app.route('/person/<id>')
 def person(id):
@@ -444,7 +472,7 @@ def suggest_edit_send(ind):
     if request.method == 'POST':
         dic = eval(dic)
         person = func.dic_to_person(dic)
-        
+        print person
         cancel = request.form.get('cancel')
         if cancel:
             func.db.session.delete(suggest)
@@ -539,7 +567,7 @@ def suggest_edit_send(ind):
             dic[cat] = {}
             suggest.dict = str(dic)
             func.db.session.commit()
-            return redirect(url_for('suggest_edit', ind=index))
+            return redirect(url_for('suggest_edit', ind=suggest.id))
 
         suggest.dict = str(dic)
         suggest.final = True

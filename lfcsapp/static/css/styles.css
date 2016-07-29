@@ -35,7 +35,8 @@ body {
   margin-left: 15%;
   min-height:100%;
   background-color: white;
-  padding-top:100px;
+  padding-top:70px;
+  padding-bottom:50px;
 }
 
 .navbar-btn {
@@ -46,13 +47,7 @@ body {
   */
 }
 
-.navbar .navbar-brand {
-  padding-top: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-
-.navbar .navbar-brand img {
-  max-height: 50px;
+.navbar .navbar-collapse img {
+  max-height: 20px;
 }
 

@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 //Select2
 $(document).ready(function() {
-      $("select").select2();
+      $(".select2").select2();
 });
 
 //DataTables ini
@@ -33,6 +33,17 @@ $(document).ready(function() {
       "dom":'rt',
   });
 
+});
+
+//prevent enter from submitting forms accidentally
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    var is_search = $(document).find("input[name='search']").length;
+    if((event.keyCode == 13) && (is_search==0)) {
+      event.preventDefault();
+      return false;
+    }
+  });
 });
 
 //dynamic form functions

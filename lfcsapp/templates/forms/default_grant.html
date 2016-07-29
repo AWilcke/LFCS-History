@@ -63,7 +63,7 @@
                 <div class='col-xs-5'>
                     <div class="input-group">
                         <span class="input-group-addon" style="border-left: 0; border-right: 0;">Co-Investigator</span>
-                        <select class='grant_link' name="grant_{{num}}_link" style="width: 100%">
+                        <select class='select2 grant_link' name="grant_{{num}}_link" style="width: 100%">
                             <option value=''>None</option>
                             {% for person in people %}
                             <option value="{{person.id}}">{{person.name}}</option>
