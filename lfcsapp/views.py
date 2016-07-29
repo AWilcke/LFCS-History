@@ -149,12 +149,22 @@ def update_user_send():
     email = request.form.get('email')
     pasw = request.form.get('password')
 
+    exists = func.Users.query.get(email)
+    if exists:
+        flash('That email is already in use', ('error','bottom right'))
+        return redirect(return_to_previous(request))
+    
     func.update_user(first_name, last_name, email, pasw)
     func.db.session.commit()
     
+    #log in again
+    user = func.Users.query.get(email)
+    user.authenticated = True
+    func.db.session.commit()
+    login_user(user, remember=True)
+    
     flash('Updated account information for ' + email, ('success','bottom right'))
-
-    return redirect(return_to_previous(request))
+    return redirect(url_for('index'))
 
 @app.route('/adduser')
 @login_required
@@ -169,6 +179,11 @@ def add_user_send():
     email = request.form.get('email')
     pasw = request.form.get('password')
 
+    exists = func.Users.query.get(email)
+    if exists:
+        flash('That email is already in use', ('error','bottom right'))
+        return redirect(return_to_previous(request))
+
     func.add_user(first_name, last_name, email, pasw)
     func.db.session.commit()
     
@@ -180,9 +195,9 @@ def add_user_send():
 @login_required
 def delete_user():
     flash('User account for ' + current_user.email + ' deleted', ('success','bottom right'))
-    logout_user()
     func.db.session.delete(func.Users.query.get(current_user.email))
     func.db.session.commit()
+    logout_user()
     return redirect(url_for('index'))
     
 
