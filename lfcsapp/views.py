@@ -150,7 +150,7 @@ def update_user_send():
     pasw = request.form.get('password')
 
     exists = func.Users.query.get(email)
-    if exists:
+    if exists!=current_user:
         flash('That email is already in use', ('error','bottom right'))
         return redirect(return_to_previous(request))
     
