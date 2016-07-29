@@ -771,7 +771,7 @@ def restore_backup(version):
 @app.route('/delete_backup/<version>', methods=['POST'])
 def delete_backup(version):
     backup.delete_backup(version)
-    return redirect(return_to_previous(request))
+    return redirect(url_for('view_backups'))
 
 @login_required
 @app.route('/clean')

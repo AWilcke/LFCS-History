@@ -66,6 +66,15 @@ def add_person(name, category, dates=None, extra=None, thesis=None, location=Non
     if not person:
         person = People(name=name, url=url, location=location, nationality=nationality)
         db.session.add(person)
+    else:
+        if not person.name:
+            person.name = name
+        if not person.url:
+            person.url = url
+        if not person.location:
+            person.location = location
+        if not person.nationality:
+            person.nationality
 
     print person.name
 

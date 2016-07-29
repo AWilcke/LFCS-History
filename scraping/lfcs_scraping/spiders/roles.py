@@ -1,5 +1,5 @@
 import scrapy
-from lfcs_scraping.items import RoleItem
+from lfcs_scraping.items import RoleItem, ExplorerItem
 
 class ResearchEx(scrapy.Spider):
     name = 'research'
