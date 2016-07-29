@@ -16,7 +16,7 @@ but uses some elements of it, which is why it is placed here.
 * **database.py** contains all the [SQl-Alchemy](http://www.sqlalchemy.org/) models for the database.
 * **func.py** contains all the functions for interaction between the views and the database.
 
-##Instructions to add all data from the spreadsheet:
+##Instructions to add all data from the spreadshee to the databaset:
 1. Download the 
 [spreadsheet](https://docs.google.com/spreadsheets/d/1bszochg8ZHpsf2phzVIw_xhKkDlNebpowGay6TVadsE/edit?usp=sharing)
 as a tab-separated file (.tsv)
@@ -37,6 +37,3 @@ as a tab-separated file (.tsv)
 | exploregrant   | exploregrant.json |
 | exploregrant2  | exploregrant2.json |
 | research       | explorer.json |
-
-
-
