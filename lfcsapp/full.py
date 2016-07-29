@@ -315,7 +315,6 @@ def role_all():
     db.session.commit()
 
 def build_db():
-    add_all()
     link_all()
     grant_all()
     grant2_all()
