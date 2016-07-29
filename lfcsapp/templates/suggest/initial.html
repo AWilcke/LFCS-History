@@ -44,6 +44,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="nationality" class="form-group">
+                    <label>Nationality</label>
+                    <input class="form-control" name="nationality" type="text" value="{{person.nationality}}"/>
+                </div>
+            </div>
+        </div>
         {% if person.staff %}
         {% include 'forms/staff_form.html' %}
         {% endif %}

@@ -146,11 +146,12 @@ class Grants(db.Model):
     def __repr__(self):
         return self.title + ' for ' + self.staff.person.name
     
-    def __init__(self, title=None, value=None, url=None, ref=None):
+    def __init__(self, title=None, value=None, url=None, ref=None, org=None):
         self.title = title
         self.value = value
         self.url = url
         self.ref = ref
+        self.org = org
 
 #table for pairs of start-end dates
 class Dates(db.Model):
@@ -198,6 +199,7 @@ class People(db.Model):
     name = db.Column(db.String())
     url = db.Column(db.String())
     location = db.Column(db.String())
+    nationality = db.Column(db.String())
     dates = db.relationship('Dates', back_populates='person', cascade='all, delete-orphan')
     
     staff=db.relationship('Staff', back_populates='person', uselist=False, cascade='all, delete-orphan')
@@ -211,15 +213,17 @@ class People(db.Model):
     search_vector=db.Column(TSVectorType(
         'name',
         'location',
-        weights={'name':'A','location':'C'}))
+        'nationality',
+        weights={'name':'A','location':'C', 'nationality':'C'}))
 
     def __repr__(self):
         return self.name
 
-    def __init__(self, name=None, url=None, location=None):
+    def __init__(self, name=None, url=None, location=None, nationality=None):
         self.name = name
         self.url = url
         self.location = location
+        self.nationality = nationality
 
 #users of the app
 class Users(db.Model):

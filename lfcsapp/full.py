@@ -14,7 +14,7 @@ def add_all(num=None):
             if line[i] == '':
                 line[i] = None
 
-        add_person(name=line[0] + ' ' + line[1], category=line[3], dates=line[2], extra=line[4], thesis=line[5], location=line[7], url=line[9])
+        add_person(name=line[0] + ' ' + line[1], category=line[3], dates=line[2], extra=line[4], thesis=line[5], location=line[7], url=line[9], nationality=line[8])
 
 def link_all():
     with open('full.tsv') as f:
@@ -61,10 +61,10 @@ def link_person(first, last, cat, supervisors):
     db.session.add(person)
     db.session.commit()
 
-def add_person(name, category, dates=None, extra=None, thesis=None, location=None, url=None):
+def add_person(name, category, dates=None, extra=None, thesis=None, location=None, url=None, nationality=None):
     person = People.query.filter(People.name==name).first()
     if not person:
-        person = People(name=name, url=url, location=location)
+        person = People(name=name, url=url, location=location, nationality=nationality)
         db.session.add(person)
 
     print person.name

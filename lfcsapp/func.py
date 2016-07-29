@@ -100,10 +100,11 @@ def advanced_search(name, location, start, end, cat):
     return set.intersection(set(results), set(dates))
 
 #updates information of person
-def update_info(person, name, url, location, starts, ends):
+def update_info(person, name, url, location, nationality, starts, ends):
     person.name = name
     person.url = url
     person.location = location
+    person.nationality = nationality
     person.dates = []    
     for (start, end) in zip(starts, ends):
         try:
@@ -141,7 +142,7 @@ def delete_person(id):
     db.session.commit()
 
 #updates information given from form for staff
-def update_staff(id, positions, pos_starts, pos_ends, research_explorer, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdoc):
+def update_staff(id, positions, pos_starts, pos_ends, research_explorer, grant_titles, grant_values, grant_urls, grant_refs, grant_orgs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdoc):
     person = id.staff
     person.position = []
     for i in range(0, len(positions)):
@@ -167,7 +168,7 @@ def update_staff(id, positions, pos_starts, pos_ends, research_explorer, grant_t
                 grant_values[i] = int(grant_values[i])
             except:
                 grant_values[i] = None
-            newGrant = Grants(grant_titles[i], grant_values[i], grant_urls[i], grant_refs[i])
+            newGrant = Grants(grant_titles[i], grant_values[i], grant_urls[i], grant_refs[i], grant_orgs[i])
             try:
                 start = int(grant_starts[i])
             except:
@@ -323,6 +324,7 @@ def person_to_dict(person, id=None):
     dic['name'] = person.name
     dic['url'] = person.url
     dic['location'] = person.location
+    dic['nationality'] = person.nationality
     dic['dates'] = [(date.start, date.end) for date in person.dates]
     #this is to pass the id down to the final suggestion
     if id:
@@ -344,6 +346,7 @@ def person_to_dict(person, id=None):
             g['dates'] = (grant.dates.start, grant.dates.end)
             g['value'] = grant.value
             g['url'] = grant.url
+            g['org'] = grant.org
             staff['grants'].append(g)
         staff['grants_secondary'] = []
         for grant in person.staff.grants_secondary:
@@ -353,6 +356,7 @@ def person_to_dict(person, id=None):
             g['dates'] = (grant.dates.start, grant.dates.end)
             g['value'] = grant.value
             g['url'] = grant.url
+            g['org'] = grant.org
             staff['grants_secondary'].append(g)
 
     if person.phd:
@@ -381,6 +385,7 @@ def dic_to_person(dic):
     person.name = dic['name']
     person.url = dic['url']
     person.location = dic['location']
+    person.nationality = dic['nationality']
     for date in dic['dates']:
         person.dates.append(Dates(date[0], date[1]))
     
@@ -400,11 +405,11 @@ def dic_to_person(dic):
             staff.postdocs.append(People.query.get(id).postdoc)
 
         for grant in staff_d['grants']:
-            g = Grants(grant['title'],grant['value'],grant['url'],grant['ref'])
+            g = Grants(grant['title'],grant['value'],grant['url'],grant['ref'], grant['org'])
             g.dates = Dates(grant['dates'][0], grant['dates'][1])
             staff.grants.append(g)
         for grant in staff_d['grants_secondary']:
-            g = Grants(grant['title'],grant['value'],grant['url'],grant['ref'])
+            g = Grants(grant['title'],grant['value'],grant['url'],grant['ref'], grant['org'])
             g.dates = Dates(grant['dates'][0], grant['dates'][1])
             staff.grants_secondary.append(g)
         

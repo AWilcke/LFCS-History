@@ -207,9 +207,10 @@ def updatesend(num):
         name = request.form['name']
         url = request.form['url']
         location = request.form['location']
+        nationality = request.form['nationality']
         starts = request.form.getlist('info_start')
         ends = request.form.getlist('info_end')
-        func.update_info(person, name, url, location, starts, ends)
+        func.update_info(person, name, url, location, nationality, starts, ends)
 
         #staff
         starts = request.form.getlist('staff_start')
@@ -227,6 +228,7 @@ def updatesend(num):
             grant_urls = request.form.getlist('grant_url')
             grant_values = request.form.getlist('grant_value')
             grant_refs = request.form.getlist('grant_ref')
+            grant_orgs = request.form.getlist('grant_org')
             grant_starts = request.form.getlist('grant_start')
             grant_ends = request.form.getlist('grant_end')
             grant_secondary = []
@@ -236,7 +238,7 @@ def updatesend(num):
             students = request.form.getlist('staff_phd_link')
             postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
+            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_orgs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -312,9 +314,10 @@ def suggestsend(num):
         name = request.form['name']
         url = request.form['url']
         location = request.form['location']
+        nationality = request.form['nationality']
         starts = request.form.getlist('info_start')
         ends = request.form.getlist('info_end')
-        func.update_info(person, name, url, location, starts, ends)
+        func.update_info(person, name, url, location, nationality, starts, ends)
 
         #staff
         starts = request.form.getlist('staff_start')
@@ -332,6 +335,7 @@ def suggestsend(num):
             grant_urls = request.form.getlist('grant_url')
             grant_values = request.form.getlist('grant_value')
             grant_refs = request.form.getlist('grant_ref')
+            grant_orgs = request.form.getlist('grant_org')
             grant_starts = request.form.getlist('grant_start')
             grant_ends = request.form.getlist('grant_end')
             grant_secondary = []
@@ -341,7 +345,7 @@ def suggestsend(num):
             students = request.form.getlist('staff_phd_link')
             postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
+            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_orgs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -437,9 +441,10 @@ def suggest_edit_send(ind):
         name = request.form['name']
         url = request.form['url']
         location = request.form['location']
+        nationality = request.form['nationality']
         starts = request.form.getlist('info_start')
         ends = request.form.getlist('info_end')
-        func.update_info(person, name, url, location, starts, ends)
+        func.update_info(person, name, url, location, nationality, starts, ends)
 
         #staff
         starts = request.form.getlist('staff_start')
@@ -457,6 +462,7 @@ def suggest_edit_send(ind):
             grant_urls = request.form.getlist('grant_url')
             grant_values = request.form.getlist('grant_value')
             grant_refs = request.form.getlist('grant_ref')
+            grant_orgs = request.form.getlist('grant_org')
             grant_starts = request.form.getlist('grant_start')
             grant_ends = request.form.getlist('grant_end')
             grant_secondary = []
@@ -466,7 +472,7 @@ def suggest_edit_send(ind):
             students = request.form.getlist('staff_phd_link')
             postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
+            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_orgs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
 
         #phd
         starts = request.form.getlist('phd_start')
@@ -569,9 +575,10 @@ def approve_suggest_send(num, id):
         name = request.form['name']
         url = request.form['url']
         location = request.form['location']
+        nationality = request.form['nationality']
         starts = request.form.getlist('info_start')
         ends = request.form.getlist('info_end')
-        func.update_info(person, name, url, location, starts, ends)
+        func.update_info(person, name, url, location, nationality, starts, ends)
 
         #staff
         starts = request.form.getlist('staff_start')
@@ -591,6 +598,7 @@ def approve_suggest_send(num, id):
             grant_urls = request.form.getlist('grant_url')
             grant_values = request.form.getlist('grant_value')
             grant_refs = request.form.getlist('grant_ref')
+            grant_orgs = request.form.getlist('grant_org')
             grant_starts = request.form.getlist('grant_start')
             grant_ends = request.form.getlist('grant_end')
             grant_secondary = []
@@ -598,9 +606,9 @@ def approve_suggest_send(num, id):
                 grant_secondary.append(request.form.getlist('grant_' + str(i) + '_link'))
                 
             students = request.form.getlist('staff_phd_link')
-            inv = request.form.getlist('staff_primary_link')
+            postdocs = request.form.getlist('staff_primary_link')
             
-            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_starts, grant_ends, grant_secondary, starts, ends, students, inv)
+            func.update_staff(person, position_names, pos_starts, pos_ends, research, grant_titles, grant_values, grant_urls, grant_refs, grant_orgs, grant_starts, grant_ends, grant_secondary, starts, ends, students, postdocs)
         elif person.staff:
             person.staff = None
 
